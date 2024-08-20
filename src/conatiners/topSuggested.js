@@ -3,12 +3,17 @@ import React from 'react'
 
 function TopSuggested() {
     return (
-        <div>
-            <h3>Top Suggested</h3>
-            <p>Based on purchases and views by others</p>
+        <div className='suggestionDiv'>
+            <h3 className='suggestionHeader'>Top Suggested</h3>
+            <p className='suggestionPgh'>Based on purchases and views by others</p>
 
-            <div>
+            <div className='suggestionInnerDiv d-flex'>
                 <Product />
+                <Product />
+                <Product />
+                <Product />
+                <Product />
+
             </div>
         </div>
     )

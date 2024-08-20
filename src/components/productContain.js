@@ -4,17 +4,17 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 
 
-function Product() {
+function ProductContain() {
     return (
-        <div className='productDiv'>
-            <div className='productImg d-flex'>
+        <div className='productContainDiv'>
+            <div className='productContainImg d-flex'>
 
                 <Image
                     width={203}
                     height={140}
                     src="/assets/product image.jpeg"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    alt='Product Image'
+                    alt='ProductContain Image'
                     style={{ objectFit: 'contain' }}
 
                 />
@@ -38,4 +38,4 @@ function Product() {
     )
 }
 
-export default Product
+export default ProductContain
