@@ -1,0 +1,17 @@
+.productsMainDiv {
+    padding: 0 .6rem;
+    flex-direction: column;
+}
+
+.productImgMain {
+    height: 15rem;
+    position: relative;
+    background-color: white;
+
+    border-radius: 0.5rem;
+    border: 0.2px solid rgba(0, 0, 0, 0.3);
+}
+
+.mainProductInfo {
+    height: 8.4375rem;
+}

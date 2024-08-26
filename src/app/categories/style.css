@@ -1,0 +1,177 @@
+.categoriesInnerDiv {
+    /* margin-top: 1rem; */
+    height: fit-content;
+    background-color: white;
+    padding: .7rem;
+
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.searchAndFilterDiv {
+    justify-content: space-between;
+    align-items: center;
+
+}
+
+
+.categoriesSearch {
+    /* justify-content: space-between; */
+    gap: .5rem;
+    align-items: center;
+    background-color: white;
+
+    height: 2.125rem;
+
+    /* margin-top: 1rem; */
+    width: 65%;
+    padding: 0 1rem;
+
+    border-radius: 0.5rem;
+    border: 0.3px solid rgba(0, 0, 0, .3);
+    background: var(--Backgrounds-Primary, #FFF);
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
+
+
+}
+
+.categoriesSearchBar {
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.01338rem;
+}
+
+.filterDiv {
+    width: 33%;
+    height: 2.125rem;
+
+    border-radius: 0.5rem;
+    border: 0.3px solid rgba(0, 0, 0, .3);
+    background: var(--Backgrounds-Primary, #FFF);
+
+    padding: 0 .4rem;
+    gap: .4rem;
+
+    align-items: center;
+
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.01338rem;
+}
+
+.filterIcon {
+    width: 1rem;
+    height: 1rem;
+}
+
+.categoryItemsDiv {
+    /* outline: auto; */
+    justify-content: space-between;
+}
+
+.categoryItemDiv {
+    /* outline: auto; */
+    flex-direction: column;
+    align-items: center;
+    gap: .1rem;
+    width: 3.5rem;
+    height: max-content
+}
+
+.categoryItemImg {
+    border-radius: 0.5rem;
+    border: 0.2px solid rgba(0, 0, 0, 0.2);
+}
+
+.categotyItemHeader {
+    color: var(--Labels-Primary, #000);
+    font-size: 0.6875rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.01338rem;
+}
+
+.priceCategoryDiv {
+    margin-top: 1.5rem;
+    flex-direction: column;
+    gap: 1rem;
+    padding: .7rem;
+    background-color: white;
+}
+
+.categoryItemPgh {
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 0.4375rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.01338rem;
+}
+
+.priceCategoryForm {
+    flex-direction: column;
+    gap: .7rem;
+}
+
+.priceCategoryFormInnerDiv {
+    gap: .3rem;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.75);
+    /* font-family: Lato; */
+    font-size: 0.75rem;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: -0.01338rem;
+}
+
+.priceCategoryFormSpan {
+    color: #006F5F;
+}
+
+.radioInput {
+    accent-color: #006F5F;
+    width: 1rem;
+    height: 1rem;
+}
+
+.useTypeForm {
+    margin-top: .6rem;
+    /* outline: auto; */
+    padding: .5rem .7rem;
+    justify-content: space-between;
+    background-color: white;
+}
+
+.brandCategories {
+    margin-top: 1rem;
+    padding: .7rem;
+    background-color: white;
+    height: 6rem;
+
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.brandCategoriesInnerDiv {
+    align-self: center;
+    justify-self: center;
+    justify-content: space-between;
+
+    overflow: auto;
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    /* IE and Edge */
+    -ms-overflow-style: none;
+    /* Firefox */
+    scrollbar-width: none;
+
+    gap: .6rem;
+}

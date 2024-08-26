@@ -6,7 +6,7 @@ import CategoryItems from "@/conatiners/categoryItems";
 import ProductsContainer from "@/conatiners/productsContainer";
 import SearchAndFIlter from "@/conatiners/searchAndFIlter";
 import TopSuggested from "@/conatiners/topSuggested";
-
+import "./style.css"
 
 
 export default function CatergoriesLayout({ children }) {
