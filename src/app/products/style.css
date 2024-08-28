@@ -1,9 +1,11 @@
 .productsMainDiv {
-    padding: 0 .6rem;
+    /* padding: 0 .6rem; */
     flex-direction: column;
+    gap: 1rem;
 }
 
 .productImgMain {
+    margin: 0 .6rem;
     height: 15rem;
     position: relative;
     background-color: white;
@@ -13,5 +15,180 @@
 }
 
 .mainProductInfo {
+    /* outline: auto; */
+    padding: .3rem .6rem;
+    flex-direction: column;
+    justify-content: space-around;
     height: 8.4375rem;
+    background-color: white;
+}
+
+.mainProductName {
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+.mainProductPrice {
+    color: rgba(0, 0, 0, 0.90);
+    font-size: 0.9375rem;
+    font-weight: 700;
+}
+
+.mainProductDetails {
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: -0.01338rem;
+}
+
+.mainProductInfoInnerDiv {
+    justify-content: space-between;
+}
+
+.mainProductInfoInnerDiv1 {
+    gap: 1rem;
+    justify-content: space-between;
+}
+
+.mainProductInfoInnerDiv2 {
+    gap: 1.4rem;
+    justify-content: space-between;
+}
+
+.mainProductButtonDiv {
+    /* align-self: center; */
+    flex-direction: column;
+    gap: .4rem;
+    margin: 0 .6rem;
+}
+
+.mainProductButton1 {
+    height: 3rem;
+    border-radius: 0.5rem;
+    border: 0.5px solid rgba(0, 0, 0, 0.75);
+    background: var(--Backgrounds-Primary, #FFF);
+
+    align-items: center;
+    justify-content: center;
+}
+
+.mainProductButton2 {
+    border-radius: 0.5rem;
+    border: 0.5px solid rgba(0, 0, 0, 0.75);
+    background: #006F5F;
+    color: white;
+}
+
+.mainProductButtonHeader {
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: -0.01338rem;
+}
+
+.mainProductMoreInfo {
+    height: max-content;
+    padding: .3rem .6rem;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: white;
+}
+
+.mainProductMoreInfoHeader {
+    color: var(--Labels-Primary, #000);
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5625rem;
+}
+
+.mainProductMoreInfoInner {
+    flex-direction: column-reverse;
+    gap: .7rem;
+}
+
+.mainProductMoreInfoInnerDiv {}
+
+.mainProductMoreInfoTitle {
+    color: rgba(0, 0, 0, 0.55);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.5625rem;
+    width: 40%;
+}
+
+.mainProductMoreInfoDetails {
+    color: #006F5F;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.5625rem;
+}
+
+
+.PreviousRatings {
+    flex-direction: column;
+    gap: 1rem;
+    padding: .3rem .6rem;
+    height: 9.875rem;
+    background-color: white;
+}
+
+.PreviousRatingsHeader {
+    color: var(--Labels-Primary, #000);
+    font-size: 0.875rem;
+    font-weight: 700;
+    letter-spacing: -0.01338rem;
+}
+
+.PreviousRatingsInnerDiv {
+
+    /* width: 23rem; */
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    height: 5rem;
+
+    border-radius: 0.5rem;
+    border: 0.5px solid rgba(0, 0, 0, 0.75);
+    background: var(--Backgrounds-Primary, #FFF);
+}
+
+.PreviousRatingsImg {
+    width: 2.8125rem;
+    height: 2.8125rem;
+    aspect-ratio: 1;
+
+    border-radius: 22.5rem;
+    border: 0.5px solid rgba(0, 0, 0, 0.75);
+    background: #A5A5A5;
+}
+
+.PreviousRatingsInfo {
+    width: 70%;
+    flex-direction: column;
+    gap: .3rem;
+}
+
+.PreviousRatingsName {
+    color: #042943;
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5625rem;
+}
+
+.PreviousRatingsDetails {
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: -0.01338rem;
+}
+
+.PreviousRatingsMore {
+    color: #006F5F;
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: -0.01338rem;
+    /* width: max-content; */
+
+    align-self: flex-end;
 }
