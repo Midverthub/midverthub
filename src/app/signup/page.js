@@ -134,118 +134,132 @@ export default function SignUp() {
 
   return (
 
+    <div>
 
-    <div className="formDiv d-flex">
+      <div className="formDiv d-flex">
 
-      <p className='login-pgh'>Sign Up</p>
+        <p className='login-pgh'>Sign Up</p>
 
-      <form className=' form d-flex' onSubmit={handleSubmit}>
+        <form className=' form d-flex' onSubmit={handleSubmit}>
 
-        <div>
+          <div>
 
-          <input
-            type="text"
-            name="email"
-            placeholder="Email address"
-            onChange={handleChg}
-            onBlur={handleBlur}
-            value={formData.email}
-          />
-          <p className="error" role="alert">
-            {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
-          </p>
+            <input
+              type="text"
+              name="email"
+              placeholder="Email address"
+              onChange={handleChg}
+              onBlur={handleBlur}
+              value={formData.email}
+            />
+            <p className="error" role="alert">
+              {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
+            </p>
 
-        </div>
+          </div>
 
-        <div>
+          <div>
 
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handleChg}
-            onBlur={handleBlur}
-            value={formData.password}
-          />
-          <p className="error" role="alert">
-            {(touched.password || isStatus === STATUS.SUBMITTED) &&
-              errors.password}
-          </p>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handleChg}
+              onBlur={handleBlur}
+              value={formData.password}
+            />
+            <p className="error" role="alert">
+              {(touched.password || isStatus === STATUS.SUBMITTED) &&
+                errors.password}
+            </p>
 
-        </div>
+          </div>
 
-        <div>
+          <div>
 
-          <input
-            type="password"
-            name="passwordCheck"
-            placeholder="Repeat Password"
-            onChange={handleChg}
-            onBlur={handleBlur}
-            value={formData.passwordCheck}
-          />
-          <p className="error" role="alert">
-            {(touched.passwordCheck || isStatus === STATUS.SUBMITTED) &&
-              errors.passwordCheck}
-          </p>
+            <input
+              type="password"
+              name="passwordCheck"
+              placeholder="Repeat Password"
+              onChange={handleChg}
+              onBlur={handleBlur}
+              value={formData.passwordCheck}
+            />
+            <p className="error" role="alert">
+              {(touched.passwordCheck || isStatus === STATUS.SUBMITTED) &&
+                errors.passwordCheck}
+            </p>
 
-        </div>
+          </div>
 
-        <div className='checkboxDiv d-flex'>
-          <input
-            className='checkbox'
-            type="checkbox"
-            id="showPassword"
-            name="showPassword"
-            checked={formData.showPassword}
-            onChange={handleChg}
-          />
-          <label htmlFor="isFriendly">Show Password?</label>
-        </div>
+          <div className='checkboxDiv d-flex'>
+            <input
+              className='checkbox'
+              type="checkbox"
+              id="showPassword"
+              name="showPassword"
+              checked={formData.showPassword}
+              onChange={handleChg}
+            />
+            <label htmlFor="isFriendly">Show Password?</label>
+          </div>
 
-        <div className='checkboxDiv d-flex'>
-          <input
-            className='checkbox'
-            type="checkbox"
-            id="staySignedIn"
-            name="staySignedIn"
-            checked={formData.staySignedIn}
-            onChange={handleChg}
-          />
-          <label htmlFor="isFriendly"> Stay signed in?</label>
-        </div>
+          <div className='checkboxDiv d-flex'>
+            <input
+              className='checkbox'
+              type="checkbox"
+              id="staySignedIn"
+              name="staySignedIn"
+              checked={formData.staySignedIn}
+              onChange={handleChg}
+            />
+            <label htmlFor="isFriendly"> Stay signed in?</label>
+          </div>
 
-        <button
-          className="subBtn"
-          type="submit"
-          disabled={!(formData.email || formData.password || formData.passwordCheck)}
-        >
-          Continue
-        </button>
+          <Link className='links' href="/signup/">
+            <button
+              className="subBtn"
+              type="submit"
+              disabled={!(formData.email || formData.password || formData.passwordCheck)}
+            >
+              Continue
+            </button>
+          </Link>
 
-      </form>
+        </form>
 
-      <p> Or sign up with </p>
-
-      <div className="otherSignUpDiv d-flex">
-        <button className='otherSignUpBtn d-flex'>
-          <FontAwesomeIcon icon={faGoogle} className='iconSize2' />
-
-          <p>Sign Up with Google</p>
-        </button>
-
-        <button className='otherSignUpBtn d-flex'>
-          <FontAwesomeIcon icon={faApple} className='iconSize2' />
-
-          <p>Sign Up with Apple</p>
-        </button>
       </div>
 
-      <Link className="links" href="/login">
-        <p className="signup-link">
-          Already have an account?
-        </p>
-      </Link>
+      <div className='otherFormDIv d-flex'>
+
+        <div className='separatorDiv d-flex'>
+          <div className='separator'></div>
+          <p className='SeparatorPgh'>
+            or sign up with
+          </p>
+          <div className='separator'></div>
+        </div>
+
+        <div className="otherSignUpDiv d-flex">
+          <button className='otherSignUpBtn d-flex'>
+            <FontAwesomeIcon icon={faGoogle} className='iconSize2' />
+
+            <p>Sign Up with Google</p>
+          </button>
+
+          <button className='otherSignUpBtn d-flex'>
+            <FontAwesomeIcon icon={faApple} className='iconSize2' />
+
+            <p>Sign Up with Apple</p>
+          </button>
+        </div>
+
+        <Link className="links" href="/login">
+          <p className="signup-link">
+            Already have an account?
+          </p>
+        </Link>
+      </div>
 
     </div>
 

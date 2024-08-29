@@ -7,8 +7,16 @@
 }
 
 .form {
+    font-size: 0.875rem;
+    font-weight: 500;
+
     gap: 1.5rem;
     flex-direction: column;
+}
+
+.inputDivs {
+    flex-direction: column;
+    gap: .4rem;
 }
 
 .login-pgh {
@@ -56,7 +64,32 @@ input::placeholder {
 
     font-size: 0.9375rem;
     font-weight: 400;
+}
 
+.otherFormDIv {
+    padding: 1.5rem 0rem;
+    gap: 1.5rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.separatorDiv {
+    /* flex-direction: column; */
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.separator {
+    width: 30%;
+    border: solid .06rem rgba(0, 0, 0, 0.3);
+}
+
+.separatorPgh {
+    font-size: 0.625rem;
+    font-weight: 400;
 }
 
 .otherSignUpDiv {
@@ -76,17 +109,6 @@ input::placeholder {
     background: var(--Backgrounds-Primary, #FFF);
 }
 
-.reset-password {
-    color: var(--Pure-White, #FFF);
-    text-align: center;
-    font-feature-settings: 'clig' off, 'liga' off;
-
-    font-size: 0.9375rem;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-}
-
 
 
 .signup-link {
@@ -94,5 +116,10 @@ input::placeholder {
     color: #006F5F;
     text-align: center;
     font-size: 0.8125rem;
+    font-weight: 500;
+}
+
+.termPgh {
+    font-size: 0.75rem;
     font-weight: 500;
 }

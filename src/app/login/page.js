@@ -120,9 +120,8 @@ export default function SignUp() {
 
 
   return (
+    <div cn>
 
-
-    <div className="height formDiv d-flex">
       <div className='loginBackgroundImgDiv d-flex'>
 
         {/* <Image
@@ -150,62 +149,79 @@ export default function SignUp() {
         </div>
       </div>
 
-      <p className='login-pgh'>Welcome Back!</p>
+      <div className="formDiv d-flex">
 
-      <form className=' form d-flex' onSubmit={handleSubmit}>
+        <p className='login-pgh'>Welcome Back!</p>
 
-        <div>
+        <form className=' form d-flex' onSubmit={handleSubmit}>
 
-          <input
-            type="text"
-            name="email"
-            placeholder="Email address"
-            onChange={handleChg}
-            onBlur={handleBlur}
-            value={formData.email}
-          />
-          <p className="error" role="alert">
-            {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
-          </p>
+          <div className='inputDivs d-flex'>
 
-        </div>
+            <p className="error" role="alert">
+              {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
+            </p>
 
-        <div>
-
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handleChg}
-            onBlur={handleBlur}
-            value={formData.password}
-          />
-          <p className="error" role="alert">
-            {(touched.password || isStatus === STATUS.SUBMITTED) &&
-              errors.password}
-          </p>
-
-        </div>
+            <input
+              type="text"
+              name="email"
+              placeholder="Email address"
+              onChange={handleChg}
+              onBlur={handleBlur}
+              value={formData.email}
+            />
 
 
-        <button
-          className="subBtn"
-          type="submit"
-          disabled={!(formData.email || formData.password || formData.passwordCheck)}
-        >
-          Login
-        </button>
+          </div>
 
-      </form>
+          <div className='inputDivs d-flex'>
+            <p className="error" role="alert">
+              {(touched.password || isStatus === STATUS.SUBMITTED) &&
+                errors.password}
+            </p>
 
-      <div className="otherSignUpDiv d-flex">
-        <Link className="links" href="/login">
-          <button className='otherSignUpBtn d-flex'>
-            Sign Up Now
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              onChange={handleChg}
+              onBlur={handleBlur}
+              value={formData.password}
+            />
+            <sub className='forgotPassword'>Forgot Password?</sub>
+
+
+          </div>
+
+
+          <button
+            className="subBtn"
+            type="submit"
+            disabled={!(formData.email || formData.password || formData.passwordCheck)}
+          >
+            Login
           </button>
-        </Link>
-      </div>
 
+        </form>
+
+      </div>
+      <div className='otherFormDIv d-flex'>
+
+        <div className='separatorDiv d-flex'>
+          <div className='separator'></div>
+          <p className='SeparatorPgh'>
+            or
+          </p>
+          <div className='separator'></div>
+        </div>
+
+        <div className="otherSignUpDiv d-flex">
+          <Link className="links" href="/signup">
+            <button className='otherSignUpBtn d-flex'>
+              Sign Up Now
+            </button>
+          </Link>
+        </div>
+      </div>
     </div>
 
   )
