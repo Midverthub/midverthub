@@ -1,0 +1,109 @@
+.height {
+    height: 100vh;
+}
+
+.signupCofirmDiv {
+    gap: 2rem;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem 0;
+
+}
+
+.signupCofirmbg {
+    height: 15rem;
+    background-color: #006F5F;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1;
+    border-radius: 10.5rem;
+
+}
+
+.signupCofirmInfo {
+    text-align: center;
+    flex-direction: column;
+    gap: .2rem;
+}
+
+.signupCofirmInHeader {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.signupCofirmPgh {
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.signupCofirmBtn {
+
+    color: #006F5F;
+    font-size: 0.875rem;
+    font-weight: 600;
+
+    width: 21.6875rem;
+    height: 2.8125rem;
+    border-radius: 0.75rem;
+    border: solid 1px #006F5F;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.checkmark {
+    width: 6.625rem;
+    height: 6.6875rem;
+
+    color: white;
+}
+
+.otherSignUpBtn {
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    width: 21.875rem;
+    height: 3.5rem;
+    border-radius: 0.75rem;
+    border: 0.5px solid #000;
+    background: var(--Backgrounds-Primary, #FFF);
+}
+
+.footerExtraDiv {
+    width: 100%;
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: -0.01338rem;
+
+    flex-direction: column;
+    justify-content: center;
+    align-self: center;
+    gap: 1.3rem;
+}
+
+.backToTopBtn {
+    height: 1.875rem;
+    background: #006F5F;
+    color: white;
+}
+
+.footerExtraInfo {
+    /* width: 100%; */
+    flex-direction: column;
+    /* align-items: center; */
+    justify-content: center;
+    gap: .7rem;
+}
+
+.footerExtraInfoInnerDiv {
+    justify-content: space-around;
+}
+
+.footerExtraInfoPgh2 {
+    align-self: center;
+}
+
+.lineDiv {
+    border: .05rem solid rgba(0, 0, 0, .4);
+}

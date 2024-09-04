@@ -189,7 +189,6 @@ export default function SignUp() {
             />
             <sub className='forgotPassword'>Forgot Password?</sub>
 
-
           </div>
 
 

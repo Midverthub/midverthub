@@ -1,0 +1,198 @@
+.formDiv {
+    flex-direction: column;
+    gap: 1.5rem;
+    /* align-items: center; */
+    padding: 1rem 0rem;
+
+}
+
+.form {
+    font-size: 0.875rem;
+    font-weight: 500;
+
+    gap: 1.5rem;
+    flex-direction: column;
+}
+
+.sub-title-1 {
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.subtitle-2 {
+    font-size: 0.875rem;
+    font-weight: 600;
+    line-height: 1.5625rem;
+}
+
+.padding-l-r {
+    padding: 0rem .7rem;
+}
+
+.padding {
+    padding: 1rem .7rem;
+}
+
+
+.inputDivs {
+    flex-direction: column;
+    gap: .4rem;
+}
+
+
+input,
+select {
+    /* width: 21.875rem; */
+    height: 3rem;
+    border-radius: 0.75rem;
+    border: 0.5px solid rgba(0, 0, 0, 0.45);
+    background: var(--Backgrounds-Primary, #FFF);
+    padding: .7rem;
+}
+
+label {
+    /* color: rgba(0, 0, 0, 0.55); */
+    font-size: 0.85rem;
+    font-weight: 600;
+    line-height: 1.5625rem;
+}
+
+input::placeholder,
+select {
+    color: rgba(0, 0, 0, 0.55);
+    font-size: 0.75rem;
+    font-weight: 500;
+    padding-left: 1rem;
+}
+
+
+.uploadFormInnerDiv {
+    background-color: white;
+    flex-direction: column;
+
+    gap: 2rem;
+
+}
+
+.addImgDiv {
+    width: 3.75rem;
+    aspect-ratio: 1;
+    border: .1rem rgba(0, 111, 95, .4) solid;
+    border-radius: 5rem;
+
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    color: #006F5F;
+    font-size: 0.5rem;
+    font-weight: 600;
+    line-height: 0.625rem;
+    /* 125% */
+
+}
+
+.uploadFormInnerDiv-1 {
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.textarea {
+    width: 100%;
+    height: 4.5rem;
+
+    color: rgba(0, 0, 0, 0.75);
+    font-size: 0.6875rem;
+    font-weight: 600;
+    letter-spacing: -0.01338rem;
+    padding: .7rem;
+
+    resize: none;
+    overflow: hidden;
+
+    border-radius: 0.5rem;
+    border: 0.5px solid rgba(0, 0, 0, 0.56);
+    background: var(--Backgrounds-Primary, #FFF);
+}
+
+textarea::placeholder {
+    font-weight: 400;
+    color: inherit;
+}
+
+.uploadRadioDiv {
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.uploadRadioHeader {
+    color: rgba(0, 0, 0, 0.47);
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 0.625rem;
+    /* 83.333% */
+}
+
+.uploadRadioInnerDiv {
+    background-color: #FFF;
+    gap: 2rem;
+}
+
+
+.uploadRadioInnerDiv-1 {
+    gap: .7rem;
+    align-items: center;
+    justify-content: center;
+}
+
+.radioInput {
+    accent-color: #006F5F;
+    width: 1rem;
+    height: 1rem;
+}
+
+.uploadInnerDiv-2 {
+    flex-direction: column;
+    gap: 1rem;
+    background-color: white;
+}
+
+
+
+
+
+
+
+
+
+.checkboxDiv {
+    gap: 1rem;
+    align-items: center;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.checkbox {
+    width: 1.25rem;
+    height: 1.25rem;
+}
+
+.links {
+    text-decoration: none;
+    color: #FFF;
+}
+
+.subBtn {
+    align-self: center;
+    width: 21.875rem;
+    height: 2.8125rem;
+
+    border-radius: 0.75rem;
+    background: #006F5F;
+
+    color: var(--Pure-White, #FFF);
+    text-align: center;
+
+    font-size: 0.9375rem;
+    font-weight: 400;
+}
