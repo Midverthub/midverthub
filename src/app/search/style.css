@@ -1,0 +1,52 @@
+.height {
+    height: 100vh;
+}
+
+.seacrchDiv {
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.searchHistroyDiv {
+    margin-top: .3rem;
+    justify-content: space-between;
+    padding: 0rem .7rem;
+}
+
+.searchHistroyHeader {
+    color: rgba(0, 0, 0, 0.85);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: -0.01338rem;
+}
+
+.searchHistroyBtn {
+    color: #178440;
+    font-size: 0.625rem;
+    font-weight: 600;
+    letter-spacing: -0.01338rem;
+}
+
+.searchHistoryItemsDiv {
+    margin-top: .8rem;
+    flex-wrap: wrap;
+    padding: 0rem .7rem;
+    gap: .4rem;
+}
+
+.noHistoryPhg {
+    margin-top: 1rem;
+    color: #767676;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: -0.214px;
+    text-align: center;
+}
+
+.searchitemsDiv {
+    margin-top: 1rem;
+    flex-direction: column;
+    gap: .4rem;
+    padding: .6rem .7rem;
+    background-color: white;
+}

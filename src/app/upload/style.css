@@ -50,11 +50,32 @@ select {
     padding: .7rem;
 }
 
+/* option {
+    background: #1b1a1a !important;
+    color: #357b1d !important;
+} */
+
+/* select {
+    background: #006F5F !important;
+    color: white !important;
+} */
+
+
 label {
     /* color: rgba(0, 0, 0, 0.55); */
     font-size: 0.85rem;
     font-weight: 600;
     line-height: 1.5625rem;
+}
+
+.addImgLabel {
+    width: min-content;
+}
+
+.radioBtnLabel {
+    /* color: rgba(0, 0, 0, 0.75); */
+    font-size: 0.75rem;
+    font-weight: 500;
 }
 
 input::placeholder,
@@ -89,7 +110,11 @@ select {
     font-weight: 600;
     line-height: 0.625rem;
     /* 125% */
+}
 
+.inputFileDiv {
+    gap: .8rem;
+    flex-wrap: wrap;
 }
 
 .uploadFormInnerDiv-1 {

@@ -20,13 +20,20 @@ export default function SignUp() {
 
 
   const [formData, setFormData] = React.useState({
+    category: "",
+    productLocation: "",
+    productName: "",
+    type: "",
+    condition: "",
+    description: "",
+    price: "",
+    negotiation: "",
+    phone: "",
     email: "",
-    password: "",
-    passwordCheck: "",
-    showPassword: false,
-    staySignedIn: false,
-
+    update: ""
   });
+
+  const [productImgs, setProductImgs] = React.useState([])
 
   const [isStatus, setStatus] = React.useState(STATUS.IDLE);
   const [touched, setTouched] = React.useState({});
@@ -46,6 +53,19 @@ export default function SignUp() {
     });
   }
 
+  function handleImgChg(e) {
+    // console.log(e.target.files[0].name);
+    const imgSrc = e.target.files[0]
+
+    setProductImgs((prevState) => {
+      return [
+        ...prevState, imgSrc
+      ];
+    });
+
+  }
+  console.log(productImgs);
+
   function handleBlur(e) {
     const { name } = e.target;
     setTouched((prevState) => {
@@ -60,20 +80,13 @@ export default function SignUp() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(e.target);
-
-    const displayName = e.target.name.value
-    const email = e.target.email.value
-    const password = e.target.password.value
-
-    console.log(displayName, email, password,)
-
+    // console.log(e.target);
     setStatus(STATUS.SUBMITTING);
 
-    if (isValid) {
+    if (true) { //isValid
       console.log("submit");
       setStatus(STATUS.COMPLETED);
-      setFinished(prev => !prev)
+      // setFinished(prev => !prev)
       console.log(formData);
     } else {
       setStatus(STATUS.SUBMITTED);
@@ -90,39 +103,47 @@ export default function SignUp() {
     }
   }
 
-  function CheckPassword(inputtxt) {
-    var decimal = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{8,15}$/;
-    if (inputtxt.match(decimal)) {
-      return true;
-    }
-    else {
-      return false;
-    }
-    // return true
-  }
-
-
   function getErrors(params) {
     const result = {}
 
+    if (!formData.category) {
+      result.category = "Category is required";
+    }
+    if (productImgs.length = 0) {
+      result.productImgs = "Product Images are required";
+    }
+    if (!formData.productLocation) {
+      result.productLocation = "Product Location is required";
+    }
+    if (!formData.productName) {
+      result.productName = "Product Name is required";
+    }
+    if (!formData.type) {
+      result.type = "Product Type is required";
+    }
+    if (!formData.condition) {
+      result.condition = "Condition is required";
+    }
+    if (!formData.description) {
+      result.description = "Product Description is required";
+    }
+    if (!formData.price) {
+      result.price = "Product Price is required";
+    }
+    if (!formData.negotiation) {
+      result.negotiation = "Is product negotiable?";
+    }
+    if (!formData.phone) {
+      result.phone = "Please enter your phone number";
+    }
     if (!formData.email) {
       result.email = "Email is required";
     } else if (!ValidateEmail(formData.email)) {
       result.email = "Email is not correct";
     }
-
-    if (!formData.password) {
-      result.password = "Please enter Password";
-    } else if (!CheckPassword(formData.password)) {
-      result.password = "Password must be between 8 to 15 characters which contain at least one lowercase letter, one uppercase letter, one numeric digit, and one special character";
+    if (!formData.update) {
+      result.update = "Are your information up to date?";
     }
-
-    if (!formData.passwordCheck) {
-      result.passwordCheck = "Please confirm Password";
-    } else if (!formData.passwordCheck.match(formData.password)) {
-      result.passwordCheck = "Password doesn't match";
-    }
-
     // if (!formData.userPhoto) result.userPhoto = "Select a Picture"
     return result;
   }
@@ -145,14 +166,14 @@ export default function SignUp() {
           <div className='uploadFormInnerDiv d-flex padding'>
 
             <div className='inputDivs d-flex '>
-              <label htmlFor="email"> Select Category</label>
+              <label htmlFor="category"> Select Category</label>
 
               <select
-                name="email"
-                id="email"
+                name="category"
+                id="category"
                 onChange={handleChg}
                 onBlur={handleBlur}
-                value={formData.email}
+                value={formData.category}
               >
 
                 <option value="c#">C#</option>
@@ -161,35 +182,51 @@ export default function SignUp() {
               </select>
 
               <p className="error" role="alert">
-                {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
+                {(touched.category || isStatus === STATUS.SUBMITTED) && errors.category}
               </p>
 
             </div>
 
             <div className='inputDivs d-flex'>
-              <label htmlFor="email"> Add Photo</label>
+              <label htmlFor="productImgs"> Add Photo</label>
 
               <input
-                id="userPhoto"
+                id="productImgs"
                 style={{ display: "none" }}
                 type="file"
-                name="userPhoto"
+                name="productImgs"
                 // placeholder="Confirm Password"
-                onChange={handleChg}
+                onChange={handleImgChg}
                 onBlur={handleBlur}
-                value={formData.userPhoto}
+              // value={formData.userPhoto}
               />
 
-              <label htmlFor="userPhoto" >
-                <div className='addImgDiv d-flex'>
-                  <FontAwesomeIcon icon={faPlus} className='iconSize2' />
-                  <span> Add photos</span>
-                </div>
-              </label>
+              <div className='inputFileDiv d-flex'>
+                {productImgs.map((prod, ind) => (
+                  <Image
+                    key={ind}
+                    width={70}
+                    height={70}
+                    src={window.URL.createObjectURL(prod)}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                    alt='Product Image'
+                    style={{ objectFit: 'contain' }}
+
+                  />
+                ))
+                }
+
+                <label className='addImgLabel' htmlFor="productImgs" >
+                  <div className='addImgDiv d-flex'>
+                    <FontAwesomeIcon icon={faPlus} className='iconSize2' />
+                    <span> Add More</span>
+                  </div>
+                </label>
+              </div>
 
               <p className="error" role="alert">
-                {(touched.userPhoto || isStatus === STATUS.SUBMITTED) &&
-                  errors.userPhoto}
+                {(touched.productImgs || isStatus === STATUS.SUBMITTED) &&
+                  errors.productImgs}
               </p>
             </div>
 
@@ -199,14 +236,14 @@ export default function SignUp() {
 
 
               <div className='inputDivs d-flex'>
-                <label htmlFor="email"> Product Location</label>
+                <label htmlFor="productLocation"> Product Location</label>
 
                 <select
-                  name="email"
-                  id="email"
+                  name="productLocation"
+                  id="productLocation"
                   onChange={handleChg}
                   onBlur={handleBlur}
-                  value={formData.email}
+                  value={formData.productLocation}
                 >
 
                   <option value="c#">C#</option>
@@ -215,39 +252,39 @@ export default function SignUp() {
                 </select>
 
                 <p className="error" role="alert">
-                  {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
+                  {(touched.productLocation || isStatus === STATUS.SUBMITTED) && errors.productLocation}
                 </p>
 
               </div>
 
 
               <div className='inputDivs d-flex'>
-                <label htmlFor="email"> Product Name</label>
+                <label htmlFor="productName"> Product Name</label>
 
                 <input
                   type="text"
-                  name="email"
-                  id="email"
-                  placeholder="Email address"
+                  name="productName"
+                  id="productName"
+                  placeholder="Product Name"
                   onChange={handleChg}
                   onBlur={handleBlur}
-                  value={formData.email}
+                  value={formData.productName}
                 />
                 <p className="error" role="alert">
-                  {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
+                  {(touched.productName || isStatus === STATUS.SUBMITTED) && errors.productName}
                 </p>
 
               </div>
 
               <div className='inputDivs d-flex'>
-                <label htmlFor="email"> Type</label>
+                <label htmlFor="type"> Type</label>
 
                 <select
-                  name="email"
-                  id="email"
+                  name="type"
+                  id="type"
                   onChange={handleChg}
                   onBlur={handleBlur}
-                  value={formData.email}
+                  value={formData.type}
                 >
 
                   <option value="c#">C#</option>
@@ -256,53 +293,53 @@ export default function SignUp() {
                 </select>
 
                 <p className="error" role="alert">
-                  {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
+                  {(touched.type || isStatus === STATUS.SUBMITTED) && errors.type}
                 </p>
 
               </div>
 
 
               <div className='inputDivs d-flex'>
-                <label htmlFor="email"> Condition</label>
+                <label htmlFor="condition"> Condition</label>
                 <input
                   type="text"
-                  name="email"
-                  id="email"
-                  placeholder="Email address"
+                  name="condition"
+                  id="condition"
+                  placeholder="Used"
                   onChange={handleChg}
                   onBlur={handleBlur}
-                  value={formData.email}
+                  value={formData.condition}
                 />
                 <p className="error" role="alert">
-                  {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
+                  {(touched.condition || isStatus === STATUS.SUBMITTED) && errors.condition}
                 </p>
 
               </div>
 
               <div className="textarea-div">
-                <label htmlFor="email">Description</label>
+                <label htmlFor="description">Description</label>
 
-                <textarea name="message" className="textarea" placeholder="Type a message" onChange={handleChg} value={formData.message} />
+                <textarea id="description" name="description" className="textarea" placeholder="Type a message" onChange={handleChg} onBlur={handleBlur} value={formData.description} />
 
                 <p className="error" role="alert">
-                  {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
+                  {(touched.description || isStatus === STATUS.SUBMITTED) && errors.description}
                 </p>
               </div>
 
               <div className='inputDivs d-flex'>
-                <label htmlFor="email"> Price</label>
+                <label htmlFor="price"> Price</label>
 
                 <input
                   type="text"
-                  name="email"
-                  id="email"
-                  placeholder="Email address"
+                  name="price"
+                  id="price"
+                  placeholder="Enter Price"
                   onChange={handleChg}
                   onBlur={handleBlur}
-                  value={formData.email}
+                  value={formData.price}
                 />
                 <p className="error" role="alert">
-                  {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
+                  {(touched.price || isStatus === STATUS.SUBMITTED) && errors.price}
                 </p>
 
               </div>
@@ -318,27 +355,27 @@ export default function SignUp() {
                 <div className='uploadRadioInnerDiv-1 d-flex'>
                   <input
                     type="radio"
-                    id="categoryTwo"
-                    name="priceCategory"
+                    id="yes"
+                    name="negotiation"
                     onChange={handleChg}
-                    checked={formData.priceCategory === "categoryTwo"}
-                    value="categoryTwo"
+                    checked={formData.negotiation === "yes"}
+                    value="yes"
                     className='radioInput'
                   />
-                  <label htmlFor="isFriendly">Yes</label>
+                  <label className='radioBtnLabel' htmlFor="yes">Yes</label>
                 </div>
 
                 <div className='uploadRadioInnerDiv-1 d-flex'>
                   <input
                     type="radio"
-                    id="categoryTwo"
-                    name="priceCategory"
+                    id="no"
+                    name="negotiation"
                     onChange={handleChg}
-                    checked={formData.priceCategory === "categoryTwo"}
-                    value="categoryTwo"
+                    checked={formData.negotiation === "no"}
+                    value="no"
                     className='radioInput'
                   />
-                  <label htmlFor="isFriendly"> No</label>
+                  <label className='radioBtnLabel' htmlFor="no"> No</label>
                 </div>
 
               </div>
@@ -350,24 +387,24 @@ export default function SignUp() {
             <h3 className='subtitle-2'>Confirm your contact details?</h3>
 
             <div className='inputDivs d-flex'>
-              <label htmlFor="email"> Phone</label>
+              <label htmlFor="phone"> Phone</label>
               <input
                 type="tel"
-                name="email"
-                id="email"
-                placeholder=""
+                name="phone"
+                id="phone"
+                placeholder="+234 1234 5678"
                 onChange={handleChg}
                 onBlur={handleBlur}
-                value={formData.email}
+                value={formData.phone}
               />
               <p className="error" role="alert">
-                {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
+                {(touched.phone || isStatus === STATUS.SUBMITTED) && errors.phone}
               </p>
 
             </div>
 
             <div className='inputDivs d-flex'>
-              <label htmlFor="email"> E-mail*</label>
+              <label htmlFor="email"> E-mail</label>
               <input
                 type="text"
                 name="email"
@@ -395,27 +432,27 @@ export default function SignUp() {
                   <div className='uploadRadioInnerDiv-1 d-flex'>
                     <input
                       type="radio"
-                      id="categoryTwo"
-                      name="priceCategory"
+                      id="yes"
+                      name="update"
                       onChange={handleChg}
-                      checked={formData.priceCategory === "categoryTwo"}
-                      value="categoryTwo"
+                      checked={formData.update === "yes"}
+                      value="yes"
                       className='radioInput'
                     />
-                    <label htmlFor="isFriendly">Yes</label>
+                    <label className='radioBtnLabel' htmlFor="yes">Yes</label>
                   </div>
 
                   <div className='uploadRadioInnerDiv-1 d-flex'>
                     <input
                       type="radio"
-                      id="categoryTwo"
-                      name="priceCategory"
+                      id="no"
+                      name="update"
                       onChange={handleChg}
-                      checked={formData.priceCategory === "categoryTwo"}
-                      value="categoryTwo"
+                      checked={formData.update === "no"}
+                      value="no"
                       className='radioInput'
                     />
-                    <label htmlFor="isFriendly"> No</label>
+                    <label className='radioBtnLabel' htmlFor="no"> No</label>
                   </div>
 
                 </div>
@@ -429,11 +466,11 @@ export default function SignUp() {
           <button
             className="subBtn padding-l-r"
             type="submit"
-            disabled={!(formData.email || formData.password || formData.passwordCheck)}
+          // disabled={!(formData.email || formData.password || formData.passwordCheck)}
           >
-            <Link className='links' href="/signup/">
-              Continue
-            </Link>
+            {/* <Link className='links' href="/signup/"> */}
+            Upload
+            {/* </Link> */}
           </button>
 
         </form>
