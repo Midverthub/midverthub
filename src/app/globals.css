@@ -114,6 +114,29 @@ article {
   display: flex;
 }
 
+.height {
+  height: 100vh;
+}
+
+.padding {
+  padding: 1rem .7rem;
+}
+
+.padding-l-r {
+  padding: 0rem .7rem;
+}
+
+.padding-t-b {
+  padding: 1rem 0rem;
+}
+
+.margin-t-b {
+  margin: 1rem 0rem;
+}
+
+
+
+
 .container {
   flex-direction: column;
   gap: 1rem;
@@ -124,6 +147,7 @@ article {
 .header {
   /* outline: auto; */
   justify-content: space-between;
+
   align-items: center;
   position: sticky;
   top: 0;
@@ -163,6 +187,31 @@ article {
   /* border: 0.5px solid rgba(0, 0, 0, 0.50); */
   background: var(--Backgrounds-Primary, #FFF);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
+}
+
+input[type="search"]:focus {
+  outline: none;
+}
+
+
+input[type="search"]::-webkit-search-cancel-button {
+  -webkit-appearance: none;
+  height: 1em;
+  width: 1em;
+  border-radius: 50em;
+  background: url(https://pro.fontawesome.com/releases/v5.10.0/svgs/solid/times-circle.svg) no-repeat 50% 50%;
+  background-size: contain;
+  opacity: 0;
+  pointer-events: none;
+}
+
+input[type="search"]:focus::-webkit-search-cancel-button {
+  opacity: .3;
+  pointer-events: all;
+}
+
+input[type="search"].dark::-webkit-search-cancel-button {
+  filter: invert(1);
 }
 
 .searchIcon {
@@ -524,4 +573,68 @@ article {
   font-size: 0.6875rem;
   font-weight: 600;
   letter-spacing: -0.01338rem;
+}
+
+/* ITEM TO RATE */
+.itemToRateDiv {
+  background-color: white;
+  flex-direction: column;
+  gap: .7rem;
+}
+
+.itemToRateInnerDiv-0 {
+  gap: .6rem;
+}
+
+.itemToRateTitlePriceDiv {
+  /* width: 70%; */
+  justify-content: space-between;
+  align-items: center;
+}
+
+.itemToRateImg {}
+
+.itemToRateInnerDiv {
+  flex-direction: column;
+  gap: .5rem;
+}
+
+.itemToRateTitle {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.itemToRatePriceHeader {
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.itemToRateInnerDiv-1 {
+  align-items: center;
+  gap: 1rem;
+  /* justify-content: space-between; */
+}
+
+.itemToRatePgh {
+  color: rgba(0, 0, 0, 0.75);
+  font-size: 0.5rem;
+  font-weight: 500;
+}
+
+.straightLine {
+  border: solid .01rem rgba(0, 0, 0, 0.2);
+}
+
+.itemToRateBtn {
+
+  align-self: flex-end;
+  width: 9.125rem;
+  height: 2.25rem;
+
+  border-radius: 0.25rem;
+  background: #006F5F;
+
+  color: var(--Backgrounds-Primary, #FFF);
+  font-size: 0.625rem;
+  font-weight: 500;
 }

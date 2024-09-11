@@ -1,6 +1,6 @@
 import './style.css'
 
-export default function SignUpLayout({ children }) {
+export default function RatingLayout({ children }) {
   return (
     <section>
       {children}

@@ -95,7 +95,7 @@ function SearchpageSearch() {
 
             <form
 
-                className='homepageSearch d-flex' action="" method="post">
+                className='homepageSearch d-flex' action="" method="post" onSubmit={handleSubmit}>
 
                 <FontAwesomeIcon icon={faAngleLeft} className="searchIcon" />
 
