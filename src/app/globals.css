@@ -189,6 +189,39 @@ article {
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
 }
 
+
+.form {
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  gap: 1.5rem;
+  flex-direction: column;
+}
+
+.inputDivs {
+  flex-direction: column;
+  gap: .4rem;
+}
+
+
+input,
+select {
+  /* width: 21.875rem; */
+  height: 3rem;
+  border-radius: 0.75rem;
+  border: 0.5px solid rgba(0, 0, 0, 0.45);
+  background: var(--Backgrounds-Primary, #FFF);
+  padding: .7rem;
+}
+
+input::placeholder,
+select {
+  color: rgba(0, 0, 0, 0.55);
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.5625rem;
+}
+
 input[type="search"]:focus {
   outline: none;
 }
@@ -212,6 +245,21 @@ input[type="search"]:focus::-webkit-search-cancel-button {
 
 input[type="search"].dark::-webkit-search-cancel-button {
   filter: invert(1);
+}
+
+.subBtn {
+  align-self: center;
+  width: 21.875rem;
+  height: 2.8125rem;
+
+  border-radius: 0.75rem;
+  background: #006F5F;
+
+  color: var(--Pure-White, #FFF);
+  text-align: center;
+
+  font-size: 0.9375rem;
+  font-weight: 400;
 }
 
 .searchIcon {
@@ -580,10 +628,18 @@ input[type="search"].dark::-webkit-search-cancel-button {
   background-color: white;
   flex-direction: column;
   gap: .7rem;
+
+  background: var(--Backgrounds-Primary, #FFF);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
 }
 
 .itemToRateInnerDiv-0 {
+  background-color: white;
   gap: .6rem;
+  /* padding: 1rem 0rem; */
+
+  background: var(--Backgrounds-Primary, #FFF);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
 }
 
 .itemToRateTitlePriceDiv {
@@ -636,5 +692,10 @@ input[type="search"].dark::-webkit-search-cancel-button {
 
   color: var(--Backgrounds-Primary, #FFF);
   font-size: 0.625rem;
+  font-weight: 500;
+}
+
+.ratingFormHeader {
+  font-size: 0.75rem;
   font-weight: 500;
 }
