@@ -1,0 +1,37 @@
+.userProfileform {
+    align-items: center;
+    /* text-align: center; */
+}
+
+input,
+select {
+    width: 19.375rem;
+    height: 2.8125rem;
+}
+
+label {
+    color: #006F5F;
+    font-size: 0.75rem;
+    font-weight: 400;
+}
+
+.userImgDiv {
+    position: relative;
+    border-radius: 5rem;
+    /* outline: auto; */
+    overflow: hidden;
+    /* background: url(<path-to-image>) lightgray 50% / cover no-repeat; */
+}
+
+.addUserImgLabel {
+    height: 1.7rem;
+    aspect-ratio: 1;
+    border-radius: 5rem;
+    background-color: #D9D9D9;
+    position: absolute;
+    bottom: .2999rem;
+    right: .9rem;
+
+    justify-content: center;
+    align-items: center;
+}

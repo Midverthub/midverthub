@@ -104,6 +104,43 @@
     align-self: center;
 }
 
-.lineDiv {
-    border: .05rem solid rgba(0, 0, 0, .4);
+
+/* Build 2 */
+/* Build 2 */
+/* Build 2 */
+/* Build 2 */
+
+.sideMenuDiv {
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.sideMenuHeader {
+    color: white;
+    background: #006F5F;
+
+    flex-direction: column;
+    justify-content: center;
+
+    height: 3.5rem;
+}
+
+.sideMenuOptionsDiv {
+    background-color: white;
+    flex-direction: column;
+    gap: 1.3rem;
+}
+
+
+.sideMenuOption {
+    gap: 1rem;
+}
+
+.sideMenuOptionProfile {
+    justify-content: space-between;
+}
+
+.logoutHeader {
+    color: #006F5F;
+    align-items: end;
 }

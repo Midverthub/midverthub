@@ -110,8 +110,30 @@ article {
   text-decoration: none;
 }
 
+
+/* Typography */
+
+.subtitle1 {
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.subtitle2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.text1 {
+  font-size: 0.625rem;
+  font-weight: 400;
+}
+
 .d-flex {
   display: flex;
+}
+
+.d-grid {
+  display: grid;
 }
 
 .height {
@@ -134,7 +156,19 @@ article {
   margin: 1rem 0rem;
 }
 
+.margin-l-r {
+  margin: 0rem 0.7rem;
+}
 
+
+.btn {
+  font-size: 0.875rem;
+  font-weight: 700;
+
+  height: 3rem;
+  border-radius: 0.5rem;
+  border: 0.5px solid rgba(0, 0, 0, 0.75);
+}
 
 
 .container {
@@ -159,6 +193,23 @@ article {
   padding: 0 1rem;
 }
 
+.backIcon {
+  font-size: 1.5rem;
+}
+
+/* SUB HEADER */
+.subHeaderDiv {
+  height: 3rem;
+  background-color: white;
+  align-items: center;
+  gap: .7rem;
+}
+
+.subHeaderDivHeader {
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
 .sign-up-btn {
   color: var(--Labels-Primary, #000);
   /* font-family: Inter; */
@@ -170,8 +221,6 @@ article {
 
 .homepageSearch {
   /* justify-content: space-between; */
-
-
   gap: .5rem;
   align-items: center;
   background-color: white;
@@ -677,7 +726,13 @@ input[type="search"].dark::-webkit-search-cancel-button {
   font-weight: 500;
 }
 
+.lineDiv {
+  width: 100%;
+  border: .05rem solid rgba(0, 0, 0, .4);
+}
+
 .straightLine {
+  width: 100%;
   border: solid .01rem rgba(0, 0, 0, 0.2);
 }
 

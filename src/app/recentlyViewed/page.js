@@ -7,6 +7,7 @@ import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image'
 import Link from 'next/link'
 import ItemToRate from '@/components/itemToRate';
+import Product from '@/components/product';
 
 export default function Rating() {
 
@@ -14,12 +15,6 @@ export default function Rating() {
   return (
 
     <div className="height ratingDiv">
-      {/* <div className='ratingInnerDiv d-flex padding'>
-        <FontAwesomeIcon icon={faAngleLeft} className="backIcon" />
-
-        <h3 className='ratingHeader' >Pending Rating</h3>
-      </div> */}
-
       <div className='ratingInnerDiv-1 margin-t-b d-flex'>
         <div className='noRatingImgDiv'>
           <Image
@@ -32,14 +27,17 @@ export default function Rating() {
           />
         </div>
 
-        <p className='noRatingPgh'>You dont have any Pending Rating</p>
+        <p className='noRatingPgh'>No recently viewed product(s)</p>
 
       </div>
 
-      <div className='itemsToRateDiv d-flex'>
+      <div className='recentlyViewedItemsDiv padding-t-b d-flex'>
+        <Product />
+        <Product />
+        <Product />
+        <Product />
+        <Product />
 
-        <ItemToRate />
-        <ItemToRate />
       </div>
       {/* <ItemToRate /> */}
 

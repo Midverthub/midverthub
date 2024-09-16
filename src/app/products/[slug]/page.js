@@ -75,13 +75,16 @@ export default function Product({ params }) {
             </div>
 
             <div className='mainProductButtonDiv d-flex'>
-                <div className='mainProductButton1 d-flex'>
+                <button className='btn'>
+                    Chat Seller
+                </button>
+                {/* <div className='mainProductButton1 d-flex'>
                     <h3 className='mainProductButtonHeader'>Chat Seller</h3>
-                </div>
+                </div> */}
 
-                <div className='mainProductButton1 mainProductButton2 d-flex'>
-                    <h3 className='mainProductButtonHeader'>View Seller Profile</h3>
-                </div>
+                <button className='btn mainProductButton2'>
+                    View Seller Profile
+                </button>
             </div>
 
             <div className='mainProductMoreInfo d-flex'>
@@ -111,9 +114,9 @@ export default function Product({ params }) {
                 </div>
 
 
-            </div>
-            <div className='mainProductButton1 d-flex'>
-                <h3 className='mainProductButtonHeader'>Request agent</h3>
+                <button className='btn'>
+                    Request agent
+                </button>
             </div>
 
             <div className='PreviousRatings d-flex'>
