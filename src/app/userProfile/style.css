@@ -20,7 +20,6 @@ label {
     border-radius: 5rem;
     /* outline: auto; */
     overflow: hidden;
-    /* background: url(<path-to-image>) lightgray 50% / cover no-repeat; */
 }
 
 .addUserImgLabel {

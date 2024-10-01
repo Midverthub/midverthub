@@ -8,6 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import ItemToRate from '@/components/itemToRate';
 import Product from '@/components/product';
+import ProductLandscape from '@/components/productLandscape';
 
 export default function Rating() {
 
@@ -31,12 +32,14 @@ export default function Rating() {
 
       </div>
 
-      <div className='recentlyViewedItemsDiv padding-t-b d-flex'>
-        <Product />
-        <Product />
-        <Product />
-        <Product />
-        <Product />
+      <div className='verticalContainer padding-t-b d-flex'>
+        <ProductLandscape />
+        <ProductLandscape />
+        <ProductLandscape />
+        <ProductLandscape />
+        <ProductLandscape />
+        <ProductLandscape />
+        <ProductLandscape />
 
       </div>
       {/* <ItemToRate /> */}

@@ -16,7 +16,7 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Build() {
+export default function SideMenu() {
 
 
   return (

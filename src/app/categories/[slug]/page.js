@@ -1,65 +1,40 @@
-'use client'
-// import axios from 'axios'
-import Image from 'next/image';
-import CategoryProduct from '@/app/components/category-product';
-import useProductsDataManager from '@/hooks/useProductsDataManager';
-import { motion } from 'framer-motion'
+
+import Radio from "@/components/radio";
+import UseType from "@/components/useType";
+import BrandCategories from "@/conatiners/brandCategories";
+import CategoryItems from "@/conatiners/categoryItems";
+import ProductsContainer from "@/conatiners/productsContainer";
+import SearchAndFIlter from "@/conatiners/searchAndFIlter";
+import TopSuggested from "@/conatiners/topSuggested";
 
 
-export default function ProductsCategories({ params }) {
-
-    const { isLoading, productLists, iserror, dispatch } = useProductsDataManager()
-
-    console.log(params.slug);
-
-    const filteredObjects = productLists.filter(obj => obj.category === params.slug);
-
-
-    if (isLoading) {
-        return (
-
-
-            <div className="loading-div">
-
-                <Image
-                    src="/assets/loading.gif"
-                    width="200"
-                    height="200"
-                    alt="loading"
-
-                />
-            </div>
-        )
-    }
+export default function CatergoriesLayout({ children }) {
     return (
         <>
-            <header className='category-header'>
-                {params.slug}
-            </header>
+            <section className=''>
 
-            <div className='d-flex category-product-container' >
-                {
-                    filteredObjects.map((map, index) => (
-                        <motion.div key={map.id}
+                <div>
+                    <div className="categoriesInnerDiv d-flex">
 
-                            initial={{
-                                opacity: 0,
-                                x: index % 2 === 0 ? 50 : -50
-                            }}
-                            whileInView={{
-                                opacity: 1,
-                                x: 0,
-                                transition: {
-                                    duration: 1
-                                }
-                            }}
-                            viewport={{ once: true }}>
+                        <SearchAndFIlter />
+                        <CategoryItems />
+                    </div>
 
-                            <CategoryProduct index={index + 1} key={map.id} slugs={params.slug} {...map} />
-                        </motion.div>
-                    ))
-                }
-            </div>
+                    <div className="priceCategoryDiv d-flex">
+                        <h3 className="suggestionHeader">Select Price Category</h3>
+                        <Radio />
+                    </div>
+
+                    <UseType />
+
+                    <BrandCategories />
+
+                    {children}
+                    <TopSuggested />
+                    <ProductsContainer />
+                </div>
+
+            </section>
         </>
     )
 }

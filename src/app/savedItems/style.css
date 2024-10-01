@@ -1,0 +1,29 @@
+.height {
+    height: 100vh;
+}
+
+.advertsContainer {
+    flex-direction: column;
+    gap: .3rem;
+}
+
+.advertLinkDiv {
+    flex-direction: column;
+    gap: .6rem;
+
+
+    align-self: center;
+
+    align-items: center;
+}
+
+.advertLinkBtn {
+    color: white;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    width: 11.25rem;
+    height: 2.8125rem;
+    border-radius: 0.5rem;
+    background: #006F5F;
+}

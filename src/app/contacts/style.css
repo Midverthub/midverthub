@@ -1,0 +1,41 @@
+.height {
+    height: 100vh;
+}
+
+.contactsInnerDiv {
+    background-color: white;
+    height: 2.2rem;
+    align-items: center;
+    margin-bottom: .5rem;
+}
+
+.contactFollowpgh {
+    padding-left: 2rem;
+    width: 50%;
+}
+
+.contactsContainer {
+    flex-direction: column;
+    gap: .3rem;
+}
+
+.contactLinkDiv {
+    flex-direction: column;
+    gap: .6rem;
+
+
+    align-self: center;
+
+    align-items: center;
+}
+
+.contactLinkBtn {
+    color: white;
+    align-items: center;
+    justify-content: center;
+    gap: .6rem;
+    width: 11.25rem;
+    height: 2.8125rem;
+    border-radius: 0.5rem;
+    background: #006F5F;
+}

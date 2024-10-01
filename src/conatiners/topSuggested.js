@@ -1,5 +1,6 @@
 import Product from '@/components/product'
 import React from 'react'
+import Link from 'next/link'
 
 function TopSuggested() {
     return (
@@ -8,11 +9,27 @@ function TopSuggested() {
             <p className='suggestionPgh'>Based on purchases and views by others</p>
 
             <div className='suggestionInnerDiv d-flex'>
-                <Product />
-                <Product />
-                <Product />
-                <Product />
-                <Product />
+                <Link className='link' href={'products/1'}>
+                    <Product />
+                </Link>
+                <Link className='link' href={'products/1'}>
+                    <Product />
+                </Link>
+                <Link className='link' href={'products/1'}>
+                    <Product />
+                </Link>
+                <Link className='link' href={'products/1'}>
+                    <Product />
+                </Link>
+                <Link className='link' href={'products/1'}>
+                    <Product />
+                </Link>
+                <Link className='link' href={'products/1'}>
+                    <Product />
+                </Link>
+                <Link className='link' href={'products/1'}>
+                    <Product />
+                </Link>
 
             </div>
         </div>

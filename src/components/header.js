@@ -1,18 +1,23 @@
 import React from 'react'
 import Image from 'next/image'
+import Link from 'next/link'
 
 function Header() {
     return (
         <header className='header d-flex'>
-            <Image
-                src="/assets/logo.svg"
-                width="68"
-                height="25"
-                alt="loading"
+            <Link href={"/"}>
+                <Image
+                    src="/assets/logo.svg"
+                    width="68"
+                    height="25"
+                    alt="loading"
 
-            />
+                />
+            </Link>
 
-            <button className='sign-up-btn'>Sign Up</button>
+            <Link href={"/signup"}>
+                <button className='sign-up-btn'>Sign Up</button>
+            </Link>
         </header>
     )
 }

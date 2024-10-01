@@ -77,7 +77,7 @@ function HomepageSearch() {
     function getErrors(params) {
         const result = {};
 
-        if (!formData.email) {
+        if (!formData.search) {
             result.search = "Input text";
         } else if (!ValidateSearch(formData.search)) {
             result.search = "Search not found";
@@ -108,10 +108,6 @@ function HomepageSearch() {
                 value={formData.search}
                 onKeyDown={handleKey}
             />
-            <p
-                className="error" role="alert">
-                {(touched.search || isStatus === STATUS.SUBMITTED) && errors.search}
-            </p>
 
             {/* <button
 

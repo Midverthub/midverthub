@@ -21,10 +21,11 @@
 }
 
 .recentlyViewedItemsDiv {
-    background-color: white;
     align-self: center;
     justify-self: center;
     justify-content: space-between;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
+
     overflow: auto;
     scroll-behavior: smooth;
     white-space: nowrap;
@@ -32,5 +33,4 @@
     scrollbar-width: none;
     gap: .6rem;
 
-    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
 }
