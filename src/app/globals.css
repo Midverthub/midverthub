@@ -151,7 +151,13 @@ article {
 /* .height {
   height: 100vh;
   overflow: scroll;
+  padding-bottom: 15rem;
 } */
+
+body {
+  margin: 0 auto;
+  max-width: 375px;
+}
 
 .padding {
   padding: 1rem .7rem;
@@ -185,6 +191,22 @@ article {
   -ms-overflow-style: none;
   scrollbar-width: none;
   gap: .6rem;
+}
+
+button:hover {
+  background-color: #002ead;
+  transition: 0.7s;
+}
+
+.button:focus {
+  outline-color: transparent;
+  outline-style: solid;
+  box-shadow: 0 0 0 4px #5a01a7;
+  transition: 0.7s;
+}
+
+.button:active {
+  background-color: #ffbf00;
 }
 
 
@@ -263,6 +285,14 @@ article {
   /* border: 0.5px solid rgba(0, 0, 0, 0.50); */
   background: var(--Backgrounds-Primary, #FFF);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.10);
+}
+
+form :active {
+  color: red;
+}
+
+input:focus {
+  color: green;
 }
 
 
