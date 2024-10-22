@@ -48,8 +48,9 @@ export default function Reshuffle() {
                         your ads every 6 hours to maximize visibility and attract more
                         potential buyers.
                     </p>
-
-                    <button className='btn subtitle1 margin-t-b reShuffleManualBtn'>Watch video now</button>
+                    <Link className='link' href='/reShuffle/manualPlan/manualPlanAd'>
+                        <button className='btn subtitle1 margin-t-b reShuffleManualBtn'>Watch video now</button>
+                    </Link>
                 </div>
             </div>
 

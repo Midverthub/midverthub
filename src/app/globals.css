@@ -194,19 +194,22 @@ body {
 }
 
 button:hover {
-  background-color: #002ead;
+  background-color: #00A08F;
+  color: #000;
   transition: 0.7s;
+  transition-timing-function: ease-out;
+  transition-timing-function: cubic-bezier(0, 0, 0.58, 1);
 }
 
 .button:focus {
   outline-color: transparent;
   outline-style: solid;
-  box-shadow: 0 0 0 4px #5a01a7;
+  box-shadow: 0 0 0 4px #00A08F;
   transition: 0.7s;
 }
 
 .button:active {
-  background-color: #ffbf00;
+  background-color: #00A08F;
 }
 
 
@@ -396,6 +399,8 @@ input[type="search"].dark::-webkit-search-cancel-button {
   background-color: white;
   /* outline: auto; */
   position: fixed;
+  /* position: -webkit-sticky; */
+  left: 0;
   bottom: 0;
   justify-content: space-around;
   align-items: center;

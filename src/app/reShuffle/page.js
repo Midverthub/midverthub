@@ -63,8 +63,9 @@ export default function Reshuffle() {
           </div>
 
         </div>
-
-        <button className='btn manualBtn'>Try Free Manual Update</button>
+        <Link className='link' href='reShuffle/manualPlan'>
+          <button className='btn manualBtn'>Try Free Manual Update</button>
+        </Link>
 
       </div>
 

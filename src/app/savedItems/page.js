@@ -29,12 +29,14 @@ export default function SavedItems() {
       <div className='advertLinkDiv d-flex'>
         <p className='subtitle1'> No saved item .....</p>
 
-        <button className='advertLinkBtn d-flex'>
-          <p className='subtitle1'>
-            Continue Shopping
-          </p>
-          <FontAwesomeIcon icon={faHome} className="iconSize2" />
-        </button>
+        <Link className='link' href='/'>
+          <button className='advertLinkBtn d-flex'>
+            <p className='subtitle1'>
+              Continue Shopping
+            </p>
+            <FontAwesomeIcon icon={faHome} className="iconSize2" />
+          </button>
+        </Link>
 
       </div>
 

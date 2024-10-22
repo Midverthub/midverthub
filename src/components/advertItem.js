@@ -3,6 +3,7 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import Link from 'next/link'
 
 
 function AdvertItem() {
@@ -59,10 +60,12 @@ function AdvertItem() {
             <div className='straightLine'></div>
 
             <button className='itemToRateBtn '>
+                <Link className='link' href='/reShuffle'>
 
-                Reshuffle ad
+                    Reshuffle ad
+                </Link>
             </button>
-        </div>
+        </div >
 
     )
 }

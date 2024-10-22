@@ -31,25 +31,31 @@ export default function SideMenu() {
         <p className='text1 padding'>My Account</p>
 
         <div className='sideMenuOptionsDiv padding-t-b d-flex'>
-          <div className='sideMenuOption padding-l-r d-flex'>
-            <FontAwesomeIcon icon={faBullhorn} className='iconSize2' />
-            <h4 className='subtitle1'>My Adverts</h4>
-          </div>
+          <Link className='link' href='/adverts'>
+            <div className='sideMenuOption padding-l-r d-flex'>
+              <FontAwesomeIcon icon={faBullhorn} className='iconSize2' />
+              <h4 className='subtitle1'>My Adverts</h4>
+            </div>
+          </Link>
 
-          <div className='sideMenuOption padding-l-r d-flex'>
-            <FontAwesomeIcon icon={faUser} className='iconSize2' />
-            <h4 className='subtitle1'>Contacts</h4>
-          </div>
+          <Link className='link' href='/contacts'>
+            <div className='sideMenuOption padding-l-r d-flex'>
+              <FontAwesomeIcon icon={faUser} className='iconSize2' />
+              <h4 className='subtitle1'>Contacts</h4>
+            </div>
+          </Link>
 
           <div className='sideMenuOption padding-l-r d-flex'>
             <FontAwesomeIcon icon={faBell} className='iconSize2' />
             <h4 className='subtitle1'>Notifications</h4>
           </div>
 
-          <div className='sideMenuOption padding-l-r d-flex'>
-            <FontAwesomeIcon icon={faListCheck} className='iconSize2' />
-            <h4 className='subtitle1'>Saved Items</h4>
-          </div>
+          <Link className='link' href='/savedItems'>
+            <div className='sideMenuOption padding-l-r d-flex'>
+              <FontAwesomeIcon icon={faListCheck} className='iconSize2' />
+              <h4 className='subtitle1'>Saved Items</h4>
+            </div>
+          </Link>
 
           <div className='sideMenuOption padding-l-r d-flex'>
             <FontAwesomeIcon icon={faGear} className='iconSize2' />

@@ -26,12 +26,14 @@ export default function Contacts() {
       <div className='advertLinkDiv d-flex'>
         <p className='subtitle1'> No advert here .....</p>
 
-        <button className='advertLinkBtn d-flex'>
-          <p className='subtitle1'>
-            Go Home
-          </p>
-          <FontAwesomeIcon icon={faHome} className="iconSize2" />
-        </button>
+        <Link className='link' href='/'>
+          <button className='advertLinkBtn d-flex'>
+            <p className='subtitle1'>
+              Go Home
+            </p>
+            <FontAwesomeIcon icon={faHome} className="iconSize2" />
+          </button>
+        </Link>
 
       </div>
 
