@@ -12,7 +12,7 @@ import "./style.css"
 export default function CatergoriesLayout({ children }) {
     return (
         <>
-            <section className=''>
+            <section className='margin-b'>
 
                 <div>
                     <div className="categoriesInnerDiv d-flex">

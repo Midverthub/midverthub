@@ -120,7 +120,7 @@ export default function SignUp() {
 
 
   return (
-    <div cn>
+    <div className=''>
 
       <div className='loginBackgroundImgDiv d-flex'>
 

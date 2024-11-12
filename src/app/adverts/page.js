@@ -15,7 +15,7 @@ export default function Contacts() {
 
   return (
 
-    <div className="height advertsDiv">
+    <div className="advertsDiv">
 
 
       <div className='advertsContainer margin-t-b d-flex'>

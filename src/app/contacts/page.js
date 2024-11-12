@@ -10,7 +10,7 @@ export default function Contacts() {
 
   return (
 
-    <div className="height contactsDiv">
+    <div className=" contactsDiv">
 
       <div className='contactsInnerDiv d-flex'>
         <h4 className='contactFollowpgh subtitle3 '>Followers (0)</h4>

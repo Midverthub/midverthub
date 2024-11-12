@@ -1,0 +1,19 @@
+database collection for all users 
+database for all the products 
+
+the database for a product would carry: 
+the user who uploaded it details
+category it belongs to 
+the pics 
+product location 
+product name
+type
+condition
+description 
+price 
+if price is negotiable 
+contact information 
+
+
+database for adverts
+collection for paid ads
