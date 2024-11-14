@@ -1,8 +1,14 @@
+
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
+// import { auth } from '@/auth'
+import { auth } from '../../auth'
+import { logout } from '../../actions/auth'
+import Logout from './logout'
 
-function Header() {
+async function Header() {
+    const session = await auth()
     return (
         <header className='header d-flex'>
             <Link href={"/"}>
@@ -14,10 +20,17 @@ function Header() {
 
                 />
             </Link>
+            {
+                !session?.user ? (
+                    <Link href={"/signup"}>
+                        <button className='sign-up-btn'>Login</button>
+                    </Link>
+                ) : (
+                    <Logout />
+                )
+            }
 
-            <Link href={"/signup"}>
-                <button className='sign-up-btn'>Sign Up</button>
-            </Link>
+
         </header>
     )
 }

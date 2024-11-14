@@ -1,7 +1,18 @@
-import { process_params } from "express/lib/router";
+
 import mongoose from "mongoose";
 
 const MONGODB_URI = process.env.MONGODB_URI
+
+//just added 
+const { PrismaClient } = require("@prisma/client");
+
+global.prisma = global.prisma || undefined;
+
+
+export const db = global.prisma || new PrismaClient();
+
+if (process.env.NODE_ENV !== "production") global.prisma = db;
+//stops here
 
 const connect = async () => {
     const connectionState = mongoose.connection.readyState

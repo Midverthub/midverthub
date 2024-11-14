@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import connect from "@/lib/db";
+import connect from "../../../../../../db";
 import Blog from "@/lib/modals/blog";
 import User from "@/lib/modals/user";
 import Category from "@/lib/modals/category";

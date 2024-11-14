@@ -2,11 +2,13 @@
 
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faApple } from '@fortawesome/free-brands-svg-icons';
+import { faGoogle, faGithub, faApple } from '@fortawesome/free-brands-svg-icons';
+import { useFormStatus } from 'react-dom'
 
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { login, loginWithCredentials } from '../../../actions/auth';
 
 export default function SignUp() {
 
@@ -16,6 +18,8 @@ export default function SignUp() {
     SUBMITTING: "SUBMITTING",
     COMPLETED: "COMPLETED",
   };
+
+  const { pending } = useFormStatus()
 
 
   const [formData, setFormData] = React.useState({
@@ -147,81 +151,101 @@ export default function SignUp() {
             Sign up to start posting your ads and reach more potential buyers today!
           </p>
         </div>
-      </div>
 
-      <div className="formDiv d-flex">
+        <div className="formDiv d-flex">
 
-        <p className='login-pgh'>Welcome Back!</p>
+          <p className='login-pgh'>Welcome Back!</p>
 
-        <form className=' form d-flex' onSubmit={handleSubmit}>
+          <form className=' form d-flex' action={loginWithCredentials} onSubmit={handleSubmit}>
 
-          <div className='inputDivs d-flex'>
+            <div className='inputDivs d-flex'>
 
-            <p className="error" role="alert">
-              {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
-            </p>
+              <p className="error" role="alert">
+                {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
+              </p>
 
-            <input
-              type="text"
-              name="email"
-              placeholder="Email address"
-              onChange={handleChg}
-              onBlur={handleBlur}
-              value={formData.email}
-            />
-
-
-          </div>
-
-          <div className='inputDivs d-flex'>
-            <p className="error" role="alert">
-              {(touched.password || isStatus === STATUS.SUBMITTED) &&
-                errors.password}
-            </p>
-
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              onChange={handleChg}
-              onBlur={handleBlur}
-              value={formData.password}
-            />
-            <sub className='forgotPassword'>Forgot Password?</sub>
-
-          </div>
+              <input
+                type="email"
+                name="email"
+                id='Email'
+                placeholder="Email address"
+                onChange={handleChg}
+                onBlur={handleBlur}
+                value={formData.email}
+              />
 
 
-          <button
-            className="subBtn"
-            type="submit"
-            disabled={!(formData.email || formData.password || formData.passwordCheck)}
-          >
-            Login
-          </button>
+            </div>
 
-        </form>
+            <div className='inputDivs d-flex'>
+              <p className="error" role="alert">
+                {(touched.password || isStatus === STATUS.SUBMITTED) &&
+                  errors.password}
+              </p>
 
-      </div>
-      <div className='otherFormDIv d-flex'>
+              <input
+                type="password"
+                name="password"
+                id='Password'
+                placeholder="Password"
+                onChange={handleChg}
+                onBlur={handleBlur}
+                value={formData.password}
+              />
+              <sub className='forgotPassword'>Forgot Password?</sub>
 
-        <div className='separatorDiv d-flex'>
-          <div className='separator'></div>
-          <p className='SeparatorPgh'>
-            or
-          </p>
-          <div className='separator'></div>
-        </div>
+            </div>
 
-        <div className="otherSignUpDiv d-flex">
-          <Link className="links" href="/signup">
-            <button className='otherSignUpBtn d-flex'>
-              Sign Up Now
+
+            <button
+              className="subBtn"
+              type="submit"
+              disabled={!(formData.email || formData.password || formData.passwordCheck || pending)}
+            >
+              {pending ? "Loading..." : "Login"}
             </button>
-          </Link>
+
+          </form>
+
         </div>
+        <div className='otherFormDIv d-flex'>
+
+          <div className='separatorDiv d-flex'>
+
+            <div className='separator'></div>
+
+            <p className='SeparatorPgh'>
+              or
+            </p>
+
+            <div className='separator'></div>
+
+            {/* come back to this */}
+            <div>
+              <button onClick={() => login('google')} className='googleBtn'>
+                <FontAwesomeIcon icon={faGoogle} />
+                <p>Sign in with Google</p>
+              </button>
+
+
+              <button onClick={() => login('github')} className='githubBtn'>
+                <FontAwesomeIcon icon={faGithub} />
+                <p>Sign in with Github</p>
+              </button>
+            </div>
+
+
+            <div className="otherSignUpDiv d-flex">
+              <Link className="links" href="/signup">
+                <button className='otherSignUpBtn d-flex'>
+                  Sign Up Now
+                </button>
+              </Link>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
-
-  )
+  );
 }
