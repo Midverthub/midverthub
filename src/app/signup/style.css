@@ -88,7 +88,8 @@ input::placeholder {
 }
 
 .separatorPgh {
-    font-size: 0.625rem;
+    /* padding: 1rem 0rem; */
+    font-size: 0.725rem;
     font-weight: 400;
 }
 
@@ -117,6 +118,11 @@ input::placeholder {
     text-align: center;
     font-size: 0.8125rem;
     font-weight: 500;
+}
+
+.signup-link:hover {
+    color: #079988;
+    text-decoration: underline;
 }
 
 .termPgh {

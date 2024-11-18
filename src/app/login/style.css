@@ -1,5 +1,6 @@
-.height {
-    min-height: 100vh;
+.loginPage {
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .loginBackgroundImgDiv {
@@ -27,7 +28,7 @@
     align-items: center;
     gap: 1rem;
     justify-content: center;
-    padding: 0 2rem;
+    padding: 0rem 2rem;
 }
 
 .formDiv {
@@ -98,6 +99,7 @@ input::placeholder {
 
 
 .otherFormDIv {
+    /* outline: auto; */
     padding: 1.5rem 0rem;
     gap: 1.5rem;
     flex-direction: column;
@@ -107,6 +109,10 @@ input::placeholder {
 }
 
 .otherSignUpDiv {
+    /* outline: auto; */
+    /* width: 100%; */
+    margin-top: 2rem;
+
     font-size: 0.875rem;
     flex-direction: column;
     gap: 1rem;
@@ -125,8 +131,9 @@ input::placeholder {
 }
 
 .separatorPgh {
-    font-size: 0.625rem;
+    font-size: 0.725rem;
     font-weight: 400;
+    /* padding-bottom: 1rem; */
 }
 
 
@@ -139,4 +146,13 @@ input::placeholder {
     border-radius: 0.75rem;
     border: 0.5px solid #000;
     background: var(--Backgrounds-Primary, #FFF);
+}
+
+.signupPgh {
+    color: #006F5F;
+}
+
+.signupPgh:hover {
+    color: #079988;
+    text-decoration: underline;
 }

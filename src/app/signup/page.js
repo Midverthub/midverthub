@@ -2,11 +2,12 @@
 
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faApple } from '@fortawesome/free-brands-svg-icons';
-
+import { faGoogle, faApple, faGithub } from '@fortawesome/free-brands-svg-icons';
+import { useRouter } from 'next/navigation';
 
 import Image from 'next/image'
 import Link from 'next/link'
+import { signup, signupWithCredentials } from '../../../actions/auth';
 
 export default function SignUp() {
 
@@ -16,6 +17,8 @@ export default function SignUp() {
     SUBMITTING: "SUBMITTING",
     COMPLETED: "COMPLETED",
   };
+
+  const router = useRouter()
 
 
   const [formData, setFormData] = React.useState({
@@ -30,7 +33,7 @@ export default function SignUp() {
   const [isStatus, setStatus] = React.useState(STATUS.IDLE);
   const [touched, setTouched] = React.useState({});
   // const [finish, setFinished] = React.useState(false);
-  const [loginError, setLoginError] = React.useState(null)
+  const [loginError, setLoginError] = React.useState('')
 
   const errors = getErrors();
   const isValid = Object.keys(errors).length === 0;
@@ -59,21 +62,44 @@ export default function SignUp() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(e.target);
+    // console.log(e.target);
 
-    const displayName = e.target.name.value
-    const email = e.target.email.value
-    const password = e.target.password.value
+    // const email = e.target.email.value
+    // const password = e.target.password.value
 
-    console.log(displayName, email, password,)
+
+
+    // console.log(email, password,)
 
     setStatus(STATUS.SUBMITTING);
 
     if (isValid) {
-      console.log("submit");
       setStatus(STATUS.COMPLETED);
-      setFinished(prev => !prev)
-      console.log(formData);
+      // console.log(formData.email);
+      try {
+        const res = await fetch("/api/register", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        });
+
+        if (res.status === 400) {
+          setLoginError("User already exists");
+        }
+        if (res.status === 200) {
+          setLoginError("");
+          signupWithCredentials(formData.email, formData.password);
+          // router.push('/signup/userinfo');
+        }
+
+      } catch (error) {
+        setLoginError("Something went wrong, try again");
+      }
     } else {
       setStatus(STATUS.SUBMITTED);
     }
@@ -126,7 +152,7 @@ export default function SignUp() {
     return result;
   }
 
-  if (loginError) throw loginError
+  // if (loginError) throw loginError
 
 
   if (isStatus === "SUBMITTING") return (<div className="container">...LOADING</div>)
@@ -138,7 +164,13 @@ export default function SignUp() {
 
       <div className="formDiv d-flex">
 
+        <p className="error" role="alert">
+          {(loginError !== "") &&
+            loginError}
+        </p>
+
         <p className='login-pgh'>Sign Up</p>
+
 
         <form className=' form d-flex' onSubmit={handleSubmit}>
 
@@ -216,15 +248,15 @@ export default function SignUp() {
             <label htmlFor="isFriendly"> Stay signed in?</label>
           </div>
 
-          <Link className='links' href="/signup/">
-            <button
-              className="subBtn"
-              type="submit"
-              disabled={!(formData.email || formData.password || formData.passwordCheck)}
-            >
-              Continue
-            </button>
-          </Link>
+          {/* <Link className='links' href="/signup/"> */}
+          <button
+            className="subBtn"
+            type="submit"
+            disabled={!(formData.email || formData.password || formData.passwordCheck)}
+          >
+            Continue
+          </button>
+          {/* </Link> */}
 
         </form>
 
@@ -234,29 +266,29 @@ export default function SignUp() {
 
         <div className='separatorDiv d-flex'>
           <div className='separator'></div>
-          <p className='SeparatorPgh'>
+          <p className='separatorPgh'>
             or sign up with
           </p>
           <div className='separator'></div>
         </div>
 
         <div className="otherSignUpDiv d-flex">
-          <button className='otherSignUpBtn d-flex'>
+          <button onClick={() => signup('google')} className='otherSignUpBtn d-flex'>
             <FontAwesomeIcon icon={faGoogle} className='iconSize2' />
 
             <p>Sign Up with Google</p>
           </button>
 
-          <button className='otherSignUpBtn d-flex'>
-            <FontAwesomeIcon icon={faApple} className='iconSize2' />
+          <button onClick={() => signup('github')} className='otherSignUpBtn d-flex'>
+            <FontAwesomeIcon icon={faGithub} className='iconSize2' />
 
-            <p>Sign Up with Apple</p>
+            <p>Sign Up with Github</p>
           </button>
         </div>
 
         <Link className="links" href="/login">
           <p className="signup-link">
-            Already have an account?
+            Already have an account? Login!
           </p>
         </Link>
       </div>

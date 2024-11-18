@@ -4,7 +4,11 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faApple } from '@fortawesome/free-brands-svg-icons';
 
+import { useRouter } from 'next/navigation';
+import Loading from '../../../loading';
 
+
+import { AuthContext } from '../../../../context/authContext';
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -17,25 +21,46 @@ export default function SignUp() {
         COMPLETED: "COMPLETED",
     };
 
+    const router = useRouter()
+
+    const { isUser, isLoading } = React.useContext(AuthContext)
+    // console.log(isUser.id);
+
 
     const [formData, setFormData] = React.useState({
 
         fullName: "",
         email: "",
-        phone: "",
+        phone: 0,
         cityOrState: "",
         provinceAndRegion: "",
-        postalCode: ""
+        postalCode: 0
 
     });
 
+    const [data, setData] = React.useState(null);
     const [isStatus, setStatus] = React.useState(STATUS.IDLE);
     const [touched, setTouched] = React.useState({});
     // const [finish, setFinished] = React.useState(false);
     const [loginError, setLoginError] = React.useState(null)
+    const [locationIndex, setlocationIndex] = React.useState()
 
     const errors = getErrors();
     const isValid = Object.keys(errors).length === 0;
+
+    React.useEffect(() => {
+
+        setStatus(STATUS.SUBMITTING)
+        fetch('/data.json')
+            .then(response => response.json())
+            .then(data => setData(data)).finally(() => {
+                setStatus(STATUS.COMPLETED);
+
+            })
+            .catch(error => console.error('Error fetching data:', error));
+
+    }, [STATUS.COMPLETED, STATUS.SUBMITTING]);
+
 
     function handleChg(e) {
         const { name, value, checked, type } = e.target;
@@ -58,23 +83,44 @@ export default function SignUp() {
 
     }
 
-
     async function handleSubmit(e) {
         e.preventDefault();
-        console.log(e.target);
-
-        const displayName = e.target.name.value
-        const email = e.target.email.value
-        const password = e.target.password.value
-
-        console.log(displayName, email, password,)
 
         setStatus(STATUS.SUBMITTING);
 
         if (isValid) {
             console.log("submit");
+            try {
+                const res = await fetch("/api/auth/users", {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        userId: isUser.id,
+                        name: formData.fullName,
+                        phone: formData.phone,
+                        state: formData.cityOrState,
+                        lga: formData.provinceAndRegion,
+                        postalcode: formData.postalCode
+                    }),
+                });
+
+                if (res.status === 400) {
+                    setLoginError("User already exists");
+
+                }
+                if (res.status === 200) {
+                    setLoginError("");
+                    router.push('/');
+                }
+
+            } catch (error) {
+                console.log(error);
+                setLoginError("Something went wrong, try again");
+            }
             setStatus(STATUS.COMPLETED);
-            setFinished(prev => !prev)
+
             console.log(formData);
         } else {
             setStatus(STATUS.SUBMITTED);
@@ -104,8 +150,8 @@ export default function SignUp() {
 
 
     function CheckPhone(inputtxt) {
-        var decimal = /^\+?[1-9][0-9]{7,14}$/;
-        if (inputtxt.match(decimal)) {
+        var number = /^(\+?\d{1,4})?\s?\d{7,14}$/;
+        if (inputtxt.match(number)) {
             return true;
         }
         else {
@@ -115,7 +161,7 @@ export default function SignUp() {
     }
 
     function CheckZip(inputtxt) {
-        var decimal = /^[0-9]{5}(?:-[0-9]{4})?$/;
+        var decimal = /^[A-Za-z0-9\s\-]{3,10}$/;
         if (inputtxt.match(decimal)) {
             return true;
         }
@@ -153,6 +199,14 @@ export default function SignUp() {
             result.postalCode = "Postal code cannot contain special charaters or letters";
         }
 
+        if (!formData.cityOrState) {
+            result.cityOrState = "City or State is required";
+        }
+
+        if (!formData.provinceAndRegion) {
+            result.provinceAndRegion = "Province or Region is required";
+        }
+
 
         return result;
     }
@@ -160,8 +214,19 @@ export default function SignUp() {
     if (loginError) throw loginError
 
 
-    if (isStatus === "SUBMITTING") return (<div className="container">...LOADING</div>)
+    if (isStatus === "SUBMITTING" || isLoading === "loading") return (<Loading />)
 
+    // if
+    //     (data) {
+    //     data.map(map => console.log(map));
+    // }
+
+    // if (data) {
+    //     console.log(
+
+    //         data.filter((city) => city.name === "Lagos")[0].cities
+    //     );
+    // }
 
     return (
 
@@ -222,36 +287,53 @@ export default function SignUp() {
 
                 </div>
 
-                <div className='inputDivs d-flex'>
+                <div className='inputDivs d-flex '>
                     <label htmlFor="cityOrState"> City Or State*</label>
-                    <input
-                        type="text"
+
+                    <select
                         name="cityOrState"
                         id="cityOrState"
-                        placeholder="City/State"
                         onChange={handleChg}
                         onBlur={handleBlur}
                         value={formData.cityOrState}
-                    />
+                    >
+                        <option value="">City or State</option>
+                        {
+                            data && data.map((city, index) => (
+                                <option key={index} value={city.name}>{city.name}</option>
+                            ))
+                        }
+
+                    </select>
+
                     <p className="error" role="alert">
                         {(touched.cityOrState || isStatus === STATUS.SUBMITTED) && errors.cityOrState}
                     </p>
+
                 </div>
 
-                <div className='inputDivs d-flex'>
-                    <label htmlFor="provinceAndRegion"> Province And Region*</label>
-                    <input
-                        type="text"
+                <div className='inputDivs d-flex '>
+                    <label htmlFor="provinceAndRegion"> Province OR Region*</label>
+
+                    <select
                         name="provinceAndRegion"
                         id="provinceAndRegion"
-                        placeholder="Province/Region"
                         onChange={handleChg}
                         onBlur={handleBlur}
                         value={formData.provinceAndRegion}
-                    />
+                    >
+                        <option value="">Province Or Region </option>
+                        {
+                            (formData.cityOrState !== "") && data.filter((city) => city.name === formData.cityOrState)[0].cities.map((city, index) => (
+                                <option key={index} value={city}>{city}</option>
+                            ))
+                        }
+                    </select>
+
                     <p className="error" role="alert">
                         {(touched.provinceAndRegion || isStatus === STATUS.SUBMITTED) && errors.provinceAndRegion}
                     </p>
+
                 </div>
 
                 <div className='inputDivs d-flex'>

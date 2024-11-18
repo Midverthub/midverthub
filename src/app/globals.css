@@ -107,6 +107,8 @@ article {
   font-weight: 500;
 }
 
+
+.links,
 .link {
   text-decoration: none;
   color: inherit;
@@ -234,6 +236,13 @@ button:hover {
   margin-bottom: 5rem;
 }
 
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
 .header {
   /* outline: auto; */
   justify-content: space-between;
@@ -282,7 +291,7 @@ button:hover {
   align-items: center;
   background-color: white;
 
-  height: 2.5rem;
+  /* height: 2.5rem; */
   margin: 0 auto;
   margin-top: 1rem;
   width: 95%;
@@ -321,7 +330,8 @@ input:focus {
 input,
 select {
   /* width: 21.875rem; */
-  height: inherit;
+  /* height: inherit; */
+  height: 3.5rem;
   border-radius: 0.75rem;
   border: 0.5px solid rgba(0, 0, 0, 0.45);
   background: var(--Backgrounds-Primary, #FFF);

@@ -4,13 +4,17 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faGithub, faApple } from '@fortawesome/free-brands-svg-icons';
 import { useFormStatus } from 'react-dom'
-
+import { AuthContext } from '../../../context/authContext';
+import Loading from '../../loading';
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { login, loginWithCredentials } from '../../../actions/auth';
+import { getUserByEmail, getUsers, login, loginWithCredentials } from '../../../actions/auth';
 
 export default function SignUp() {
+
+  const { isUser, isLoading } = React.useContext(AuthContext)
+
 
   const STATUS = {
     IDLE: "IDLE",
@@ -30,7 +34,7 @@ export default function SignUp() {
   const [isStatus, setStatus] = React.useState(STATUS.IDLE);
   const [touched, setTouched] = React.useState({});
   // const [finish, setFinished] = React.useState(false);
-  const [loginError, setLoginError] = React.useState(null)
+  const [loginError, setLoginError] = React.useState('')
 
   const errors = getErrors();
   const isValid = Object.keys(errors).length === 0;
@@ -56,23 +60,44 @@ export default function SignUp() {
 
   }
 
+  // async function nameit(params) {
+
+  //   const user = await getUserByEmail(isUser.user.email);
+  //   // const user = await getUserByEmail("ajayifiyin41@gmail.com");
+  //   console.log(user);
+
+
+  //   const users = await getUsers()
+  //   console.log(users);
+  // }
+  // nameit()
 
   async function handleSubmit(e) {
     e.preventDefault();
-    console.log(e.target);
 
-    const email = e.target.email.value
-    const password = e.target.password.value
-
-    console.log(email, password,)
 
     setStatus(STATUS.SUBMITTING);
 
     if (isValid) {
-      console.log("submit");
+      // console.log("submit");
+      //here we are finding the user by email in the database
+      // const user = getUserByEmail(formData.email)
+      const user = await getUserByEmail(formData.email);
+
+      if (!user) {
+        setLoginError("User not found")
+        setStatus(STATUS.IDLE);
+        return
+      }
+      else {
+        //login with credentials
+        loginWithCredentials(formData.email, formData.password)
+      }
+
+
       setStatus(STATUS.COMPLETED);
-      setFinished(prev => !prev)
-      console.log(formData);
+
+      // console.log(formData);
     } else {
       setStatus(STATUS.SUBMITTED);
     }
@@ -99,7 +124,6 @@ export default function SignUp() {
     // return true
   }
 
-
   function getErrors(params) {
     const result = {}
 
@@ -120,11 +144,11 @@ export default function SignUp() {
   if (loginError) throw loginError
 
 
-  if (isStatus === "SUBMITTING") return (<div className="container">...LOADING</div>)
+  if (isStatus === "SUBMITTING") return (<Loading />)
 
 
   return (
-    <div className=''>
+    <div className='loginPage d-flex'>
 
       <div className='loginBackgroundImgDiv d-flex'>
 
@@ -151,101 +175,110 @@ export default function SignUp() {
             Sign up to start posting your ads and reach more potential buyers today!
           </p>
         </div>
-
-        <div className="formDiv d-flex">
-
-          <p className='login-pgh'>Welcome Back!</p>
-
-          <form className=' form d-flex' action={loginWithCredentials} onSubmit={handleSubmit}>
-
-            <div className='inputDivs d-flex'>
-
-              <p className="error" role="alert">
-                {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
-              </p>
-
-              <input
-                type="email"
-                name="email"
-                id='Email'
-                placeholder="Email address"
-                onChange={handleChg}
-                onBlur={handleBlur}
-                value={formData.email}
-              />
+      </div>
 
 
-            </div>
+      <div className="formDiv d-flex">
 
-            <div className='inputDivs d-flex'>
-              <p className="error" role="alert">
-                {(touched.password || isStatus === STATUS.SUBMITTED) &&
-                  errors.password}
-              </p>
+        <p className='login-pgh'>Welcome Back!</p>
 
-              <input
-                type="password"
-                name="password"
-                id='Password'
-                placeholder="Password"
-                onChange={handleChg}
-                onBlur={handleBlur}
-                value={formData.password}
-              />
-              <sub className='forgotPassword'>Forgot Password?</sub>
+        <form className=' form d-flex' onSubmit={handleSubmit}>
+          <p className="error" role="alert">
+            {(loginError !== "") &&
+              loginError}
+          </p>
 
-            </div>
+          <div className='inputDivs d-flex'>
 
-
-            <button
-              className="subBtn"
-              type="submit"
-              disabled={!(formData.email || formData.password || formData.passwordCheck || pending)}
-            >
-              {pending ? "Loading..." : "Login"}
-            </button>
-
-          </form>
-
-        </div>
-        <div className='otherFormDIv d-flex'>
-
-          <div className='separatorDiv d-flex'>
-
-            <div className='separator'></div>
-
-            <p className='SeparatorPgh'>
-              or
+            <p className="error" role="alert">
+              {(touched.email || isStatus === STATUS.SUBMITTED) && errors.email}
             </p>
 
-            <div className='separator'></div>
-
-            {/* come back to this */}
-            <div>
-              <button onClick={() => login('google')} className='googleBtn'>
-                <FontAwesomeIcon icon={faGoogle} />
-                <p>Sign in with Google</p>
-              </button>
-
-
-              <button onClick={() => login('github')} className='githubBtn'>
-                <FontAwesomeIcon icon={faGithub} />
-                <p>Sign in with Github</p>
-              </button>
-            </div>
+            <input
+              type="email"
+              name="email"
+              id='Email'
+              placeholder="Email address"
+              onChange={handleChg}
+              onBlur={handleBlur}
+              value={formData.email}
+            />
 
 
-            <div className="otherSignUpDiv d-flex">
-              <Link className="links" href="/signup">
-                <button className='otherSignUpBtn d-flex'>
-                  Sign Up Now
-                </button>
-              </Link>
-            </div>
           </div>
-        </div>
+
+          <div className='inputDivs d-flex'>
+            <p className="error" role="alert">
+              {(touched.password || isStatus === STATUS.SUBMITTED) &&
+                errors.password}
+            </p>
+
+            <input
+              type="password"
+              name="password"
+              id='Password'
+              placeholder="Password"
+              onChange={handleChg}
+              onBlur={handleBlur}
+              value={formData.password}
+            />
+            <sub className='forgotPassword'>Forgot Password?</sub>
+
+          </div>
+
+
+          <button
+            className="subBtn"
+            type="submit"
+            disabled={!(formData.email || formData.password || formData.passwordCheck || pending)}
+          >
+            {pending ? "Loading..." : "Login"}
+          </button>
+
+        </form>
 
       </div>
-    </div>
+
+      <div className='otherFormDIv d-flex'>
+
+        <div className='separatorDiv d-flex'>
+
+          <div className='separator'></div>
+
+          <p className='separatorPgh'>
+            or
+          </p>
+
+          <div className='separator'></div>
+        </div>
+
+
+        {/* come back to this */}
+        <div className="otherSignUpDiv d-flex">
+          <button onClick={() => login('google')} className='otherSignUpBtn d-flex'>
+            <FontAwesomeIcon icon={faGoogle} className='iconSize2' />
+
+            <p>Sign in with Google</p>
+          </button>
+
+          <button onClick={() => login('github')} className='otherSignUpBtn d-flex'>
+            <FontAwesomeIcon icon={faGithub} className='iconSize2' />
+
+            <p>Sign in with Github</p>
+          </button>
+        </div>
+
+
+        <div className="otherSignUpDiv d-flex">
+          <Link className="links" href="/signup">
+
+            <p className='signupPgh'>
+              Don&apos;t have an account? Sign up now!
+            </p>
+          </Link>
+        </div>
+      </div>
+
+    </div >
   );
 }

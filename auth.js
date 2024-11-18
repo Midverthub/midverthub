@@ -52,17 +52,28 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
                 })
 
                 //if the user is not found in the database, we are creating a new user with the email and password
-                if (!user) {
-                    user = await db.user.create({
-                        data: {
-                            email,
-                            hashedPassword: hash
-                        }
-                    })
+                // if (!user) {
+                //     user = await db.user.create({
+                //         data: {
+                //             email,
+                //             hashedPassword: hash
+                //         }
+                //     })
 
-                }
-                //if the user is found in the database, we are checking if the password matches the hashed password
-                else {
+                // }
+                // //if the user is found in the database, we are checking if the password matches the hashed password
+                // else {
+                //     const isMatch = bcrypt.compareSync(credentials.password,
+                //         user.hashedPassword
+                //     )
+                //     //if the password does not match, we are throwing an error
+                //     if (!isMatch) {
+                //         throw new Error("Password does not match")
+                //     }
+                // }
+
+                //if user email is found in the database, we are checking if the password matches the hashed password
+                if (user) {
                     const isMatch = bcrypt.compareSync(credentials.password,
                         user.hashedPassword
                     )

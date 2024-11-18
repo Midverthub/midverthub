@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
-import connect, { db } from "../../../../../db";
+// import connect from "../../../../db";
+// import connect, { db } from "../../../../../db";
 import User from "@/lib/modals/user";
 import { PrismaClient } from "@prisma/client";
 import { Types } from "mongoose";
@@ -8,15 +9,28 @@ const prisma = new PrismaClient()
 
 const ObjectId = require("mongoose").Types.ObjectId
 
-export const GET = async () => {
+export const GET = async (request) => {
 
     try {
-        await connect()
+        // const body = await request.json();
+        // const { email } = body
+
+        const { searchParams } = new URL(request.url);
+        const email = searchParams.get('email');
+
+
+        // await connect()
         // const users = await User.find()
-        const users = await prisma.user.findMany()
+        const user = await prisma.user.findUnique(
+            {
+                where: {
+                    email: email
+                }
+            }
+        )
 
         // return new NextResponse({ status: 200 })
-        return new NextResponse(JSON.stringify(users), { status: 200 })
+        return new NextResponse(JSON.stringify(user), { status: 200 })
 
     } catch (error) {
         return new NextResponse("Errors in fetching users" + error.message,
@@ -47,13 +61,13 @@ export const PATCH = async (request) => {
     try {
         //get userId and newUsername from the request body
         const body = await request.json();
-        const { userId, name, phone, state, lga, postalcode } = body
+        const { userId, newUsername } = body
 
         //connect to the database
         await connect()
 
         //check if the userId or newUsername is not found
-        if (!userId || !name || !phone || !state || !lga || !postalcode) {
+        if (!userId || !newUsername) {
             return new NextResponse(JSON.stringify({ message: "ID or new username not found" }),
                 { status: 400 })
         }
@@ -65,34 +79,20 @@ export const PATCH = async (request) => {
         }
 
         //find the user by Id and update the username
-        // const UpdatedUser = await User.findOneAndUpdate(
-        //     { _id: new ObjectId(userId) },
-        //     { username: newUsername },
-        //     { new: true }
-        // )
-
-        const upsertUser = await prisma.user.update({
-            where: {
-                id: userId,
-            },
-            data: {
-                name: name,
-                phone: phone,
-                state: state,
-                town: lga,
-                postalCode: postalcode
-            }
-        })
-
+        const UpdatedUser = await User.findOneAndUpdate(
+            { _id: new ObjectId(userId) },
+            { username: newUsername },
+            { new: true }
+        )
         //check if the user is not found in the database
-        if (!upsertUser) {
+        if (!UpdatedUser) {
 
             return new NextResponse(JSON.stringify({ message: "user not found in the database" }),
                 { status: 400 })
         }
 
         //return the updated user   
-        return new NextResponse(JSON.stringify({ message: "user is updated", user: upsertUser }),
+        return new NextResponse(JSON.stringify({ message: "user is updated", user: UpdatedUser }),
             { status: 200 })
 
     } catch (error) {

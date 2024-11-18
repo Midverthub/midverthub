@@ -23,12 +23,16 @@ model User {
   id            String          @id @default(auto()) @map("_id") @db.ObjectId
   name          String?
   email         String?         @unique
+  phone          String?
+  state          String?
+  town          String?
+  postalCode     String?
   hashedPassword String?
   emailVerified DateTime?
   image         String?
   accounts      Account[]
   sessions      Session[]
-  role          UserRole?       @default (ADMIN)
+  role          UserRole?       @default (USER)
   // Optional for WebAuthn support
   Authenticator Authenticator[]
  

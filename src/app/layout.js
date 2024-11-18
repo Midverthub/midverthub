@@ -4,6 +4,7 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "../../auth";
+import AuthContextProvider from "../../context/authContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -13,21 +14,26 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
+
   const session = await auth();
+
+  // console.log(session.user.email);
+
   return (
     <SessionProvider session={session}>
+      <AuthContextProvider session={session ? session : null}>
+        <html lang="en">
+          <body className={`${inter.className}`}>
+            <Header />
+            <div className="margin-b">
+              {children}
+            </div>
 
-      <html lang="en">
-        <body className={`${inter.className}`}>
-          <Header />
-          <div className="margin-b">
-            {children}
-          </div>
+            <Footer />
 
-          <Footer />
-
-        </body>
-      </html>
+          </body>
+        </html>
+      </AuthContextProvider>
     </SessionProvider>
   );
 }

@@ -30,7 +30,7 @@ const connect = async () => {
     try {
         mongoose.connect(
             MONGODB_URI, {
-            dbName: "Backenddb",
+            dbName: "midverthub",
             bufferCommands: true
         })
 
