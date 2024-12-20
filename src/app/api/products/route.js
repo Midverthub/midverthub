@@ -1,9 +1,12 @@
 import { NextResponse } from "next/server";
-import connect from "../../../../../db";
-import Blog from "@/lib/modals/blog";
-import User from "@/lib/modals/user";
-import Category from "@/lib/modals/category";
+// import connect from "../../../../../db";
+// import Blog from "@/lib/modals/blog";
+// import User from "@/lib/modals/user";
+// import Category from "@/lib/modals/category";
 import { Types } from "mongoose";
+import { Prisma } from "@prisma/client";
+
+const prisma = new PrismaClient()
 
 export const GET = async (request) => {
     try {
@@ -38,7 +41,7 @@ export const GET = async (request) => {
         }
 
 
-        await connect()
+        // await connect()
 
         const user = await User.findById(userId)
         //checking if the user is exisiting
@@ -108,51 +111,88 @@ export const GET = async (request) => {
 export const POST = async (request) => {
 
     try {
-        const { searchParams } = new URL(request.url)
-        const userId = searchParams.get('userId')
-        const categoryId = searchParams.get('categoryId')
 
-        const body = await request.json()
-        const { title, description } = body
+        //get userid and categoryid from the query
+
+        //get new product data from the request body
+        const body = await request.json();
+        const { userId, category,
+            cityOrState, provinceAndRegion, productName,
+            condition, description, price,
+            negotiation, phone, email, update, images
+        } = body
+
+        // await connect()
+
+        if (!userId || !category || !cityOrState || !provinceAndRegion || !productName || !condition || !description || !price || !negotiation || !phone || !email || !update || !images) {
+            return new NextResponse(JSON.stringify({ message: "missing fields" }),
+                { status: 400 })
+
+        }
+
+        //checking if the user is exisiting
+        if (!Types.ObjectId.isValid(userId)) {
+            return new NextResponse(JSON.stringify({ message: "Invalid User Id" }),
+                { status: 400 })
+        }
 
         //checking if the userId is correct or exisiting
-        if (!userId || !Types.ObjectId.isValid(userId)) {
-            return new NextResponse(JSON.stringify({ message: "Invalid or missing userId" }),
-                { status: 404 })
-        }
-
         //checking if the categoryId is correct or exisiting
-        if (!categoryId || !Types.ObjectId.isValid(categoryId)) {
-            return new NextResponse(JSON.stringify({ message: "Invalid or missing categoryId" }),
-                { status: 404 })
-        }
-
-
-        await connect()
-
-        const user = await User.findById(userId)
-        //checking if the user is exisiting
-        if (!user) {
-            return new NextResponse(JSON.stringify({ message: "User not found in database" }),
-                { status: 404 })
-        }
-
+        //connect to the database
         //checking if the category is exisiting
-        const category = await Category.findOne({ _id: categoryId, user: userId })
-        if (!category) {
-            return new NextResponse(JSON.stringify({ message: "Category not found in database" }),
-                { status: 404 })
-        }
+        //setting the new product data
+        //saving the new product data
 
-        const newBlog = new Blog({
-            title,
-            description,
-            user: new Types.ObjectId(userId),
-            category: new Types.ObjectId(categoryId)
+        const newProduct = await prisma.product.create({
+            data: {
+                userId: userId,
+                categoryTitle: category,
+
+
+                images: images,
+                state: cityOrState,
+                town: provinceAndRegion,
+                name: productName,
+                condition: condition,
+                description: description,
+                price: price,
+                negotiation: negotiation,
+                phone: phone,
+                email: email,
+            }
         })
 
-        await newBlog.save()
-        return new NextResponse(JSON.stringify({ message: "Blog created successfully", blog: newBlog }),
+        const addCategory = await prisma.category.create({
+            where: {
+                title: category
+            },
+            products: {
+                create: [
+                    {
+                        connect: { id: newProduct.id },
+
+                        userId: userId,
+
+                        images: images,
+                        state: cityOrState,
+                        town: provinceAndRegion,
+                        name: productName,
+                        condition: condition,
+                        description: description,
+                        price: price,
+                        negotiation: negotiation,
+                        phone: phone,
+                        email: email,
+                    }
+                ]
+            }
+        })
+
+        return new NextResponse(JSON.stringify({
+            message: "information saved", info: {
+                userId, category, cityOrState, provinceAndRegion, productName, condition, description, price, negotiation, phone, email, update, images
+            }
+        }),
             { status: 200 })
 
 

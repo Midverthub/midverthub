@@ -64,6 +64,17 @@ button {
   background-color: transparent;
 }
 
+button[disabled] {
+  cursor: not-allowed;
+  background-color: darkgray;
+  color: #000;
+}
+
+button[disabled]:hover {
+  cursor: not-allowed;
+  background-color: darkgray;
+}
+
 /*
   7. Avoid text overflows
 */

@@ -31,10 +31,10 @@ export default function SignUp() {
 
         fullName: "",
         email: "",
-        phone: 0,
+        phone: "",
         cityOrState: "",
         provinceAndRegion: "",
-        postalCode: 0
+        postalCode: ""
 
     });
 

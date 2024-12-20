@@ -4,6 +4,8 @@ import User from "@/lib/modals/user";
 import { PrismaClient } from "@prisma/client";
 import { Types } from "mongoose";
 import { Admin } from "mongodb";
+
+
 const prisma = new PrismaClient()
 
 const ObjectId = require("mongoose").Types.ObjectId
@@ -14,7 +16,6 @@ export const GET = async () => {
         await connect()
         // const users = await User.find()
         const users = await prisma.user.findMany()
-
         // return new NextResponse({ status: 200 })
         return new NextResponse(JSON.stringify(users), { status: 200 })
 
@@ -64,14 +65,7 @@ export const PATCH = async (request) => {
                 { status: 400 })
         }
 
-        //find the user by Id and update the username
-        // const UpdatedUser = await User.findOneAndUpdate(
-        //     { _id: new ObjectId(userId) },
-        //     { username: newUsername },
-        //     { new: true }
-        // )
-
-        const upsertUser = await prisma.user.update({
+        const updateUser = await prisma.user.update({
             where: {
                 id: userId,
             },
@@ -85,14 +79,14 @@ export const PATCH = async (request) => {
         })
 
         //check if the user is not found in the database
-        if (!upsertUser) {
+        if (!updateUser) {
 
             return new NextResponse(JSON.stringify({ message: "user not found in the database" }),
                 { status: 400 })
         }
 
         //return the updated user   
-        return new NextResponse(JSON.stringify({ message: "user is updated", user: upsertUser }),
+        return new NextResponse(JSON.stringify({ message: "user is updated", user: updateUser }),
             { status: 200 })
 
     } catch (error) {

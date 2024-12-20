@@ -3,13 +3,17 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faApple } from '@fortawesome/free-brands-svg-icons';
-
+import Loading from '@/loading';
+// import { useRouter } from 'next/router';
+import axios from 'axios';
 
 import Image from 'next/image'
 import Link from 'next/link'
 import { faCross, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { AuthContext } from '../../../context/authContext';
 
 export default function SignUp() {
+
 
   const STATUS = {
     IDLE: "IDLE",
@@ -18,27 +22,53 @@ export default function SignUp() {
     COMPLETED: "COMPLETED",
   };
 
+  // const router = useRouter()
+
+  const { isUser, isLoading } = React.useContext(AuthContext)
+  // console.log(isUser);
+
 
   const [formData, setFormData] = React.useState({
     category: "",
-    productLocation: "",
+    cityOrState: "" || isUser ? (isUser.state) : "",
+    provinceAndRegion: "" || isUser ? (isUser.town) : "",
     productName: "",
-    type: "",
+    // type: "",
     condition: "",
     description: "",
     price: "",
     negotiation: "",
-    phone: "",
-    email: "",
+    phone: "" || isUser ? (isUser.phone) : "",
+    email: "" || isUser ? (isUser.email) : "",
     update: ""
   });
 
-  const [productImgs, setProductImgs] = React.useState([])
+
+  const [data, setData] = React.useState(null)
 
   const [isStatus, setStatus] = React.useState(STATUS.IDLE);
   const [touched, setTouched] = React.useState({});
+
+  const [productImgs, setProductimgs] = React.useState([])
+  const [uploadSingleFile, setUploadSingleFile] = React.useState(null)
+  // const [imageUrl, setImageUrl] = React.useState(null)
+  const [singleimage64, setsingleImage64] = React.useState(null)
+  const [image64, setImage64] = React.useState([])
   // const [finish, setFinished] = React.useState(false);
-  const [loginError, setLoginError] = React.useState(null)
+  const [isError, setisError] = React.useState(null)
+
+  React.useEffect(() => {
+
+    setStatus(STATUS.SUBMITTING)
+    fetch('/data.json')
+      .then(response => response.json())
+      .then(data => setData(data)).finally(() => {
+        setStatus(STATUS.COMPLETED);
+
+      })
+      .catch(error => console.error('Error fetching data:', error));
+
+  }, [STATUS.COMPLETED, STATUS.SUBMITTING]);
 
   const errors = getErrors();
   const isValid = Object.keys(errors).length === 0;
@@ -54,17 +84,53 @@ export default function SignUp() {
   }
 
   function handleImgChg(e) {
-    // console.log(e.target.files[0].name);
-    const imgSrc = e.target.files[0]
+    setUploadSingleFile(e.target.files[0])
 
-    setProductImgs((prevState) => {
+    // console.log(e.target.files[0].name);
+
+
+    //pushing the image to the productImgs array
+    const imgSrc = e.target.files[0]
+    setProductimgs((prevState) => {
       return [
         ...prevState, imgSrc
       ];
     });
 
+    const file = e.target.files
+    const promise = new Promise((res, rej) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file[0]);
+      reader.onload = () => res(reader.result);
+      reader.onerror = (error) => rej(error);
+    })
+
+    Promise.resolve(promise).then((imgFile) => {
+      // console.log(imgFile);
+      setsingleImage64(imgFile)
+      setImage64((prevState) => {
+        return [
+          ...prevState, imgFile
+        ];
+      })
+    })
+
+
+    // using URL.createObjectURL to convert the image to a url
+    // const url = window.URL.createObjectURL(imgSrc);
+    // setImageUrl((prevState) => {
+    //   return [
+    //     ...prevState, url
+    //   ];
+    // });
+
   }
-  console.log(productImgs);
+
+  React.useEffect(() => {
+    // console.log(productImgs);
+    // console.log(imageUrl);
+    // console.log(image64);
+  }, [image64]);
 
   function handleBlur(e) {
     const { name } = e.target;
@@ -77,17 +143,113 @@ export default function SignUp() {
 
   }
 
-
   async function handleSubmit(e) {
     e.preventDefault();
     // console.log(e.target);
     setStatus(STATUS.SUBMITTING);
 
-    if (true) { //isValid
+    if (isValid) { //isValid
+      // if (isValid) { //isValid
+
       console.log("submit");
+      console.log(productImgs);
+      console.log(uploadSingleFile);
+      // console.log(singleimage64);
+      // console.log(image64);
+      // console.log(formData);
+
+
+      try {
+        const res = await fetch("/api/imageUpload", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json"
+          },
+
+          body: JSON.stringify({ files: image64 })
+        }).then(async (res) => {
+          const data = await res.json()
+          console.log(data);
+          const res2 = await fetch("/api/products", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userId: "60f7b3b3b3b3b3b3b3b3b3b3",
+              category: formData.category,
+              cityOrState: formData.cityOrState,
+              provinceAndRegion: formData.provinceAndRegion,
+              productName: formData.productName,
+              condition: formData.condition,
+              description: formData.description,
+              price: formData.price,
+              negotiation: formData.negotiation,
+              phone: formData.phone,
+              email: formData.email,
+              update: formData.update,
+              images: data
+            }),
+          });
+          if (res2.ok) {
+            console.log("Product Uploaded");
+            console.log(await res2.json());
+            setisError("");
+            // router.push('/');
+
+          } else {
+            console.log("Product Upload failed, try again");
+          }
+        })
+
+        // if (res.ok) {
+        //   const data = await res.json()
+        //   console.log(data);
+        // try {
+        //   const res = await fetch("/api/products", {
+        //     method: "POST",
+        //     headers: {
+        //       "Content-Type": "application/json",
+        //     },
+        //     body: JSON.stringify({
+        //       userId: isUser.id,
+        //       category: formData.category,
+        //       cityOrState: formData.cityOrState,
+        //       provinceAndRegion: formData.provinceAndRegion,
+        //       productName: formData.productName,
+        //       condition: formData.condition,
+        //       description: formData.description,
+        //       price: formData.price,
+        //       negotiation: formData.negotiation,
+        //       phone: formData.phone,
+        //       email: formData.email,
+        //       update: formData.update,
+        //       images: data
+        //     }),
+        //   });
+
+        // if (res.status === 400) {
+        //   setisError("Product Upload failed, try again");
+
+        // }
+        // if (res.status === 200) {
+        //   console.log("Product Uploaded");
+        //   console.log(await res.json());
+        //   setisError("");
+        //   // router.push('/');
+        // }
+
+        // } catch (error) {
+        //   console.log(error);
+        //   setisError("Something went wrong, try again");
+        // }
+        // }
+
+      } catch (error) {
+        console.log(error);
+      }
+
       setStatus(STATUS.COMPLETED);
-      // setFinished(prev => !prev)
-      console.log(formData);
     } else {
       setStatus(STATUS.SUBMITTED);
     }
@@ -109,49 +271,65 @@ export default function SignUp() {
     if (!formData.category) {
       result.category = "Category is required";
     }
-    if (productImgs.length = 0) {
-      result.productImgs = "Product Images are required";
+
+    // if (productImgs.length = 0) {
+    //   result.productImgs = "Product Images are required";
+    // }
+
+    if (!formData.cityOrState) {
+      result.cityOrState = "City or State is required";
     }
-    if (!formData.productLocation) {
-      result.productLocation = "Product Location is required";
+
+    if (!formData.provinceAndRegion) {
+      result.provinceAndRegion = "Province or Region is required";
     }
+
     if (!formData.productName) {
       result.productName = "Product Name is required";
     }
-    if (!formData.type) {
-      result.type = "Product Type is required";
-    }
+
+    // if (!formData.type) {
+    //   result.type = "Product Type is required";
+    // }
+
     if (!formData.condition) {
       result.condition = "Condition is required";
     }
+
     if (!formData.description) {
       result.description = "Product Description is required";
     }
+
     if (!formData.price) {
       result.price = "Product Price is required";
     }
+
     if (!formData.negotiation) {
       result.negotiation = "Is product negotiable?";
     }
+
     if (!formData.phone) {
       result.phone = "Please enter your phone number";
     }
+
     if (!formData.email) {
       result.email = "Email is required";
     } else if (!ValidateEmail(formData.email)) {
       result.email = "Email is not correct";
     }
+
     if (!formData.update) {
       result.update = "Are your information up to date?";
     }
     // if (!formData.userPhoto) result.userPhoto = "Select a Picture"
     return result;
   }
+  const category = ["Vehicles", "Real Estate", "Phones & Gadgets", "Fashion", "Electronics", "Home Furniture & Appliances", "Health & Beauty", "Books & Games", "Electricals", "Sports", "Services", "Animals & Pets", "Children / kids", "Industrial & Commercial equipment", "Others"]
 
-  if (loginError) throw loginError
+  if (isError) throw isError
 
 
-  if (isStatus === "SUBMITTING") return (<div className="container">...LOADING</div>)
+  if (isStatus === "SUBMITTING" || isLoading === "loading") return (<Loading />)
 
 
   return (
@@ -160,7 +338,7 @@ export default function SignUp() {
 
       <div className="formDiv d-flex">
 
-        <p className='sub-title-1 padding-l-r'>Edit Upload</p>
+        <p className='subtitle2 padding-l-r'>Edit Upload</p>
 
         <form className=' form d-flex' onSubmit={handleSubmit}>
           <div className='uploadFormInnerDiv d-flex padding'>
@@ -176,9 +354,11 @@ export default function SignUp() {
                 value={formData.category}
               >
 
-                <option value="c#">C#</option>
-                <option value="C++">C++</option>
-                <option value="erlang">Erlang</option>
+                <option value="">Select a category</option>
+                {category.map((cat, ind) => (
+                  <option key={ind} value={cat}>{cat}</option>
+                )
+                )}
               </select>
 
               <p className="error" role="alert">
@@ -195,6 +375,7 @@ export default function SignUp() {
                 style={{ display: "none" }}
                 type="file"
                 name="productImgs"
+                disabled={productImgs.length === 5}
                 // placeholder="Confirm Password"
                 onChange={handleImgChg}
                 onBlur={handleBlur}
@@ -223,6 +404,7 @@ export default function SignUp() {
                   </div>
                 </label>
               </div>
+              {/* <h6>you can only upload 5 images</h6> */}
 
               <p className="error" role="alert">
                 {(touched.productImgs || isStatus === STATUS.SUBMITTED) &&
@@ -232,28 +414,62 @@ export default function SignUp() {
 
             <div className='uploadFormInnerDiv-1 d-flex'>
 
-              <h3 className='subtitle-2'>Enter Details</h3>
+              <h3 className='subtitle2'>Enter Details</h3>
 
+              <div className='productloactionDiv d-flex'>
+                <h3 className='subtitle-2 productLocationHeader'>Product Location</h3>
 
-              <div className='inputDivs d-flex'>
-                <label htmlFor="productLocation"> Product Location</label>
+                <div className='productloactionDivInner d-flex'>
 
-                <select
-                  name="productLocation"
-                  id="productLocation"
-                  onChange={handleChg}
-                  onBlur={handleBlur}
-                  value={formData.productLocation}
-                >
+                  <div className='inputDivs d-flex'>
+                    <label htmlFor="cityOrState"> City Or State</label>
 
-                  <option value="c#">C#</option>
-                  <option value="C++">C++</option>
-                  <option value="erlang">Erlang</option>
-                </select>
+                    <select
+                      name="cityOrState"
+                      id="cityOrState"
+                      onChange={handleChg}
+                      onBlur={handleBlur}
+                      value={formData.cityOrState}
+                    >
+                      <option value="">City or State</option>
+                      {
+                        data && data.map((city, index) => (
+                          <option key={index} value={city.name}>{city.name}</option>
+                        ))
+                      }
 
-                <p className="error" role="alert">
-                  {(touched.productLocation || isStatus === STATUS.SUBMITTED) && errors.productLocation}
-                </p>
+                    </select>
+
+                    <p className="error" role="alert">
+                      {(touched.cityOrState || isStatus === STATUS.SUBMITTED) && errors.cityOrState}
+                    </p>
+
+                  </div>
+
+                  <div className='inputDivs d-flex '>
+                    <label htmlFor="provinceAndRegion"> Province OR Region</label>
+
+                    <select
+                      name="provinceAndRegion"
+                      id="provinceAndRegion"
+                      onChange={handleChg}
+                      onBlur={handleBlur}
+                      value={formData.provinceAndRegion}
+                    >
+                      <option value="">Province Or Region </option>
+                      {
+                        (formData.cityOrState !== "") && data.filter((city) => city.name === formData.cityOrState)[0].cities.map((city, index) => (
+                          <option key={index} value={city}>{city}</option>
+                        ))
+                      }
+                    </select>
+
+                    <p className="error" role="alert">
+                      {(touched.provinceAndRegion || isStatus === STATUS.SUBMITTED) && errors.provinceAndRegion}
+                    </p>
+
+                  </div>
+                </div>
 
               </div>
 
@@ -276,7 +492,7 @@ export default function SignUp() {
 
               </div>
 
-              <div className='inputDivs d-flex'>
+              {/* <div className='inputDivs d-flex'>
                 <label htmlFor="type"> Type</label>
 
                 <select
@@ -296,20 +512,26 @@ export default function SignUp() {
                   {(touched.type || isStatus === STATUS.SUBMITTED) && errors.type}
                 </p>
 
-              </div>
-
+              </div> */}
 
               <div className='inputDivs d-flex'>
                 <label htmlFor="condition"> Condition</label>
-                <input
-                  type="text"
+
+                <select
                   name="condition"
                   id="condition"
-                  placeholder="Used"
                   onChange={handleChg}
                   onBlur={handleBlur}
                   value={formData.condition}
-                />
+                >
+
+                  <option value="">Select a Condition</option>
+                  <option value="Brand New">Brand New</option>
+                  <option value="Foreign Used">Foreign Used</option>
+                  <option value="Local Used">Local Used</option>
+                  <option value="Refurbished">Refurbished</option>
+                </select>
+
                 <p className="error" role="alert">
                   {(touched.condition || isStatus === STATUS.SUBMITTED) && errors.condition}
                 </p>
@@ -380,7 +602,12 @@ export default function SignUp() {
 
               </div>
 
+              <p className="error" role="alert">
+                {(touched.negotiation || isStatus === STATUS.SUBMITTED) && errors.negotiation}
+              </p>
+
             </div>
+
           </div>
 
           <div className='uploadInnerDiv-2 padding d-flex'>
@@ -466,7 +693,7 @@ export default function SignUp() {
           <button
             className="subBtn padding-l-r"
             type="submit"
-          // disabled={!(formData.email || formData.password || formData.passwordCheck)}
+            disabled={!(formData.category || formData.cityOrState || formData.provinceAndRegion || formData.productName || formData.type || formData.condition || formData.description || formData.price || formData.returnPolicy || formData.payment || formData.negotiation || formData.phone || formData.email || formData.update)}
           >
             {/* <Link className='links' href="/signup/"> */}
             Upload
