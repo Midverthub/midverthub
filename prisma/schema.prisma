@@ -87,19 +87,27 @@ model User {
 
   //   a user can save zero or many products
   // product id of the saved product
-  productId String? @db.ObjectId
+  // productId String? @db.ObjectId
 
-  savedById     String? @db.ObjectId
-  savedBy       User?   @relation("ProductSavedBy", fields: [savedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  savedProducts User[]  @relation("ProductSavedBy")
+  // savedById     String? @db.ObjectId
+  // savedBy       User?   @relation("ProductSavedBy", fields: [savedById], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  savedProducts SavedProduct[]
 
   // a user can be followed by zero or many users
-  followedBy    User[]   @relation("UserFollows", fields: [followedByIDs], references: [id])
-  followedByIDs String[] @db.ObjectId
+  // followedBy    User[]   @relation("UserFollows", fields: [followedByIDs], references: [id])
+  // followedByIDs String[] @db.ObjectId
 
-  // a user can follow zero or many users
-  following    User[]   @relation("UserFollows", fields: [followingIDs], references: [id])
-  followingIDs String[] @db.ObjectId
+  // // a user can follow zero or many users
+  // following    User[]   @relation("UserFollows", fields: [followingIDs], references: [id])
+  // followingIDs String[] @db.ObjectId
+
+  // a user can be followed by zero or many users
+  followers UserFollowing[] @relation("FollowedUsers")
+
+  // // a user can follow zero or many users
+  following UserFollowing[] @relation("FollowingUsers")
+
+  reviews Review[]
 
   name  String? @unique
   email String? @unique
@@ -122,6 +130,28 @@ model User {
   Authenticator Authenticator[]
 }
 
+//self relation joint table
+model SavedProduct {
+  id        String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId    String  @db.ObjectId
+  productId String  @db.ObjectId
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) // Timestamp for when the product was saved
+}
+
+//self relation joint table
+model UserFollowing {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  followerId  String @db.ObjectId
+  followingId String @db.ObjectId
+  follower    User   @relation("FollowingUsers", fields: [followerId], references: [id], onDelete: Cascade)
+  following   User   @relation("FollowedUsers", fields: [followingId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now()) // Timestamp for when the follow occurred
+}
+
 model Categories {
   id String @id @default(auto()) @map("_id") @db.ObjectId
 
@@ -140,34 +170,36 @@ model Product {
   // a product must have a user
   //the user that created the product the product is add to an array of products the user has
   //and the user id is saved in the product
-  userId String @unique @db.ObjectId
-  user   User   @relation(fields: [userId], references: [id])
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   //one to many relationship i.e a product must have a category 
   //and a category can have many products
   //the product is added to an array of products in this 
   //category and the category id is saved in the product
-  categoryTitle String     @unique
-  categories    Categories @relation(fields: [categoryTitle], references: [title]) //A product can have one category 
+  categoryTitle String
+  category      Categories? @relation(fields: [categoryTitle], references: [title], onDelete: Cascade) //A product can have one category 
 
   // A product can have many reviews
   //   a product can save zero or many reviews
 
-  productId String? @db.ObjectId
+  // productId String? @db.ObjectId
 
-  reviewTitle String?
-  review      String?
+  // reviewTitle String?
+  // review      String?
 
-  ratingCount String?
-  rating      String?
+  // ratingCount String?
+  // rating      String?
 
-  reviewedBy Product?  @relation("ProductreviewdBy", fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  reviews    Product[] @relation("ProductreviewdBy")
+  // reviewedBy Product?  @relation("ProductreviewdBy", fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  // reviews    Product[] @relation("ProductreviewdBy")
+  reviews Review[]
 
   // A product can have many ratings
 
   // ratingBy Product?  @relation("ProductRatedBy", fields: [productId], references: [id], onDelete: NoAction, onUpdate: NoAction)
   // ratings  Product[] @relation("ProductRatedBy")
+  SavedProduct SavedProduct[]
 
   // A product can either be have a paid advert or not
   paidAdvert PaidAdvert?
@@ -180,15 +212,33 @@ model Product {
   condition   String?
   description String?
   price       String?
-  negotation  String?
+  negotiation String?
   phone       String?  @unique
   email       String?  @unique
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  @@unique([id, reviewTitle, review])
-  @@unique([id, review, reviewTitle])
+  // @@unique([id, reviewTitle, review])
+  // @@unique([id, review, reviewTitle])
+}
+
+//self relation joint table
+model Review {
+  id      String @id @default(auto()) @map("_id") @db.ObjectId
+  content String
+  rating  Int    @default(0)
+
+  // Relation to User: Each review is written by one user
+  userId String @db.ObjectId
+  user   User   @relation(fields: [userId], references: [id])
+
+  // Relation to Product: Each review is for one product
+  productId String  @db.ObjectId
+  product   Product @relation(fields: [productId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model PaidAdvert {
@@ -199,18 +249,19 @@ model PaidAdvert {
   //the paidAd is added to an array of paid advert that belongs to this user
   // and the user id is saved in the paidAd
   // a paid ad must have a user
-  userId String @unique @db.ObjectId
+  userId String @db.ObjectId
   user   User   @relation(fields: [userId], references: [id])
 
   //one to one relationship i.e a paidAd must have a product 
   //and a product either be a paidAd or not
   // a paid ad must be a product
   productId String  @unique @db.ObjectId
-  product   Product @relation(fields: [productId], references: [id])
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   subscription String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 // user

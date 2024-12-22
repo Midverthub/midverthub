@@ -193,12 +193,13 @@ export default function SignUp() {
           });
           if (res2.ok) {
             console.log("Product Uploaded");
-            console.log(await res2.json());
+            console.log(res2);
             setisError("");
             // router.push('/');
 
           } else {
             console.log("Product Upload failed, try again");
+            console.log(res2);
           }
         })
 
