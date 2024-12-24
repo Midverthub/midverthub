@@ -23,8 +23,8 @@ function Categories() {
                 });
                 const data = await res.json();
                 setIsLoading(false);
-                setCategories(data);
-                // console.log(data);
+                setCategories(data.categories);
+                console.log(data);
             } catch (error) {
                 console.error("Failed to fetch categories:", error);
             }
