@@ -259,6 +259,7 @@ model PaidAdvert {
   product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   subscription String
+  // subscription String @default("no")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

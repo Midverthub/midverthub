@@ -81,6 +81,12 @@ export const POST = async (request, context) => {
                 { status: 404 })
         }
 
+        if (!content || !rating) {
+            return new NextResponse(JSON.stringify({ message: "Invalid or missing content or rating" }),
+                { status: 404 })
+
+        }
+
         await connect()
 
         const review = await prisma.review.create({
@@ -130,6 +136,12 @@ export const PATCH = async (request, context) => {
         if (!productId || !Types.ObjectId.isValid(productId)) {
             return new NextResponse(JSON.stringify({ message: "Invalid or missing productId" }),
                 { status: 404 })
+        }
+
+        if (!reviewId || !Types.ObjectId.isValid(reviewId)) {
+            return new NextResponse(JSON.stringify({ message: "Invalid or missing reviewId" }),
+                { status: 404 })
+
         }
 
         await connect()

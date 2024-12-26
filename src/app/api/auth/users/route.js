@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
-import connect, { db } from "../../../../../db";
-import User from "@/lib/modals/user";
+import connect from "../../../../../db";
 import { PrismaClient } from "@prisma/client";
 import { Types } from "mongoose";
 import { Admin } from "mongodb";

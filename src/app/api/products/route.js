@@ -185,21 +185,21 @@ export const POST = async (request) => {
         const newProduct = await prisma.product.create({
             data: {
                 user: {
-                    connect: { id: userId }, // Replace "user-id" with the actual user ID
+                    connect: { id: userId },
                 },
                 category: {
-                    connect: { title: category }, // Replace "Category Title" with the actual category title
+                    connect: { title: category },
                 },
 
 
-                images: images, // Array of image URLs
+                images: images,
                 state: cityOrState,
                 town: provinceAndRegion,
                 name: productName,
-                condition: condition, // or "used"
+                condition: condition,
                 description: description,
                 price: price,
-                negotiation: negotiation, // optional
+                negotiation: negotiation,
                 phone: phone,
                 email: email,
             },
