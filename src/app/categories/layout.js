@@ -1,41 +1,12 @@
-
-import Radio from "@/components/radio";
-import UseType from "@/components/useType";
-import BrandCategories from "@/conatiners/brandCategories";
-import CategoryItems from "@/conatiners/categoryItems";
-import ProductsContainer from "@/conatiners/productsContainer";
-import SearchAndFIlter from "@/conatiners/searchAndFIlter";
-import TopSuggested from "@/conatiners/topSuggested";
 import "./style.css"
 
 
 export default function CatergoriesLayout({ children }) {
     return (
-        <>
-            <section className='margin-b'>
+        <div>
 
-                <div>
-                    <div className="categoriesInnerDiv d-flex">
+            {children}
+        </div>
 
-                        <SearchAndFIlter />
-                        <CategoryItems />
-                    </div>
-
-                    <div className="priceCategoryDiv d-flex">
-                        <h3 className="suggestionHeader">Select Price Category</h3>
-                        <Radio />
-                    </div>
-
-                    <UseType />
-
-                    <BrandCategories />
-
-                    {children}
-                    <TopSuggested />
-                    <ProductsContainer />
-                </div>
-
-            </section>
-        </>
     )
 }

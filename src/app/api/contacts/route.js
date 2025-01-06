@@ -32,13 +32,21 @@ export const GET = async (request, context) => {
                 { status: 400 })
         }
 
-        const contacts = await prisma.user.findMany({
+        const contacts = await prisma.user.findUnique({
             where: {
                 id: userId
             },
             include: {
-                following: true,
-                followers: true
+                following: {
+                    include: {
+                        following: true
+                    }
+                },
+                followers: {
+                    include: {
+                        follower: true
+                    }
+                },
             }
         })
 

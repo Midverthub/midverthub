@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@auth/mongodb-adapter": "^3.7.3",
-    "@auth/prisma-adapter": "^2.7.3",
+    "@auth/prisma-adapter": "^2.7.4",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
     "@fortawesome/free-brands-svg-icons": "^6.6.0",
     "@fortawesome/free-regular-svg-icons": "^6.6.0",

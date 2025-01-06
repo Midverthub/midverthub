@@ -7,21 +7,77 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function Rating() {
+import { AuthContext } from "../../../../context/authContext";
+import Loading from '@/loading'
+import axios from 'axios'
+import { useRouter } from 'next/navigation';
+
+export const REQUEST_STATUS = {
+    LOADING: "loading",
+    SUCCESS: "success",
+    FAILURE: "failure"
+}
+
+const STATUS = {
+    IDLE: "IDLE",
+    SUBMITTED: "SUBMITTED",
+    SUBMITTING: "SUBMITTING",
+    COMPLETED: "COMPLETED",
+};
+
+export default function Rating({ params }) {
+
+    const router = useRouter();
+
+    const { isUser, isLoading } = React.useContext(AuthContext)
+    // console.log(isUser);
+    const [productData, setProductData] = React.useState([])
+    const [redirect, setRedirect] = React.useState(false)
+    const [requestStatus, setRequestStatus] = React.useState(REQUEST_STATUS.LOADING)
 
 
-    const STATUS = {
-        IDLE: "IDLE",
-        SUBMITTED: "SUBMITTED",
-        SUBMITTING: "SUBMITTING",
-        COMPLETED: "COMPLETED",
-    };
+    React.useEffect(() => {
+        if (isUser && isUser.id) {
+            setRequestStatus(REQUEST_STATUS.LOADING)
+            async function fetchData() {
+                try {
+                    const result = await axios.get(`/api/ratings?ratingId=${params.slug}`);
+                    setProductData(result.data.data);
+                    setRequestStatus(REQUEST_STATUS.SUCCESS)
+                    // console.log(result.data);
+                } catch (error) {
+                    setRequestStatus(REQUEST_STATUS.FAILURE)
+                    console.error('Error fetching product data:', error);
+                }
+            }
+            fetchData();
+        }
+    }, [isUser, params.slug])
+    // console.log(productData);
+
+
+    React.useEffect(() => {
+        if (redirect) {
+
+            const timer = setTimeout(() => {
+                // console.log("Countdown finished");
+                // Add your desired action here
+                router.push("/");
+            }, 5000); // 5 seconds
+
+            return () => clearTimeout(timer); // Cleanup the timer on component unmount
+        }
+    }, [redirect, router]);
+
+
+
 
 
     const [formData, setFormData] = React.useState({
         reviewTitle: "",
-        detailedTitle: "",
-        starRating: ""
+        // detailedTitle: "",
+        detailedReview: "",
+        starRating: 0
     });
 
 
@@ -60,11 +116,64 @@ export default function Rating() {
         // console.log(e.target);
         setStatus(STATUS.SUBMITTING);
 
-        if (true) { //isValid
-            console.log("submit");
-            setStatus(STATUS.COMPLETED);
+        if (isValid) { //isValid
+            // console.log("submit");
+
+            try {
+                const res = await fetch(`/api/reviews/${productData.product.id}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        userId: isUser.id,
+                        productId: productData.product.id,
+                        content: formData.detailedReview,
+                        rating: Number(formData.starRating)
+                    }),
+                })
+
+                if (res.status === 200) {
+                    // console.log(await res.json());
+                    setStatus(STATUS.COMPLETED);
+                    try {
+                        const result = await fetch(`/api/ratings/${params.slug}?userId=${isUser.id}`, {
+                            method: "DELETE",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({
+                                userId: isUser.id,
+                                productId: productData.productId,
+                                ratingId: params.slug
+
+                            }),
+
+                        });
+                        if (result.status === 200) {
+                            // console.log("rating successfull removed", await result.json());
+                            setStatus(STATUS.COMPLETED);
+                        }
+
+                    } catch (error) {
+                        console.error("An error occurred", error);
+                        setLoginError(error)
+
+                    }
+
+                    setRedirect(true)
+                    // setFinished(prev => !prev)
+                    // console.log("Review submitted successfully");
+                }
+
+            } catch (error) {
+                console.error("An error occurred", error);
+                setLoginError(error)
+
+            }
+            // setStatus(STATUS.COMPLETED);
             // setFinished(prev => !prev)
-            console.log(formData);
+            // console.log(formData);
         } else {
             setStatus(STATUS.SUBMITTED);
         }
@@ -73,11 +182,11 @@ export default function Rating() {
     function getErrors(params) {
         const result = {}
 
-        if (!formData.detailedTitle) {
-            result.detailedTitle = "Title is required";
+        if (!formData.detailedReview) {
+            result.detailedReview = "Enter a review";
         }
         if (!formData.reviewTitle) {
-            result.reviewTitle = "Enter a review";
+            result.reviewTitle = "Title is required";
         }
 
         return result;
@@ -86,8 +195,9 @@ export default function Rating() {
     if (loginError) throw loginError
 
 
-    if (isStatus === "SUBMITTING") return (<div className="container">...LOADING</div>)
+    // if (isStatus === "SUBMITTING") return (<div className="container">...LOADING</div>)
 
+    if (isLoading === "loading" || requestStatus === REQUEST_STATUS.LOADING || isStatus === "SUBMITTING") return (<Loading />)
 
 
 
@@ -113,24 +223,23 @@ export default function Rating() {
                 <div className='itemToRateInnerDiv d-flex'>
 
                     <div className='itemToRateTitlePriceDiv d-flex'>
-                        <h3 className='itemToRateTitle'>Benz A Class</h3>
-                        <h3 className='itemToRatePriceHeader'>N15000000</h3>
+                        <h3 className='itemToRateTitle'>{productData.product.name}</h3>
+                        <h3 className='itemToRatePriceHeader'>{productData.product.price}</h3>
                     </div>
 
 
-                    <h4 className='productInfo'>Samsung Galaxy S21 Ultra - 128GB
-                        Phantom Black
+                    <h4 className='productInfo'>{productData.product.description}
                     </h4>
 
 
                     <div className='itemToRateInnerDiv-1 d-flex'>
                         <div className='productLoactionDiv d-flex'>
                             <FontAwesomeIcon icon={faLocationDot} className='loactionIcon' />
-                            <p className='productLoaction'>Lagos, Nigeria</p>
+                            <p className='productLoaction'>{productData.product.town}, {productData.product.state}</p>
                         </div>
 
                         <div className='usageType d-flex'>
-                            <p className='usageTypePgh'>Foreign Used</p>
+                            <p className='usageTypePgh'>{productData.product.condition}</p>
                         </div>
                     </div>
 
@@ -167,19 +276,19 @@ export default function Rating() {
 
 
                         <div className="textarea-div inputDivs d-flex">
-                            <label htmlFor="detailedTitle">Detailed Title</label>
+                            <label htmlFor="detailedReview">Detailed Review</label>
 
                             <textarea
-                                id="detailedTitle"
-                                name="detailedTitle"
+                                id="detailedReview"
+                                name="detailedReview"
                                 className="textarea"
                                 placeholder="Tell us more about the product"
                                 onChange={handleChg}
                                 onBlur={handleBlur}
-                                value={formData.detailedTitle} />
+                                value={formData.detailedReview} />
 
                             <p className="error" role="alert">
-                                {(touched.detailedTitle || isStatus === STATUS.SUBMITTED) && errors.detailedTitle}
+                                {(touched.detailedReview || isStatus === STATUS.SUBMITTED) && errors.detailedReview}
                             </p>
                         </div>
 
@@ -260,7 +369,7 @@ export default function Rating() {
                     <button
                         className="subBtn ratingSubBtn padding-l-r"
                         type="submit"
-                    // disabled={!(formData.email || formData.password || formData.passwordCheck)}
+                        disabled={!(formData.detailedReview && formData.reviewTitle && formData.starRating)}
                     >
                         {/* <Link className='links' href="/signup/"> */}
                         Submit

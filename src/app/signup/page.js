@@ -273,7 +273,9 @@ export default function SignUp() {
         </div>
 
         <div className="otherSignUpDiv d-flex">
-          <button onClick={() => signup('google')} className='otherSignUpBtn d-flex'>
+          <button onClick={() => {
+            signup('google')
+          }} className='otherSignUpBtn d-flex'>
             <FontAwesomeIcon icon={faGoogle} className='iconSize2' />
 
             <p>Sign Up with Google</p>

@@ -11,6 +11,26 @@ import { PrismaClient } from "@prisma/client";
 // import { redirectTo } from "next/navigation";
 
 
+const prisma = new PrismaClient()
+
+// for debugging purpose and to check if the user already exists in the database or not 
+export const getUserByEmail = async (email) => {
+    try {
+        //find the user by email in the database and return the user
+        const user = await prisma.user.findUnique({
+            where: {
+                email: email
+            }
+        })
+        return user
+        // return true
+    } catch (error) {
+        console.log(error);
+        return false
+        // return null
+    }
+}
+
 // signup function to signup with the provider passed as an argument
 export const signup = async (provider) => {
     // signIn function from next-auth/react to sign in with the provider passed as an argument
@@ -41,25 +61,8 @@ export const logout = async () => {
     revalidatePath('/');
 }
 
-// for debugging purpose and to check if the user already exists in the database or not 
-export const getUserByEmail = async (email) => {
-    try {
-        //find the user by email in the database and return the user
-        const user = await db.user.findUnique({
-            where: {
-                email: email
-            }
-        })
-        return user
-        // return true
-    } catch (error) {
-        console.log(error);
-        return false
-        // return null
-    }
-}
 
-const prisma = new PrismaClient()
+
 export const getUsers = async (email) => {
     try {
         //find the user by email in the database and return the user

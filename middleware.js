@@ -28,6 +28,7 @@
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { auth } from "@/auth";
+// import { auth as middleware } from "@/middleware";
 
 // const { auth } = require("@/auth");
 

@@ -36,7 +36,14 @@ export const GET = async (request, context) => {
                 { status: 400 })
         }
 
-        const paidAds = await prisma.paidAdvert.findMany()
+        const paidAds = await prisma.paidAdvert.findMany({
+            include: {
+                product: true
+            },
+            orderBy: {
+                updatedAt: "asc"
+            }
+        })
 
 
         if (!paidAds) {

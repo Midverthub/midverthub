@@ -8,15 +8,20 @@ import { faBell } from '@fortawesome/free-solid-svg-icons';
 import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
-
-
-
-
+import { faCheck } from '@fortawesome/free-solid-svg-icons';
 
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { AuthContext } from '../../../context/authContext';
+import Loading from '@/loading'
+
 export default function SideMenu() {
+
+  const { isUser, isLoading } = React.useContext(AuthContext)
+  // console.log(isUser);
+
+  if (isLoading === "loading") return (<Loading />)
 
 
   return (
@@ -24,8 +29,8 @@ export default function SideMenu() {
     <div className="sideMenuDiv height d-flex">
       <div>
         <header className='sideMenuHeader padding d-flex'>
-          <h3 className='subtitle1'>{`Welcome, ${'John Doe'}`}</h3>
-          <p className='text1'>johndoe@gmail.com</p>
+          <h3 className='subtitle1'>{`Welcome, ${isUser.name}`}</h3>
+          <p className='text1'>{isUser.email}</p>
         </header>
 
         <p className='text1 padding'>My Account</p>
@@ -49,6 +54,13 @@ export default function SideMenu() {
             <FontAwesomeIcon icon={faBell} className='iconSize2' />
             <h4 className='subtitle1'>Notifications</h4>
           </div>
+
+          <Link className='link' href='/rating'>
+            <div className='sideMenuOption padding-l-r d-flex'>
+              <FontAwesomeIcon icon={faCheck} className='iconSize2' />
+              <h4 className='subtitle1'>Reviews</h4>
+            </div>
+          </Link>
 
           <Link className='link' href='/savedItems'>
             <div className='sideMenuOption padding-l-r d-flex'>

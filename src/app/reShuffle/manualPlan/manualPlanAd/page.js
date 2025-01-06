@@ -7,7 +7,12 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { ProductContext } from '../../../../../context/productContext';
+
 export default function Reshuffle() {
+
+    const { isProduct, setProduct, isLoading } = React.useContext(ProductContext)
+    // console.log(isProduct);
 
     return (
 

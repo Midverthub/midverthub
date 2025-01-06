@@ -89,7 +89,7 @@ export default function SignUp() {
         setStatus(STATUS.SUBMITTING);
 
         if (isValid) {
-            console.log("submit");
+            // console.log("submit");
             try {
                 const res = await fetch("/api/auth/users", {
                     method: "PATCH",
@@ -116,12 +116,12 @@ export default function SignUp() {
                 }
 
             } catch (error) {
-                console.log(error);
+                // console.log(error);
                 setLoginError("Something went wrong, try again");
             }
             setStatus(STATUS.COMPLETED);
 
-            console.log(formData);
+            // console.log(formData);
         } else {
             setStatus(STATUS.SUBMITTED);
         }

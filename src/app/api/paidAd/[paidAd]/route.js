@@ -30,6 +30,9 @@ export const GET = async (request, context) => {
         const paidAds = await prisma.paidAdvert.findMany({
             where: {
                 userId: userId
+            },
+            orderBy: {
+                updatedAt: "asc"
             }
         })
 
@@ -106,7 +109,9 @@ export const POST = async (request, context) => {
                 product: {
                     connect: { id: productId },
                 },
-                subscription: subscription
+                subscription: subscription,
+                count: 1
+
             }
         })
 
@@ -128,7 +133,7 @@ export const POST = async (request, context) => {
 
 export const PATCH = async (request, context) => {
     try {
-        const { userId, productId, paidAdId, subscription } = await request.json()
+        const { userId, productId, paidAdId, subscription, count } = await request.json()
 
 
         if (!userId || !Types.ObjectId.isValid(userId)) {
@@ -197,7 +202,8 @@ export const PATCH = async (request, context) => {
                 product: {
                     connect: { id: productId ? productId : ad.productId },
                 },
-                subscription: subscription ? subscription : ad.subscription
+                subscription: subscription ? subscription : ad.subscription,
+                count: count ? count + 1 : ad.count + 1
             }
         })
 

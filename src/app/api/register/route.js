@@ -1,9 +1,9 @@
-import User from "@/lib/modals/user";
+// import User from "@/lib/modals/user";
 import connect from "../../../../db";
 import bcrypt from "bcryptjs";
 import { saltAndHashPassword } from "../../../../utils/helper";
 import { NextResponse } from "next/server";
-import { Prisma } from "@prisma/client";
+import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient()
 
@@ -17,7 +17,7 @@ export const POST = async (req, res) => {
         //checking if the user already exists
         // const existingUser = await User.findOne({ email });
         //here we are finding the user by email in the database
-        const existingUser = await db.user.findUnique({
+        const existingUser = await prisma.user.findUnique({
             where: {
                 email: email
             }

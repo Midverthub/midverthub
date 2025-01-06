@@ -24,7 +24,7 @@ function Categories() {
                 const data = await res.json();
                 setIsLoading(false);
                 setCategories(data.categories);
-                console.log(data);
+                // console.log(data);
             } catch (error) {
                 console.error("Failed to fetch categories:", error);
             }

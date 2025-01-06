@@ -13,10 +13,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(db),
     session: { strategy: "jwt" },
     providers: [
-        Github({
-            clientId: process.env.AUTH_GITHUB_ID,
-            clientSecret: process.env.AUTH_GITHUB_SECRET,
-        }),
+        Github,
         Google,
 
         //here we are using the credentials provider to login with email and password

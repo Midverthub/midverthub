@@ -1,8 +1,5 @@
+import React from "react";
 import { NextResponse } from "next/server";
-// import connect from "../../../../../db";
-// import Blog from "@/lib/modals/blog";
-// import User from "@/lib/modals/user";
-// import Category from "@/lib/modals/category";
 import connect from "../../../../db";
 import { Types } from "mongoose";
 import { PrismaClient } from "@prisma/client";
@@ -31,7 +28,11 @@ export const GET = async (request) => {
                 { status: 400 })
         }
 
-        const products = await prisma.product.findMany()
+        const products = await prisma.product.findMany({
+            where: {
+                userId: userId
+            }
+        })
 
 
         if (!products) {

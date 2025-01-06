@@ -1,14 +1,86 @@
 'use client'
-import React from 'react';
+import React, { use } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import TopSuggested from '@/conatiners/topSuggested';
 
+import { AuthContext } from '../../../../context/authContext';
+import axios from 'axios'
+import Loading from '@/loading';
+
+export const REQUEST_STATUS = {
+    LOADING: "loading",
+    SUCCESS: "success",
+    FAILURE: "failure"
+}
+
 
 
 export default function Product({ params }) {
+    // console.log(params);
+
+    const { isUser, isLoading } = React.useContext(AuthContext)
+    // console.log(isUser);
+    const [productData, setProductData] = React.useState(null)
+    const [requestStatus, setRequestStatus] = React.useState(REQUEST_STATUS.LOADING)
+
+
+    React.useEffect(() => {
+        if (isUser && isUser.id) {
+            setRequestStatus(REQUEST_STATUS.LOADING)
+
+            async function fetchData() {
+                try {
+                    const result = await axios.get(`/api/products/${params.slug}?userId=${isUser.id}`);
+                    setProductData(result.data.data);
+                    setRequestStatus(REQUEST_STATUS.SUCCESS)
+
+                } catch (error) {
+                    setRequestStatus(REQUEST_STATUS.FAILURE)
+                    console.error('Error fetching product data:', error);
+                }
+            }
+            fetchData();
+        }
+    }, [isUser, params.slug])
+    // console.log(productData);
+
+    async function saveProduct() {
+        try {
+            const res = await axios.post(`/api/saved/${params.slug}`, {
+                userId: isUser.id,
+                productId: productData.id
+            })
+
+            if (res.status === 200) {
+                // console.log("Product saved successfully");
+            }
+        } catch (error) {
+            // console.log(error);
+        }
+    }
+
+    async function followSeller(params) {
+        try {
+            const res = await axios.post(`/api/contacts/${isUser.id}`, {
+                followingId: productData.userId,
+                userId: isUser.id
+            })
+
+            if (res.status === 200) {
+                // console.log("Seller followed successfully");
+            }
+        } catch (error) {
+            // console.log(error);
+        }
+
+    }
+
+
+    if (isLoading === "loading" || requestStatus === REQUEST_STATUS.LOADING) return (<Loading />)
+
 
 
     return (
@@ -16,7 +88,8 @@ export default function Product({ params }) {
             <div className='productImgMain'>
                 <Image
                     fill
-                    src="/assets/product image.jpeg"
+                    // src="/assets/product image.jpeg"
+                    src={productData.images[0]}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     alt='Homepage Banner'
                     style={{ objectFit: 'contain' }}
@@ -25,10 +98,9 @@ export default function Product({ params }) {
             </div>
 
             <div className='mainProductInfo d-flex'>
-                <h4 className='mainProductName'>Samsung Galaxy S21 Ultra - 128GB Phantom Black</h4>
-                <h3 className='mainProductPrice'># 15,000,000</h3>
-                <p className='mainProductDetails'>All items displayed are readily available to customers within Ajika, Lagos Nigeria
-                    and can be delivered once order is  confirmed
+                <h4 className='mainProductName'>{productData.name}</h4>
+                <h3 className='mainProductPrice'>₦{productData.price}</h3>
+                <p className='mainProductDetails'>{productData.description}
                 </p>
 
                 <div className='mainProductInfoInnerDiv d-flex'>
@@ -36,11 +108,11 @@ export default function Product({ params }) {
 
                         <div className='productLoactionDiv usageType d-flex '>
                             <FontAwesomeIcon icon={faLocationDot} className='loactionIcon' />
-                            <p className='productLoaction'>Lagos, Nigeria</p>
+                            <p className='productLoaction'>{productData.town}, {productData.state}</p>
                         </div>
 
                         <div className='usageType d-flex'>
-                            <p className='usageTypePgh'>Foreign Used</p>
+                            <p className='usageTypePgh'>{productData.condition}</p>
                         </div>
                     </div>
 
@@ -65,6 +137,7 @@ export default function Product({ params }) {
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 alt='Save'
                                 style={{ objectFit: 'contain' }}
+                                onClick={() => saveProduct()}
 
                             />
                         </div>
@@ -82,8 +155,8 @@ export default function Product({ params }) {
                     <h3 className='mainProductButtonHeader'>Chat Seller</h3>
                 </div> */}
 
-                <button className='btn mainProductButton2'>
-                    View Seller Profile
+                <button onClick={() => followSeller()} className='btn mainProductButton2'>
+                    Follow Seller
                 </button>
             </div>
 

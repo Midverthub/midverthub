@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faLink } from '@fortawesome/free-solid-svg-icons';
@@ -6,7 +7,44 @@ import Image from 'next/image';
 import Link from 'next/link'
 import Contact from '@/components/contact';
 
+import { ProductContext } from '../../../context/productContext';
+import { AuthContext } from '../../../context/authContext';
+import Loading from '@/loading';
+
 export default function Reshuffle() {
+
+  const { isProduct, setProduct } = React.useContext(ProductContext)
+  // console.log(isProduct);
+
+  const { isUser, isLoading } = React.useContext(AuthContext)
+  // console.log(isUser);
+
+  async function subscribe(plan) {
+    try {
+      const res = await fetch(`/api/paidAd/${isUser.id}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          userId: isUser.id,
+          productId: isProduct.id,
+          subscription: plan
+        })
+      })
+      if (res.status === 200) {
+        // console.log("subscribed successfully");
+        // console.log(await res.json());
+
+      }
+
+    } catch (error) {
+      // console.log(error);
+    }
+  }
+
+  if (isLoading === "loading") return (<Loading />)
+
 
 
   return (
@@ -98,7 +136,7 @@ export default function Reshuffle() {
         <div className='paidPlanDetailsDiv d-flex'>
           <h3 className='subtitle2'>30 Days</h3>
 
-          <button className='btn paidPlanDetailsBtn'>Subscribe now</button>
+          <button onClick={() => { subscribe("pro package") }} className='btn paidPlanDetailsBtn'>Subscribe now</button>
         </div>
       </div>
 
@@ -131,7 +169,7 @@ export default function Reshuffle() {
         <div className='paidPlanDetailsDiv d-flex'>
           <h3 className='subtitle2'>30 Days</h3>
 
-          <button className='btn paidPlanDetailsBtn'>Subscribe now</button>
+          <button onClick={() => { subscribe("pro plus package") }} className='btn paidPlanDetailsBtn'>Subscribe now</button>
         </div>
       </div>
 

@@ -1,50 +1,28 @@
+"use client"
 import React from 'react'
 import ProductContain from '@/components/productContain'
 
 import Link from 'next/link'
 
-function ProductsContainer() {
+function ProductsContainer({ data }) {
+
+
     return (
         <div className='productsContainer'>
-            <Link className='link' href={'products/1'}>
-                <ProductContain />
-            </Link>
+            {
+                data.map((product, index) => {
+                    return (
+                        <Link className='links' key={index} href={`/products/${product.id}`}>
+                            <ProductContain data={product} />
+                        </Link>
+                    )
+                })
+            }
+            {/* <Link className='link' href={'products/1'}>
+                <ProductContain data={productData.data} />
+            </Link> */}
 
-            <Link className='link' href={'products/1'}>
-                <ProductContain />
-            </Link>
 
-            <Link className='link' href={'products/1'}>
-                <ProductContain />
-            </Link>
-
-            <Link className='link' href={'products/1'}>
-                <ProductContain />
-            </Link>
-
-            <Link className='link' href={'products/1'}>
-                <ProductContain />
-            </Link>
-
-            <Link className='link' href={'products/1'}>
-                <ProductContain />
-            </Link>
-
-            <Link className='link' href={'products/1'}>
-                <ProductContain />
-            </Link>
-
-            <Link className='link' href={'products/1'}>
-                <ProductContain />
-            </Link>
-
-            <Link className='link' href={'products/1'}>
-                <ProductContain />
-            </Link>
-
-            <Link className='link' href={'products/1'}>
-                <ProductContain />
-            </Link>
 
         </div>
     )

@@ -14,7 +14,6 @@ import { AuthContext } from '../../../context/authContext';
 
 export default function SignUp() {
 
-
   const STATUS = {
     IDLE: "IDLE",
     SUBMITTED: "SUBMITTED",
@@ -151,9 +150,9 @@ export default function SignUp() {
     if (isValid) { //isValid
       // if (isValid) { //isValid
 
-      console.log("submit");
-      console.log(productImgs);
-      console.log(uploadSingleFile);
+      // console.log("submit");
+      // console.log(productImgs);
+      // console.log(uploadSingleFile);
       // console.log(singleimage64);
       // console.log(image64);
       // console.log(formData);
@@ -169,14 +168,14 @@ export default function SignUp() {
           body: JSON.stringify({ files: image64 })
         }).then(async (res) => {
           const data = await res.json()
-          console.log(data);
+          // console.log(data);
           const res2 = await fetch("/api/products", {
             method: "POST",
             headers: {
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              userId: "60f7b3b3b3b3b3b3b3b3b3b3",
+              userId: isUser.id,
               category: formData.category,
               cityOrState: formData.cityOrState,
               provinceAndRegion: formData.provinceAndRegion,
@@ -192,14 +191,15 @@ export default function SignUp() {
             }),
           });
           if (res2.ok) {
-            console.log("Product Uploaded");
-            console.log(res2);
+            // console.log("Product Uploaded");
+            // console.log(await res2.json());
             setisError("");
             // router.push('/');
 
           } else {
-            console.log("Product Upload failed, try again");
-            console.log(res2);
+            // console.log("Product Upload failed, try again");
+            // console.log(res2);
+            // console.log(await res2.json());
           }
         })
 
@@ -247,7 +247,7 @@ export default function SignUp() {
         // }
 
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
 
       setStatus(STATUS.COMPLETED);

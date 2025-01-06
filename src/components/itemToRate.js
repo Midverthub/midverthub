@@ -4,7 +4,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 
 
-function ItemToRate() {
+function ItemToRate({ data }) {
+    console.log(data.product);
     return (
         <div className='itemToRateDiv d-flex padding'>
             <div className='itemToRateInnerDiv-0 d-flex'>
@@ -25,24 +26,23 @@ function ItemToRate() {
                 <div className='itemToRateInnerDiv d-flex'>
 
                     <div className='itemToRateTitlePriceDiv d-flex'>
-                        <h3 className='itemToRateTitle'>Benz A Class</h3>
-                        <h3 className='itemToRatePriceHeader'>N15000000</h3>
+                        <h3 className='itemToRateTitle'>{data.product.name}</h3>
+                        <h3 className='itemToRatePriceHeader'>{data.product.price}</h3>
                     </div>
 
 
-                    <h4 className='productInfo'>Samsung Galaxy S21 Ultra - 128GB
-                        Phantom Black
+                    <h4 className='productInfo'>{data.product.description}
                     </h4>
 
 
                     <div className='itemToRateInnerDiv-1 d-flex'>
                         <div className='productLoactionDiv d-flex'>
                             <FontAwesomeIcon icon={faLocationDot} className='loactionIcon' />
-                            <p className='productLoaction'>Lagos, Nigeria</p>
+                            <p className='productLoaction'>{data.product.town}, {data.product.state}</p>
                         </div>
 
                         <div className='usageType d-flex'>
-                            <p className='usageTypePgh'>Foreign Used</p>
+                            <p className='usageTypePgh'>{data.product.condition}</p>
                         </div>
                     </div>
 

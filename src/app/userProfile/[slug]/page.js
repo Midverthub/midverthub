@@ -63,10 +63,10 @@ export default function Rating() {
         setStatus(STATUS.SUBMITTING);
 
         if (true) { //isValid
-            console.log("submit");
+            // console.log("submit");
             setStatus(STATUS.COMPLETED);
             // setFinished(prev => !prev)
-            console.log(formData);
+            // console.log(formData);
         } else {
             setStatus(STATUS.SUBMITTED);
         }

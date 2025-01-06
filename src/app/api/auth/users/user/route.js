@@ -26,7 +26,10 @@ export const GET = async (request) => {
                 // include: {
                 //     products: true,
                 // },
-            }
+                omit: {
+                    hashedPassword: true,
+                }
+            },
         )
 
         // return new NextResponse({ status: 200 })

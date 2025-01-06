@@ -52,17 +52,17 @@ export default function UserProfile() {
   function handleImgChg(e) {
     // console.log(e.target.files[0].name);
     const imgSrc = e.target.files[0]
-    console.log(imgSrc);
+    // console.log(imgSrc);
 
     setUserImg(imgSrc);
   }
 
-  console.log(userImg);
+  // console.log(userImg);
 
   if (userImg.length === 0) {
-    console.log("empty");
+    // console.log("empty");
   } else {
-    console.log("there is something here");
+    // console.log("there is something here");
   }
 
   function handleBlur(e) {
@@ -83,10 +83,10 @@ export default function UserProfile() {
     setStatus(STATUS.SUBMITTING);
 
     if (true) { //isValid
-      console.log("submit");
+      // console.log("submit");
       setStatus(STATUS.COMPLETED);
       // setFinished(prev => !prev)
-      console.log(formData);
+      // console.log(formData);
     } else {
       setStatus(STATUS.SUBMITTED);
     }

@@ -1,8 +1,10 @@
+"use client"
 import React from 'react'
 
 import Image from 'next/image'
 
-function Contact() {
+function Contact({ contact, unfollow }) {
+    console.log(contact);
     return (
         <div className='contactDiv padding-l-r  d-flex'>
             <div className='contactUserImgDiv'>
@@ -18,11 +20,11 @@ function Contact() {
 
             <div className='contactInnerdiv d-flex'>
                 <div className='contactInfoDiv '>
-                    <h3 className='subtitle3'> John Doe</h3>
-                    <p className='text1'> Key stone plug</p>
+                    <h3 className='subtitle3'> {(contact.following ? contact.following : contact.follower).name}</h3>
+                    {/* <p className='text1'> Key stone plug</p> */}
                 </div>
 
-                <button className=' text1'>Remove</button>
+                {contact.following && <button onClick={() => unfollow(contact.id)} className=' text1'>Remove</button>}
             </div>
 
         </div>

@@ -1,4 +1,5 @@
-
+"use client"
+import React from 'react'
 import Radio from "@/components/radio";
 import UseType from "@/components/useType";
 import BrandCategories from "@/conatiners/brandCategories";
@@ -7,8 +8,49 @@ import ProductsContainer from "@/conatiners/productsContainer";
 import SearchAndFIlter from "@/conatiners/searchAndFIlter";
 import TopSuggested from "@/conatiners/topSuggested";
 
+import { AuthContext } from "../../../../context/authContext";
+import Loading from '@/loading'
+import axios from 'axios'
 
-export default function CatergoriesLayout({ children }) {
+export const REQUEST_STATUS = {
+    LOADING: "loading",
+    SUCCESS: "success",
+    FAILURE: "failure"
+}
+
+
+export default function CatergoryPage({ params }) {
+    // console.log(params.slug);
+
+
+    const { isUser, isLoading } = React.useContext(AuthContext)
+    // console.log(isUser);
+    const [productData, setProductData] = React.useState([])
+    const [requestStatus, setRequestStatus] = React.useState(REQUEST_STATUS.LOADING)
+
+
+    React.useEffect(() => {
+        if (isUser && isUser.id) {
+            setRequestStatus(REQUEST_STATUS.LOADING)
+            async function fetchData() {
+                try {
+                    const result = await axios.get(`/api/categories/category?title=${params.slug}`);
+                    setProductData(result.data.category.products);
+                    setRequestStatus(REQUEST_STATUS.SUCCESS)
+                    // console.log(result.data);
+                } catch (error) {
+                    setRequestStatus(REQUEST_STATUS.FAILURE)
+                    console.error('Error fetching product data:', error);
+                }
+            }
+            fetchData();
+        }
+    }, [isUser, params.slug])
+    // console.log(productData);
+
+
+    if (isLoading === "loading" || requestStatus === REQUEST_STATUS.LOADING) return (<Loading />)
+
     return (
         <>
             <section className=''>
@@ -29,9 +71,8 @@ export default function CatergoriesLayout({ children }) {
 
                     <BrandCategories />
 
-                    {children}
                     <TopSuggested />
-                    <ProductsContainer />
+                    <ProductsContainer data={productData} />
                 </div>
 
             </section>
