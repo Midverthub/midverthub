@@ -18,23 +18,23 @@ const prisma = new PrismaClient()
 export const GET = async (request, context) => {
     try {
         //collecting the userid as a query from the url
-        const { searchParams } = new URL(request.url)
-        const userId = searchParams.get('userId')
+        // const { searchParams } = new URL(request.url)
+        // const userId = searchParams.get('userId')
 
         await connect();
         // await prisma.$connect()
 
-        if (!userId) {
-            return new NextResponse(JSON.stringify({ message: "missing user id field" }),
-                { status: 400 })
+        // if (!userId) {
+        //     return new NextResponse(JSON.stringify({ message: "missing user id field" }),
+        //         { status: 400 })
 
-        }
+        // }
 
         // checking if the user is exisiting
-        if (!Types.ObjectId.isValid(userId)) {
-            return new NextResponse(JSON.stringify({ message: "Invalid User Id" }),
-                { status: 400 })
-        }
+        // if (!Types.ObjectId.isValid(userId)) {
+        //     return new NextResponse(JSON.stringify({ message: "Invalid User Id" }),
+        //         { status: 400 })
+        // }
 
         const paidAds = await prisma.paidAdvert.findMany({
             include: {

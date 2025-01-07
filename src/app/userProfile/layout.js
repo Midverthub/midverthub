@@ -1,16 +1,17 @@
-'use client'
 import './style.css'
 
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
-import SubHeader from '@/components/subHeader';
+import Back from '@/components/back';
 
-export default function RatingLayout({ children, params }) {
+export default function UserProfileLayout({ children, params }) {
   // console.log(params);
   return (
     <section>
-      <SubHeader title={params.slug} />
+      <div className='subHeaderDiv d-flex padding'>
+        <Back />
+
+        <h3 className='subtitle2' >User Profile</h3>
+      </div>
       {children}
     </section>
   )

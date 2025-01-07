@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 
 import { AuthContext } from '../../context/authContext'
@@ -25,25 +26,25 @@ export default function AdReshuffle() {
     React.useEffect(() => {
 
 
-        if (isUser && isUser.id) {
-            setRequestStatus(REQUEST_STATUS.LOADING)
+        // if (isUser && isUser.id) {
+        setRequestStatus(REQUEST_STATUS.LOADING)
 
-            async function fetchData() {
-                try {
-                    const result = await axios.get(`/api/paidAd?userId=${isUser.id}`);
-                    setProductData(result.data.data);
-                    setRequestStatus(REQUEST_STATUS.SUCCESS)
+        async function fetchData() {
+            try {
+                const result = await axios.get(`/api/paidAd`);
+                setProductData(result.data.data);
+                setRequestStatus(REQUEST_STATUS.SUCCESS)
 
-                } catch (error) {
-                    setRequestStatus(REQUEST_STATUS.FAILURE)
-                    console.error('Error fetching product data:', error);
-                }
+            } catch (error) {
+                setRequestStatus(REQUEST_STATUS.FAILURE)
+                console.error('Error fetching product data:', error);
             }
-            fetchData()
-        } else {
-            setRequestStatus(REQUEST_STATUS.FAILURE)
         }
-    }, [isUser])
+        fetchData()
+        // } else {
+        // setRequestStatus(REQUEST_STATUS.FAILURE)
+        // }
+    }, [])
     console.log(productData);
 
     React.useEffect(() => {
@@ -76,7 +77,7 @@ export default function AdReshuffle() {
                 // console.log(product.updatedAt);
                 async function fetchData() {
                     try {
-                        const result = await axios.get(`/api/paidAd?userId=${isUser.id}`);
+                        const result = await axios.get(`/api/paidAd`);
                         setProductData(result.data.data);
                         setRequestStatus(REQUEST_STATUS.SUCCESS)
 
@@ -93,13 +94,13 @@ export default function AdReshuffle() {
                         console.log("Normal package: 6 hours interval action");
                         if (product.count >= 4) {
                             try {
-                                const res = await fetch(`/api/paidAd/${isUser.id}`, {
+                                const res = await fetch(`/api/paidAd/slug`, {
                                     method: 'DELETE',
                                     headers: {
                                         'Content-Type': 'application/json',
                                     },
                                     body: JSON.stringify({
-                                        userId: isUser.id,
+                                        // userId: isUser.id,
                                         paidAdId: product.id
                                     })
                                 });
@@ -115,49 +116,52 @@ export default function AdReshuffle() {
                             } catch (error) {
                                 console.error('Error reshuffling product:', error);
                             }
-                        }
+                        } else {
 
-                        try {
-                            const res = await fetch(`/api/paidAd/${isUser.id}`, {
-                                method: 'PATCH',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    userId: isUser.id,
-                                    productId: product.productId,
-                                    paidAdId: product.id,
-                                    subscription: product.subscription,
-                                    count: product.count
-                                })
-                            });
 
-                            if (res.status === 200) {
-                                console.log("Ad deleted successfully successfully");
-                                console.log(await res.json());
-                                fetchData();
-                                // if (isRendered) {
-                                //     setIsRendered(prevState => prevState + 1)
-                                // }
+                            try {
+                                const res = await fetch(`/api/paidAd/slug`, {
+                                    method: 'PATCH',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        // userId: isUser.id,
+                                        productId: product.productId,
+                                        paidAdId: product.id,
+                                        subscription: product.subscription,
+                                        count: product.count
+                                    })
+                                });
 
+                                if (res.status === 200) {
+                                    console.log("Ad deleted successfully successfully");
+                                    console.log(await res.json());
+                                    fetchData();
+                                    // if (isRendered) {
+                                    //     setIsRendered(prevState => prevState + 1)
+                                    // }
+
+                                }
+
+                            } catch (error) {
+                                console.error('Error reshuffling product:', error);
                             }
-
-                        } catch (error) {
-                            console.error('Error reshuffling product:', error);
                         }
+
                         // Perform action for normal package
                     } else if (product.subscription === 'pro package' && timeDifference > fourHoursInMilliseconds) {
                         console.log("Pro package: 4 hours interval action");
                         if (product.count >= 6) {
                             console.log('Product count is greater than 6');
                             try {
-                                const res = await fetch(`/api/paidAd/${isUser.id}`, {
+                                const res = await fetch(`/api/paidAd/slug`, {
                                     method: 'DELETE',
                                     headers: {
                                         'Content-Type': 'application/json',
                                     },
                                     body: JSON.stringify({
-                                        userId: isUser.id,
+                                        // userId: isUser.id,
                                         paidAdId: product.id
                                     })
                                 });
@@ -176,49 +180,52 @@ export default function AdReshuffle() {
                             } catch (error) {
                                 console.error('Error reshuffling product:', error);
                             }
-                        }
+                        } else {
 
-                        try {
-                            const res = await fetch(`/api/paidAd/${isUser.id}`, {
-                                method: 'PATCH',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    userId: isUser.id,
-                                    productId: product.productId,
-                                    paidAdId: product.id,
-                                    subscription: product.subscription,
-                                    count: product.count
 
-                                })
-                            });
+                            try {
+                                const res = await fetch(`/api/paidAd/slug`, {
+                                    method: 'PATCH',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        // userId: isUser.id,
+                                        productId: product.productId,
+                                        paidAdId: product.id,
+                                        subscription: product.subscription,
+                                        count: product.count
 
-                            if (res.status === 200) {
-                                console.log("Ad deleted successfully successfully");
-                                console.log(await res.json());
-                                fetchData();
-                                // if (isRendered) {
-                                //     setIsRendered(prevState => prevState + 1)
-                                // }
+                                    })
+                                });
 
+                                if (res.status === 200) {
+                                    console.log("Ad deleted successfully successfully");
+                                    console.log(await res.json());
+                                    fetchData();
+                                    // if (isRendered) {
+                                    //     setIsRendered(prevState => prevState + 1)
+                                    // }
+
+                                }
+
+                            } catch (error) {
+                                console.error('Error reshuffling product:', error);
                             }
-
-                        } catch (error) {
-                            console.error('Error reshuffling product:', error);
                         }
+
                         // Perform action for pro package
                     } else if (product.subscription === 'pro plus package' && timeDifference > twoHoursInMilliseconds) {
                         console.log("Plus package: 2 hours interval action");
                         if (product.count >= 12) {
                             try {
-                                const res = await fetch(`/api/paidAd/${isUser.id}`, {
+                                const res = await fetch(`/api/paidAd/slug`, {
                                     method: 'DELETE',
                                     headers: {
                                         'Content-Type': 'application/json',
                                     },
                                     body: JSON.stringify({
-                                        userId: isUser.id,
+                                        // userId: isUser.id,
                                         paidAdId: product.id
                                     })
                                 });
@@ -235,36 +242,38 @@ export default function AdReshuffle() {
                             } catch (error) {
                                 console.error('Error reshuffling product:', error);
                             }
-                        }
+                        } else {
 
-                        try {
-                            const res = await fetch(`/api/paidAd/${isUser.id}`, {
-                                method: 'PATCH',
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                },
-                                body: JSON.stringify({
-                                    userId: isUser.id,
-                                    productId: product.productId,
-                                    paidAdId: product.id,
-                                    subscription: product.subscription,
-                                    count: product.count
 
-                                })
-                            });
+                            try {
+                                const res = await fetch(`/api/paidAd/slug`, {
+                                    method: 'PATCH',
+                                    headers: {
+                                        'Content-Type': 'application/json',
+                                    },
+                                    body: JSON.stringify({
+                                        // userId: isUser.id,
+                                        productId: product.productId,
+                                        paidAdId: product.id,
+                                        subscription: product.subscription,
+                                        count: product.count
 
-                            if (res.status === 200) {
-                                console.log("Ad deleted successfully successfully");
-                                console.log(await res.json());
-                                fetchData();
-                                // if (isRendered) {
-                                //     setIsRendered(prevState => prevState + 1)
-                                // }
+                                    })
+                                });
 
+                                if (res.status === 200) {
+                                    console.log("Ad deleted successfully successfully");
+                                    console.log(await res.json());
+                                    fetchData();
+                                    // if (isRendered) {
+                                    //     setIsRendered(prevState => prevState + 1)
+                                    // }
+
+                                }
+
+                            } catch (error) {
+                                console.error('Error reshuffling product:', error);
                             }
-
-                        } catch (error) {
-                            console.error('Error reshuffling product:', error);
                         }
                         // Perform action for plus package
                     }

@@ -7,6 +7,7 @@ import CategoryItems from "@/conatiners/categoryItems";
 import ProductsContainer from "@/conatiners/productsContainer";
 import SearchAndFIlter from "@/conatiners/searchAndFIlter";
 import TopSuggested from "@/conatiners/topSuggested";
+import Back from '@/components/back';
 
 import { AuthContext } from "../../../../context/authContext";
 import Loading from '@/loading'
@@ -30,21 +31,21 @@ export default function CatergoryPage({ params }) {
 
 
     React.useEffect(() => {
-        if (isUser && isUser.id) {
-            setRequestStatus(REQUEST_STATUS.LOADING)
-            async function fetchData() {
-                try {
-                    const result = await axios.get(`/api/categories/category?title=${params.slug}`);
-                    setProductData(result.data.category.products);
-                    setRequestStatus(REQUEST_STATUS.SUCCESS)
-                    // console.log(result.data);
-                } catch (error) {
-                    setRequestStatus(REQUEST_STATUS.FAILURE)
-                    console.error('Error fetching product data:', error);
-                }
+        // if (isUser && isUser.id) {
+        setRequestStatus(REQUEST_STATUS.LOADING)
+        async function fetchData() {
+            try {
+                const result = await axios.get(`/api/categories/category?title=${params.slug}`);
+                setProductData(result.data.category.products);
+                setRequestStatus(REQUEST_STATUS.SUCCESS)
+                // console.log(result.data);
+            } catch (error) {
+                setRequestStatus(REQUEST_STATUS.FAILURE)
+                console.error('Error fetching product data:', error);
             }
-            fetchData();
         }
+        fetchData();
+        // }
     }, [isUser, params.slug])
     // console.log(productData);
 
@@ -56,6 +57,13 @@ export default function CatergoryPage({ params }) {
             <section className=''>
 
                 <div>
+
+                    <div className='subHeaderDiv d-flex padding'>
+                        <Back />
+
+                        <h3 className='subtitle2' >{params.slug}</h3>
+                    </div>
+
                     <div className="categoriesInnerDiv d-flex">
 
                         <SearchAndFIlter />

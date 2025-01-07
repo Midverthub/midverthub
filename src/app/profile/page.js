@@ -15,6 +15,7 @@ import Link from 'next/link'
 
 import { AuthContext } from '../../../context/authContext';
 import Loading from '@/loading'
+import { logout } from '../../../actions/auth';
 
 export default function SideMenu() {
 
@@ -28,10 +29,18 @@ export default function SideMenu() {
 
     <div className="sideMenuDiv height d-flex">
       <div>
-        <header className='sideMenuHeader padding d-flex'>
-          <h3 className='subtitle1'>{`Welcome, ${isUser.name}`}</h3>
-          <p className='text1'>{isUser.email}</p>
-        </header>
+        {isUser ? (
+
+          <header className='sideMenuHeader padding d-flex'>
+            <h3 className='subtitle1'>{`Welcome, ${isUser.name}`}</h3>
+            <p className='text1'>{isUser.email}</p>
+          </header>
+        ) : (
+          <header className='sideMenuHeader padding d-flex'>
+            <h3 className='subtitle1'>Welcome, Guest</h3>
+            <p className='text1'>Sign in to access your account</p>
+          </header>
+        )}
 
         <p className='text1 padding'>My Account</p>
 
@@ -78,10 +87,12 @@ export default function SideMenu() {
         <p className='text1 padding'>My Profile</p>
 
         <div className='sideMenuOptionsDiv padding-t-b d-flex'>
-          <div className='sideMenuOptionProfile padding-l-r d-flex'>
-            <h4 className='subtitle1'>Account Management</h4>
-            <FontAwesomeIcon icon={faAngleRight} className='iconSize2' />
-          </div>
+          <Link className='link' href='/userProfile'>
+            <div className='sideMenuOptionProfile padding-l-r d-flex'>
+              <h4 className='subtitle1'>Account Management</h4>
+              <FontAwesomeIcon icon={faAngleRight} className='iconSize2' />
+            </div>
+          </Link>
 
           <div className='sideMenuOptionProfile padding-l-r d-flex'>
             <h4 className='subtitle1'>Close Account</h4>
@@ -92,10 +103,11 @@ export default function SideMenu() {
       </div>
 
 
-
-      <h3 className='padding subtitle2 logoutHeader d-flex'>
-        Logout
-      </h3>
+      {isUser &&
+        <h3 onClick={() => logout()} className='padding subtitle2 logoutHeader d-flex'>
+          Logout
+        </h3>
+      }
     </div>
 
   )

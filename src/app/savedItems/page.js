@@ -71,12 +71,30 @@ export default function SavedItems() {
         }
       }
       fetchData();
+    } else {
+      setRequestStatus(REQUEST_STATUS.SUCCESS)
+      setProductData([]);
     }
   }, [isUser])
   // console.log(productData);
 
   if (isLoading === "loading" || requestStatus === REQUEST_STATUS.LOADING) return (<Loading />)
 
+  if (!isUser) return (
+    <div className='margin-t-b advertLinkDiv d-flex'>
+      <p className='subtitle1'> Login to save an item</p>
+
+      <Link className='link' href='/login'>
+        <button className='advertLinkBtn d-flex'>
+          <p className='subtitle1'>
+            Continue to Login
+          </p>
+          {/* <FontAwesomeIcon icon={faHome} className="iconSize2" /> */}
+        </button>
+      </Link>
+
+    </div>
+  )
 
 
   return (

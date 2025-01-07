@@ -56,7 +56,7 @@ export default function Home() {
 
         <h3 className="suggestionHeader otherItems">Other Items</h3>
         {/* <ProductsContainer data={productData} /> */}
-        {/* <AdReshuffle /> */}
+        <AdReshuffle />
 
       </main>
     </div>

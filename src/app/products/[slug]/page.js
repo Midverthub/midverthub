@@ -10,6 +10,8 @@ import { AuthContext } from '../../../../context/authContext';
 import axios from 'axios'
 import Loading from '@/loading';
 
+import Back from '@/components/back';
+
 export const REQUEST_STATUS = {
     LOADING: "loading",
     SUCCESS: "success",
@@ -28,24 +30,24 @@ export default function Product({ params }) {
 
 
     React.useEffect(() => {
-        if (isUser && isUser.id) {
-            setRequestStatus(REQUEST_STATUS.LOADING)
+        // if (isUser && isUser.id) {
+        setRequestStatus(REQUEST_STATUS.LOADING)
 
-            async function fetchData() {
-                try {
-                    const result = await axios.get(`/api/products/${params.slug}?userId=${isUser.id}`);
-                    setProductData(result.data.data);
-                    setRequestStatus(REQUEST_STATUS.SUCCESS)
+        async function fetchData() {
+            try {
+                const result = await axios.get(`/api/products/${params.slug}`);
+                setProductData(result.data.data);
+                setRequestStatus(REQUEST_STATUS.SUCCESS)
 
-                } catch (error) {
-                    setRequestStatus(REQUEST_STATUS.FAILURE)
-                    console.error('Error fetching product data:', error);
-                }
+            } catch (error) {
+                setRequestStatus(REQUEST_STATUS.FAILURE)
+                console.error('Error fetching product data:', error);
             }
-            fetchData();
         }
+        fetchData();
+        // }
     }, [isUser, params.slug])
-    // console.log(productData);
+    console.log(productData);
 
     async function saveProduct() {
         try {
@@ -84,7 +86,13 @@ export default function Product({ params }) {
 
 
     return (
+
         <div className='productsMainDiv d-flex'>
+            <div className='subHeaderDiv d-flex padding'>
+                <Back />
+
+                <h3 className='subtitle2' >{productData.name}</h3>
+            </div>
             <div className='productImgMain'>
                 <Image
                     fill
@@ -117,7 +125,7 @@ export default function Product({ params }) {
                     </div>
 
                     <div className='mainProductInfoInnerDiv2 d-flex'>
-                        <div>
+                        <button>
                             <Image
                                 width={18}
                                 height={18}
@@ -127,9 +135,9 @@ export default function Product({ params }) {
                                 style={{ objectFit: 'contain' }}
 
                             />
-                        </div>
+                        </button>
 
-                        <div>
+                        <button disabled={!isUser} onClick={() => saveProduct()}>
                             <Image
                                 width={18}
                                 height={18}
@@ -137,10 +145,10 @@ export default function Product({ params }) {
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 alt='Save'
                                 style={{ objectFit: 'contain' }}
-                                onClick={() => saveProduct()}
+                            // onClick={() => saveProduct()}
 
                             />
-                        </div>
+                        </button>
 
                     </div>
                 </div>
@@ -167,7 +175,7 @@ export default function Product({ params }) {
                 <div className='mainProductMoreInfoInner d-flex'>
                     <div className='mainProductMoreInfoInnerDiv d-flex'>
                         <p className='mainProductMoreInfoTitle'>State of item:</p>
-                        <p className='mainProductMoreInfoDetails'>Brand new</p>
+                        <p className='mainProductMoreInfoDetails'>{productData.condition}</p>
                     </div>
 
                     <div className='mainProductMoreInfoInnerDiv d-flex'>
@@ -176,13 +184,16 @@ export default function Product({ params }) {
                     </div>
 
                     <div className='mainProductMoreInfoInnerDiv d-flex'>
-                        <p className='mainProductMoreInfoTitle'>Payment:</p>
-                        <p className='mainProductMoreInfoDetails'>Before delivery</p>
-                    </div>
-
-                    <div className='mainProductMoreInfoInnerDiv d-flex'>
                         <p className='mainProductMoreInfoTitle'>Color:</p>
                         <p className='mainProductMoreInfoDetails'>Grey</p>
+                    </div>
+
+
+                    <div className='mainProductMoreInfoInnerDiv d-flex'>
+                        <p className='mainProductMoreInfoTitle'>Category:</p>
+                        <Link className='links' href={`/categories/${productData.categoryTitle}`}>
+                            <p className='mainProductMoreInfoDetails'>{productData.categoryTitle}</p>
+                        </Link>
                     </div>
                 </div>
 

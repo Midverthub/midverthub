@@ -1,4 +1,3 @@
-'use client'
 import { Manrope } from 'next/font/google'
 import "./style.css"
 
@@ -9,6 +8,7 @@ export default function ProductsLayout({ children }) {
     return (
         <>
             <section className={inter.className}>
+
                 <div>
                     {children}
                 </div>

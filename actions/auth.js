@@ -87,7 +87,7 @@ export const signupWithCredentials = async (email, password) => {
         // email: formData.get('email'),
         password: password,
         // password: formData.get('password'),
-        role: "ADMIN",
+        role: "USER",
         redirectTo: '/signup/userinfo'
     }
 
@@ -127,7 +127,7 @@ export const loginWithCredentials = async (email, password) => {
         // email: formData.get('email'),
         password: password,
         // password: formData.get('password'),
-        role: "ADMIN",
+        role: "USER",
         redirectTo: '/'
     }
 

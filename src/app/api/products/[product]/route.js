@@ -15,15 +15,15 @@ export const GET = async (request, context) => {
 
     try {
         //collecting the userid as a query from the url
-        const { searchParams } = new URL(request.url)
-        const userId = searchParams.get('userId')
+        // const { searchParams } = new URL(request.url)
+        // const userId = searchParams.get('userId')
         // const productId = searchParams.get('productId')
 
         //checking if the userId is correct or exisiting
-        if (!userId || !Types.ObjectId.isValid(userId)) {
-            return new NextResponse(JSON.stringify({ message: "Invalid or missing userId" }),
-                { status: 404 })
-        }
+        // if (!userId || !Types.ObjectId.isValid(userId)) {
+        //     return new NextResponse(JSON.stringify({ message: "Invalid or missing userId" }),
+        //         { status: 404 })
+        // }
 
         //checking if the categoryId is correct or exisiting
         if (!productId || !Types.ObjectId.isValid(productId)) {
@@ -33,18 +33,18 @@ export const GET = async (request, context) => {
 
         await connect()
 
-        const user = await prisma.user.findUnique(
-            {
-                where: {
-                    id: userId
-                },
-            }
-        )
+        // const user = await prisma.user.findUnique(
+        //     {
+        //         where: {
+        //             id: userId
+        //         },
+        //     }
+        // )
         //checking if the user is exisiting
-        if (!user) {
-            return new NextResponse(JSON.stringify({ message: "User not found in database" }),
-                { status: 404 })
-        }
+        // if (!user) {
+        //     return new NextResponse(JSON.stringify({ message: "User not found in database" }),
+        //         { status: 404 })
+        // }
 
         //getting the product
         const product = await prisma.product.findUnique({

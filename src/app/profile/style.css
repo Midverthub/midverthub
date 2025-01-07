@@ -4,6 +4,7 @@
 /* SIDE MENU */
 
 .sideMenuDiv {
+    height: 85vh;
     flex-direction: column;
     justify-content: space-between;
 }

@@ -133,13 +133,16 @@ export const POST = async (request, context) => {
 
 export const PATCH = async (request, context) => {
     try {
-        const { userId, productId, paidAdId, subscription, count } = await request.json()
+        const {
+            //  userId,
+
+            productId, paidAdId, subscription, count } = await request.json()
 
 
-        if (!userId || !Types.ObjectId.isValid(userId)) {
-            return new NextResponse(JSON.stringify({ message: "Invalid or missing userId" }),
-                { status: 404 })
-        }
+        // if (!userId || !Types.ObjectId.isValid(userId)) {
+        //     return new NextResponse(JSON.stringify({ message: "Invalid or missing userId" }),
+        //         { status: 404 })
+        // }
 
         if (!productId || !Types.ObjectId.isValid(productId)) {
             return new NextResponse(JSON.stringify({ message: "Invalid or missing productId" }),
@@ -155,17 +158,17 @@ export const PATCH = async (request, context) => {
 
         await connect()
 
-        const user = await prisma.user.findUnique({
-            where: {
-                id: userId
-            }
-        })
+        // const user = await prisma.user.findUnique({
+        //     where: {
+        //         id: userId
+        //     }
+        // })
 
-        if (!user) {
-            return new NextResponse(JSON.stringify({ message: "User not found" }),
-                { status: 404 })
+        // if (!user) {
+        //     return new NextResponse(JSON.stringify({ message: "User not found" }),
+        //         { status: 404 })
 
-        }
+        // }
 
         const product = await prisma.product.findUnique({
             where: {
@@ -196,9 +199,9 @@ export const PATCH = async (request, context) => {
                 id: paidAdId
             },
             data: {
-                user: {
-                    connect: { id: userId ? userId : ad.userId },
-                },
+                // user: {
+                //     connect: { id: userId ? userId : ad.userId },
+                // },
                 product: {
                     connect: { id: productId ? productId : ad.productId },
                 },
@@ -224,13 +227,16 @@ export const PATCH = async (request, context) => {
 
 export const DELETE = async (request, context) => {
     try {
-        const { userId, paidAdId, } = await request.json()
+        const {
+            //  userId,
+
+            paidAdId, } = await request.json()
 
 
-        if (!userId || !Types.ObjectId.isValid(userId)) {
-            return new NextResponse(JSON.stringify({ message: "Invalid or missing userId" }),
-                { status: 404 })
-        }
+        // if (!userId || !Types.ObjectId.isValid(userId)) {
+        //     return new NextResponse(JSON.stringify({ message: "Invalid or missing userId" }),
+        //         { status: 404 })
+        // }
 
         if (!paidAdId || !Types.ObjectId.isValid(paidAdId)) {
             return new NextResponse(JSON.stringify({ message: "Invalid or missing paidAdId" }),
@@ -240,17 +246,17 @@ export const DELETE = async (request, context) => {
 
         await connect()
 
-        const user = await prisma.user.findUnique({
-            where: {
-                id: userId
-            }
-        })
+        // const user = await prisma.user.findUnique({
+        //     where: {
+        //         id: userId
+        //     }
+        // })
 
-        if (!user) {
-            return new NextResponse(JSON.stringify({ message: "User not found" }),
-                { status: 404 })
+        // if (!user) {
+        //     return new NextResponse(JSON.stringify({ message: "User not found" }),
+        //         { status: 404 })
 
-        }
+        // }
 
         const ad = await prisma.paidAdvert.findUnique({
             where: {
