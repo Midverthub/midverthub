@@ -15,7 +15,7 @@ export const REQUEST_STATUS = {
 export default function AdReshuffle() {
 
     const { isUser, isLoading } = React.useContext(AuthContext)
-    console.log(isUser);
+    // console.log(isUser);
     const [productData, setProductData] = React.useState([])
     const [requestStatus, setRequestStatus] = React.useState(REQUEST_STATUS.LOADING)
     const [isRendered, setIsRendered] = React.useState(1)
@@ -45,7 +45,7 @@ export default function AdReshuffle() {
         // setRequestStatus(REQUEST_STATUS.FAILURE)
         // }
     }, [])
-    console.log(productData);
+    // console.log(productData);
 
     React.useEffect(() => {
         if (requestStatus === REQUEST_STATUS.SUCCESS) {
@@ -55,12 +55,13 @@ export default function AdReshuffle() {
                 const updateTimestamp = new Date(product.updatedAt).getTime();
                 const currentTime = new Date().getTime();
                 const timeDifference = currentTime - updateTimestamp / (1000 * 60 * 60)
-                console.log(`Time difference in hours: ${timeDifference}`);
-                if (timeDifference > 2 * 60 * 60 * 1000) {
-                    console.log('More than 2 hours have passed');
-                } else {
-                    console.log('Less than 2 hours have passed');
-                }
+                // console.log(`Time difference in hours: ${timeDifference}`);
+                // if (timeDifference > 2 * 60 * 60 * 1000) {
+                //     console.log('More than 2 hours have passed');
+                // } else {
+                //     console.log('Less than 2 hours have passed');
+                // }
+
                 // const twoHoursInMilliseconds = 2 * 60 * 60 * 1000;
                 // const fourHoursInMilliseconds = 4 * 60 * 60 * 1000;
                 // const sixHoursInMilliseconds = 6 * 60 * 60 * 1000;
@@ -88,10 +89,10 @@ export default function AdReshuffle() {
                 }
 
                 return setInterval(async () => {
-                    console.log("Interval running");
+                    // console.log("Interval running");
                     // Check the state and perform an action based on the state
                     if (product.subscription === 'manual plan' && timeDifference > sixHoursInMilliseconds) {
-                        console.log("Normal package: 6 hours interval action");
+                        // console.log("Normal package: 6 hours interval action");
                         if (product.count >= 4) {
                             try {
                                 const res = await fetch(`/api/paidAd/slug`, {
@@ -107,7 +108,7 @@ export default function AdReshuffle() {
 
                                 if (res.status === 200) {
                                     console.log("Ad deleted successfully successfully");
-                                    console.log(await res.json());
+                                    // console.log(await res.json());
                                     fetchData();
                                     // if (isRendered) {
                                     //     setIsRendered(prevState => prevState + 1)
@@ -136,7 +137,7 @@ export default function AdReshuffle() {
 
                                 if (res.status === 200) {
                                     console.log("Ad deleted successfully successfully");
-                                    console.log(await res.json());
+                                    // console.log(await res.json());
                                     fetchData();
                                     // if (isRendered) {
                                     //     setIsRendered(prevState => prevState + 1)
@@ -151,9 +152,9 @@ export default function AdReshuffle() {
 
                         // Perform action for normal package
                     } else if (product.subscription === 'pro package' && timeDifference > fourHoursInMilliseconds) {
-                        console.log("Pro package: 4 hours interval action");
+                        // console.log("Pro package: 4 hours interval action");
                         if (product.count >= 6) {
-                            console.log('Product count is greater than 6');
+                            // console.log('Product count is greater than 6');
                             try {
                                 const res = await fetch(`/api/paidAd/slug`, {
                                     method: 'DELETE',
@@ -168,7 +169,7 @@ export default function AdReshuffle() {
 
                                 if (res.status === 200) {
                                     console.log("Ad deleted successfully successfully");
-                                    console.log(await res.json());
+                                    // console.log(await res.json());
                                     fetchData();
                                     // if (isRendered) {
                                     //     setIsRendered(prevState => prevState + 1)
@@ -201,7 +202,7 @@ export default function AdReshuffle() {
 
                                 if (res.status === 200) {
                                     console.log("Ad deleted successfully successfully");
-                                    console.log(await res.json());
+                                    // console.log(await res.json());
                                     fetchData();
                                     // if (isRendered) {
                                     //     setIsRendered(prevState => prevState + 1)
@@ -216,7 +217,7 @@ export default function AdReshuffle() {
 
                         // Perform action for pro package
                     } else if (product.subscription === 'pro plus package' && timeDifference > twoHoursInMilliseconds) {
-                        console.log("Plus package: 2 hours interval action");
+                        // console.log("Plus package: 2 hours interval action");
                         if (product.count >= 12) {
                             try {
                                 const res = await fetch(`/api/paidAd/slug`, {
@@ -232,7 +233,7 @@ export default function AdReshuffle() {
 
                                 if (res.status === 200) {
                                     console.log("Ad deleted successfully successfully");
-                                    console.log(await res.json());
+                                    // console.log(await res.json());
                                     fetchData();
                                     // if (isRendered) {
                                     //     setIsRendered(prevState => prevState + 1)
@@ -263,7 +264,7 @@ export default function AdReshuffle() {
 
                                 if (res.status === 200) {
                                     console.log("Ad deleted successfully successfully");
-                                    console.log(await res.json());
+                                    // console.log(await res.json());
                                     fetchData();
                                     // if (isRendered) {
                                     //     setIsRendered(prevState => prevState + 1)

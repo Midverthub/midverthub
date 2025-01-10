@@ -29,12 +29,12 @@ export default function SignUp() {
 
     const [formData, setFormData] = React.useState({
 
-        fullName: "",
-        email: "",
-        phone: "",
-        cityOrState: "",
-        provinceAndRegion: "",
-        postalCode: ""
+        fullName: "".trim(),
+        email: "".trim(),
+        phone: "".trim(),
+        cityOrState: "".trim(),
+        provinceAndRegion: "".trim(),
+        postalCode: "".trim()
 
     });
 
@@ -138,19 +138,18 @@ export default function SignUp() {
     }
 
     function CheckText(inputtxt) {
-        var decimal = /[^ a - zA - Z] +/g;
+        var decimal = /^[a-zA-Z\s]+$/
         if (inputtxt.match(decimal)) {
             return true;
         }
         else {
             return false;
         }
-        // return true
     }
 
 
     function CheckPhone(inputtxt) {
-        var number = /^(\+?\d{1,4})?\s?\d{7,14}$/;
+        var number = /^\+?\d{1,3}?\s?\d{10}$/;
         if (inputtxt.match(number)) {
             return true;
         }
@@ -190,14 +189,14 @@ export default function SignUp() {
         if (!formData.phone) {
             result.phone = "Phone number is required";
         } else if (!CheckPhone(formData.phone)) {
-            result.phone = "Phone Number cannot contian letters";
+            result.phone = "Phone Number cannot contian letters or is not correct";
         }
 
-        if (!formData.postalCode) {
-            result.postalCode = "Postal code is required";
-        } else if (!CheckZip(formData.postalCode)) {
-            result.postalCode = "Postal code cannot contain special charaters or letters";
-        }
+        // if (!formData.postalCode) {
+        //     result.postalCode = "Postal code is required";
+        // } else if (!CheckZip(formData.postalCode)) {
+        //     result.postalCode = "Postal code cannot contain special charaters or letters";
+        // }
 
         if (!formData.cityOrState) {
             result.cityOrState = "City or State is required";
@@ -337,7 +336,7 @@ export default function SignUp() {
                 </div>
 
                 <div className='inputDivs d-flex'>
-                    <label htmlFor="postalCode"> Postal code*</label>
+                    <label htmlFor="postalCode"> Postal code</label>
                     <input
                         type="text"
                         name="postalCode"
@@ -347,9 +346,9 @@ export default function SignUp() {
                         onBlur={handleBlur}
                         value={formData.postalCode}
                     />
-                    <p className="error" role="alert">
+                    {/* <p className="error" role="alert">
                         {(touched.postalCode || isStatus === STATUS.SUBMITTED) && errors.postalCode}
-                    </p>
+                    </p> */}
                 </div>
 
 
@@ -357,7 +356,7 @@ export default function SignUp() {
                 <button
                     className="subBtn"
                     type="submit"
-                    disabled={!(formData.email || formData.password || formData.passwordCheck)}
+                    disabled={!(formData.fullName && formData.cityOrState && formData.email && formData.phone && formData.provinceAndRegion)}
                 >
                     Continue
                 </button>

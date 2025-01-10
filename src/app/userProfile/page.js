@@ -10,8 +10,15 @@ import Link from 'next/link'
 import { faImage } from '@fortawesome/free-solid-svg-icons';
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 
+import { AuthContext } from '../../../context/authContext';
+import Loading from '@/loading'
+
 
 export default function UserProfile() {
+
+  const { isUser, isLoading } = React.useContext(AuthContext)
+  console.log(isUser);
+
 
   const STATUS = {
     IDLE: "IDLE",
@@ -135,7 +142,7 @@ export default function UserProfile() {
   if (loginError) throw loginError
 
 
-  if (isStatus === "SUBMITTING") return (<div className="container">...LOADING</div>)
+  if (isLoading === "loading" || isStatus === "SUBMITTING") return (<Loading />)
 
 
 
@@ -184,7 +191,7 @@ export default function UserProfile() {
 
 
       <div className='inputDivs d-flex'>
-        <label htmlFor="firstName"> First Name</label>
+        <label htmlFor="firstName">Name</label>
 
         <input
           type="text"
@@ -201,7 +208,7 @@ export default function UserProfile() {
 
       </div>
 
-      <div className='inputDivs d-flex'>
+      {/* <div className='inputDivs d-flex'>
         <label htmlFor="lastName"> Last Name</label>
 
         <input
@@ -217,7 +224,7 @@ export default function UserProfile() {
           {(touched.lastName || isStatus === STATUS.SUBMITTED) && errors.lastName}
         </p>
 
-      </div>
+      </div> */}
 
       <div className='inputDivs d-flex'>
         <label htmlFor="location"> Type</label>

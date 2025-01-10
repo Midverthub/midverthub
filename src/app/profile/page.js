@@ -87,12 +87,12 @@ export default function SideMenu() {
         <p className='text1 padding'>My Profile</p>
 
         <div className='sideMenuOptionsDiv padding-t-b d-flex'>
-          <Link className='link' href='/userProfile'>
-            <div className='sideMenuOptionProfile padding-l-r d-flex'>
-              <h4 className='subtitle1'>Account Management</h4>
-              <FontAwesomeIcon icon={faAngleRight} className='iconSize2' />
-            </div>
-          </Link>
+          {/* <Link className='link' href='/userProfile'> */}
+          <div className='sideMenuOptionProfile padding-l-r d-flex'>
+            <h4 className='subtitle1'>Account Management</h4>
+            <FontAwesomeIcon icon={faAngleRight} className='iconSize2' />
+          </div>
+          {/* </Link> */}
 
           <div className='sideMenuOptionProfile padding-l-r d-flex'>
             <h4 className='subtitle1'>Close Account</h4>

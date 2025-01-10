@@ -35,6 +35,8 @@ export default function SignUp() {
   // const [finish, setFinished] = React.useState(false);
   const [loginError, setLoginError] = React.useState('')
 
+  // const [isShowPassword, setisShowPassword] = React.useState(false)
+
   const errors = getErrors();
   const isValid = Object.keys(errors).length === 0;
 
@@ -47,6 +49,7 @@ export default function SignUp() {
       };
     });
   }
+
 
   function handleBlur(e) {
     const { name } = e.target;
@@ -193,7 +196,7 @@ export default function SignUp() {
           <div>
 
             <input
-              type="password"
+              type={formData.showPassword ? "text" : "password"}
               name="password"
               placeholder="Password"
               onChange={handleChg}
@@ -210,7 +213,7 @@ export default function SignUp() {
           <div>
 
             <input
-              type="password"
+              type={formData.showPassword ? "text" : "password"}
               name="passwordCheck"
               placeholder="Repeat Password"
               onChange={handleChg}
@@ -252,7 +255,7 @@ export default function SignUp() {
           <button
             className="subBtn"
             type="submit"
-            disabled={!(formData.email || formData.password || formData.passwordCheck)}
+            disabled={!(formData.email && formData.password && formData.passwordCheck)}
           >
             Continue
           </button>

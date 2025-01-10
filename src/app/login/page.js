@@ -29,6 +29,7 @@ export default function SignUp() {
   const [formData, setFormData] = React.useState({
     email: "",
     password: "",
+    showPassword: false,
   });
 
   const [isStatus, setStatus] = React.useState(STATUS.IDLE);
@@ -214,7 +215,7 @@ export default function SignUp() {
             </p>
 
             <input
-              type="password"
+              type={formData.showPassword ? "text" : "password"}
               name="password"
               id='Password'
               placeholder="Password"
@@ -224,6 +225,18 @@ export default function SignUp() {
             />
             <sub className='forgotPassword'>Forgot Password?</sub>
 
+          </div>
+
+          <div className='checkboxDiv d-flex'>
+            <input
+              className='checkbox'
+              type="checkbox"
+              id="showPassword"
+              name="showPassword"
+              checked={formData.showPassword}
+              onChange={handleChg}
+            />
+            <label htmlFor="isFriendly">Show Password?</label>
           </div>
 
 

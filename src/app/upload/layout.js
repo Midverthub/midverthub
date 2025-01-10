@@ -8,7 +8,7 @@ export default function SignUpLayout({ children }) {
         <Back />
         {/* <FontAwesomeIcon icon={faAngleLeft} className="backIcon" /> */}
 
-        <h3 className='subtitle2' >Saved Items</h3>
+        <h3 className='subtitle2' >Upload</h3>
       </div>
 
       {children}

@@ -25,15 +25,16 @@
 //     return NextResponse.next()
 // }
 
-import { auth } from "./auth";
+import { auth } from "../auth";
 import { NextResponse } from "next/server";
+import UserProfile from "./app/userProfile/page";
 
-const protectedRoutes = ["/savedItems", "upload"];
+const protectedRoutes = ["/savedItems", "/upload", "/adverts", "/contacts", "/rating", "/userProfile", "/reShuffle"];
 
 export default async function middleware(request) {
     // get the session object from the auth function to check if the user is logged in or not
     const session = await auth();
-    console.log(session);
+    // console.log(session);
 
     // check if the user is on a protected route or not by checking the pathname of the url and comparing it to the protected routes array 
     const isProtectedRoute = protectedRoutes.some((route) => {
@@ -43,7 +44,7 @@ export default async function middleware(request) {
     // if the user is not logged in and is on a protected route, redirect them to the home page
     if (!session && isProtectedRoute) {
         // redirect to the home page 
-        const absoluteUrl = new URL('/', request.nextUrl.origin);
+        const absoluteUrl = new URL('/login', request.nextUrl.origin);
         // return the redirect response 
         return NextResponse.redirect(absoluteUrl.toString());
     }
