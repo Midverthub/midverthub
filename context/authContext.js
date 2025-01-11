@@ -27,8 +27,8 @@ function AuthContextProvider({ children, session }) {
         async function getUser() {
             try {
                 const response = await axios.get(`/api/auth/users/user?email=${session.user.email}`)
-                setIsLoading(REQUEST_STATUS.SUCCESS)
                 setUser(response.data)
+                setIsLoading(REQUEST_STATUS.SUCCESS)
 
             } catch (error) {
                 setIsLoading(REQUEST_STATUS.FAILURE)

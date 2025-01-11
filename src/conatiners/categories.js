@@ -40,7 +40,7 @@ function Categories() {
 
     return (
         <div className='categories'>
-            <Link className='link' href={'/upload'}>
+            {/* <Link className='link' href={'/upload'}>
                 <div className='sellDiv d-flex'>
                     <Image
                         src="/assets/sell.svg"
@@ -51,7 +51,7 @@ function Categories() {
                     />
                     Sell
                 </div>
-            </Link>
+            </Link> */}
 
             {
                 categories.map((category) => (

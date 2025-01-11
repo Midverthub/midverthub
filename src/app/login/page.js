@@ -75,8 +75,6 @@ export default function SignUp() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-
-
     setStatus(STATUS.SUBMITTING);
 
     if (isValid) {
@@ -92,6 +90,7 @@ export default function SignUp() {
       }
       else {
         //login with credentials
+        setStatus(STATUS.SUBMITTING);
         loginWithCredentials(formData.email, formData.password)
       }
 
@@ -145,7 +144,7 @@ export default function SignUp() {
   if (loginError) throw loginError
 
 
-  if (isStatus === "SUBMITTING") return (<Loading />)
+  if (isStatus === "SUBMITTING" || isLoading === 'loading') return (<Loading />)
 
 
   return (

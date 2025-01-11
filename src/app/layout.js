@@ -22,8 +22,6 @@ export default async function RootLayout({ children }) {
 
   const session = await auth();
 
-  // console.log(session.user.email);
-
   return (
     <SessionProvider session={session}>
       <AuthContextProvider session={session ? session : null}>

@@ -6,8 +6,6 @@ import Credentials from "next-auth/providers/credentials"
 import bcrypt from "bcryptjs"
 import { db } from "./db"
 import { saltAndHashPassword } from "./utils/helper"
-import { revalidatePath } from "next/cache"
-import { redirect } from "next/dist/server/api-utils"
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
     adapter: PrismaAdapter(db),

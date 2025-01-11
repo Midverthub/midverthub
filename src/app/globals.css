@@ -477,7 +477,7 @@ input[type="checkbox"] {
   /* outline: auto; */
 
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto;
   grid-gap: .5rem;
   /* align-content: center; */
@@ -510,6 +510,7 @@ input[type="checkbox"] {
 .categoryDiv {
   width: fit-content;
   height: fit-content;
+  gap: .5rem;
 
   flex-direction: column;
   justify-content: center;
@@ -520,19 +521,18 @@ input[type="checkbox"] {
 
 .categoryImg {
   position: relative;
-  width: 5.3125rem;
-  height: 3.8125rem;
+  width: 6.3125rem;
+  height: 4.8125rem;
 
   border-radius: 0.375rem;
-  border: 0.2px solid rgba(0, 0, 0, 0.20);
+  border: 0.2px solid transparent;
   /* background: url(<path-to-image>) lightgray 50% / cover no-repeat; */
-
 }
 
 .categoryPgh {
   color: var(--Labels-Primary, #000);
   /* font-family: Inter; */
-  font-size: 0.5625rem;
+  font-size: 0.6625rem;
   font-style: normal;
   font-weight: 400;
   line-height: normal;

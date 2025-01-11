@@ -12,7 +12,7 @@ function AdvertItem({ data }) {
 
     const { isProduct, setProduct, isLoading } = React.useContext(ProductContext)
 
-    console.log(data);
+    // console.log(data);
     return (
         <div className='itemToRateDiv d-flex padding'>
             <div className='itemToRateInnerDiv-0 d-flex'>

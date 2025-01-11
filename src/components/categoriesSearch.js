@@ -108,10 +108,10 @@ function CategoriesSearch() {
                 value={formData.search}
                 onKeyDown={handleKey}
             />
-            <p
+            {/* <p
                 className="error" role="alert">
                 {(touched.search || isStatus === STATUS.SUBMITTED) && errors.search}
-            </p>
+            </p> */}
 
             {/* <button
 

@@ -61,7 +61,10 @@ export default function CatergoryPage({ params }) {
                     <div className='subHeaderDiv d-flex padding'>
                         <Back />
 
-                        <h3 className='subtitle2' >{params.slug}</h3>
+                        <h3 className='subtitle2' > {decodeURIComponent(params.slug)
+                            .replace(/%20/g, ' ')
+                            .replace(/\b\w/g, (char) => char.toUpperCase())
+                        }</h3>
                     </div>
 
                     <div className="categoriesInnerDiv d-flex">

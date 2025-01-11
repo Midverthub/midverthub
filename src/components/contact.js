@@ -4,7 +4,7 @@ import React from 'react'
 import Image from 'next/image'
 
 function Contact({ contact, unfollow }) {
-    console.log(contact);
+    // console.log(contact);
     return (
         <div className='contactDiv padding-l-r  d-flex'>
             <div className='contactUserImgDiv'>
