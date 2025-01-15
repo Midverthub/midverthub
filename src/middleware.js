@@ -6,7 +6,7 @@ const protectedRoutes = ["/savedItems", "/upload", "/adverts", "/contacts", "/ra
 export default async function middleware(request) {
     // get the session object from the auth function to check if the user is logged in or not
     const sessionToken = request.cookies.get('authjs.session-token')?.value;
-    // console.log(sessionToken);
+    console.log(sessionToken);
 
     // check if the user is on a protected route or not by checking the pathname of the url and comparing it to the protected routes array 
     const isProtectedRoute = protectedRoutes.some((route) => {
@@ -29,5 +29,5 @@ export default async function middleware(request) {
 
 
 export const config = {
-    matcher: ["/", "/((?!api|_next/static|_next/image|favicon.ico).*)"],
+    matcher: ["/((?!api|_next/static|_next/image|favicon.ico).*)"],
 }

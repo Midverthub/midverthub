@@ -17,9 +17,9 @@ function Categories() {
             try {
                 const res = await fetch("/api/categories", {
                     method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    }
+                    // headers: {
+                    //     "Content-Type": "text/x-component",
+                    // }
                 });
                 const data = await res.json();
                 setIsLoading(false);

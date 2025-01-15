@@ -30,7 +30,10 @@
     scroll-behavior: smooth;
     white-space: nowrap;
     -ms-overflow-style: none;
-    scrollbar-width: none;
     gap: .6rem;
 
+}
+
+.recentlyViewedItemsDiv::-webkit-scrollbar {
+    scrollbar-width: none;
 }

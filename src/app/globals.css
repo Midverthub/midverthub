@@ -210,8 +210,11 @@ body {
   scroll-behavior: smooth;
   white-space: nowrap;
   -ms-overflow-style: none;
-  scrollbar-width: none;
   gap: .6rem;
+}
+
+.horizontalScrollContainer::-webkit-scrollbar {
+  display: none;
 }
 
 button:hover {
@@ -580,9 +583,12 @@ input[type="checkbox"] {
   /* IE and Edge */
   -ms-overflow-style: none;
   /* Firefox */
-  scrollbar-width: none;
 
   /* gap: 1rem; */
+}
+
+.suggestionInnerDiv::-webkit-scrollbar {
+  display: none;
 }
 
 .productDiv {
@@ -602,10 +608,10 @@ input[type="checkbox"] {
   justify-content: center;
   position: relative;
   width: 12.6875rem;
-  height: 9.375rem;
+  /* height: 9.375rem; */
 
   border-radius: 0.5rem;
-  border: 0.2px solid rgba(0, 0, 0, 0.3);
+  /* border: 0.2px solid rgba(0, 0, 0, 0.3); */
 }
 
 .priceOption {

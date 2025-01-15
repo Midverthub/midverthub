@@ -174,7 +174,10 @@
     /* IE and Edge */
     -ms-overflow-style: none;
     /* Firefox */
-    scrollbar-width: none;
 
     gap: .6rem;
+}
+
+.brandCategoriesInnerDiv::-webkit-scrollbar {
+    scrollbar-width: none;
 }
