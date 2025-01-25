@@ -262,15 +262,15 @@ export default function SignUp() {
             <label htmlFor="isFriendly"> Stay signed in?</label>
           </div>
 
-          {/* <Link className='links' href="/signup/"> */}
-          <button
-            className="subBtn"
-            type="submit"
-            disabled={!(formData.email && formData.password && formData.passwordCheck)}
-          >
-            Continue
-          </button>
-          {/* </Link> */}
+          <Link className='links' href="/signup/continue">
+            <button
+              className="subBtn"
+              type="submit"
+              disabled={!(formData.email && formData.password && formData.passwordCheck)}
+            >
+              Continue
+            </button>
+          </Link>
 
         </form>
 
