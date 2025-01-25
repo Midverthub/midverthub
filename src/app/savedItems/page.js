@@ -50,7 +50,7 @@ export default function SavedItems() {
       const result = await axios.get(`/api/saved/${isUser.id}`)
       // console.log(result.data.data);
       setSavedId(result.data.data);
-      setRequestStatus(REQUEST_STATUS.SUCCESS)
+      // setRequestStatus(REQUEST_STATUS.SUCCESS)
 
 
 
@@ -102,7 +102,7 @@ export default function SavedItems() {
           const result = await axios.get(`/api/saved/${isUser.id}`)
           // console.log(result.data.data);
           setSavedId(result.data.data);
-          setRequestStatus(REQUEST_STATUS.SUCCESS)
+          // setRequestStatus(REQUEST_STATUS.SUCCESS)
 
 
 

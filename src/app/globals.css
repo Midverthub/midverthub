@@ -842,6 +842,8 @@ input[type="checkbox"] {
   position: relative;
   background-color: white;
   gap: .6rem;
+  align-items: center;
+  justify-content: center;
   /* padding: 1rem 0rem; */
 
   background: var(--Backgrounds-Primary, #FFF);
