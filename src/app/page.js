@@ -7,7 +7,7 @@ import Category from "@/components/category";
 import Categories from "@/conatiners/categories";
 import TopSuggested from "@/conatiners/topSuggested";
 import ProductsContainer from "@/conatiners/productsContainer";
-
+import Alert from "@/components/alert";
 
 import AdReshuffle from "@/components/adReshuffle";
 import Link from "next/link";
@@ -57,6 +57,7 @@ export default function Home() {
         <h3 className="suggestionHeader otherItems">Other Items</h3>
         {/* <ProductsContainer data={productData} /> */}
         <AdReshuffle />
+        {/* <Alert text="Product uploaded sucessfully" /> */}
 
       </main>
     </div>

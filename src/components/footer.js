@@ -1,12 +1,20 @@
+'use client'
+
 import React from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { usePathname } from 'next/navigation'
+
 function Footer() {
+
+    const pathname = usePathname()
+
+
     return (
         <footer className='footer d-flex'>
             <Link className='link' href={'/'}>
-                <div className='footerItems'>
+                <div className={`footerItems ${(pathname == '/') && "active"}`}>
                     <Image
                         width={24}
                         height={24}
@@ -22,7 +30,7 @@ function Footer() {
 
             <Link className='link' href={'/savedItems'}>
 
-                <div className='footerItems'>
+                <div className={`footerItems ${(pathname == '/savedItems') && "active"}`}>
                     <Image
                         width={24}
                         height={24}
@@ -37,7 +45,7 @@ function Footer() {
             </Link>
 
             <Link className='link' href={'/upload'}>
-                <div className='footerItems'>
+                <div className={`footerItems ${(pathname == '/upload') && "active"}`}>
                     <Image
                         width={24}
                         height={24}
@@ -52,7 +60,7 @@ function Footer() {
             </Link>
 
 
-            <div className='footerItems'>
+            <div className={`footerItems ${(pathname == '') && "active"}`}>
                 <Image
                     width={24}
                     height={24}
@@ -66,7 +74,7 @@ function Footer() {
             </div>
 
             <Link className='link' href={'/profile'}>
-                <div className='footerItems'>
+                <div className={`footerItems ${(pathname == '/profile') && "active"}`}>
                     <Image
                         width={24}
                         height={24}

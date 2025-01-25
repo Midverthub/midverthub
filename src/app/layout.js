@@ -6,6 +6,8 @@ import { SessionProvider } from "next-auth/react";
 import { auth } from "../../auth";
 import AuthContextProvider from "../../context/authContext";
 import ProductContextProvider from "../../context/productContext";
+import SessionContextProvider from "../../context/sessionContext";
+
 
 const inter = Inter({
   weight: ['400', '500', '600', '700', '800', '900'],
@@ -24,22 +26,24 @@ export default async function RootLayout({ children }) {
 
   return (
     <SessionProvider session={session}>
-      <AuthContextProvider session={session ? session : null}>
-        <ProductContextProvider>
-          <html lang="en">
-            <body className={`${inter.className}`}>
-              <Header />
-              <div className="margin-b">
-                {children}
-              </div>
+      <SessionContextProvider session={session ? session : null}>
+        <AuthContextProvider session={session ? session : null}>
+          <ProductContextProvider>
+            <html lang="en">
+              <body className={`${inter.className}`}>
+                <Header />
+                <div className="margin-b">
+                  {children}
+                </div>
 
-              <Footer />
+                <Footer />
 
-            </body>
-          </html>
+              </body>
+            </html>
 
-        </ProductContextProvider>
-      </AuthContextProvider>
+          </ProductContextProvider>
+        </AuthContextProvider>
+      </SessionContextProvider>
     </SessionProvider>
   );
 }

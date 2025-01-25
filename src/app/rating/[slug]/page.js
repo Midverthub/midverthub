@@ -11,6 +11,7 @@ import { AuthContext } from "../../../../context/authContext";
 import Loading from '@/loading'
 import axios from 'axios'
 import { useRouter } from 'next/navigation';
+import Redirect from '../../../../hooks/redirect';
 
 export const REQUEST_STATUS = {
     LOADING: "loading",
@@ -26,6 +27,9 @@ const STATUS = {
 };
 
 export default function Rating({ params }) {
+    const { redirectFunc } = Redirect()
+
+    redirectFunc()
 
     const router = useRouter();
 
@@ -60,12 +64,11 @@ export default function Rating({ params }) {
         if (redirect) {
 
             const timer = setTimeout(() => {
-                // console.log("Countdown finished");
-                // Add your desired action here
+
                 router.push("/");
             }, 5000); // 5 seconds
 
-            return () => clearTimeout(timer); // Cleanup the timer on component unmount
+            return () => clearTimeout(timer);
         }
     }, [redirect, router]);
 

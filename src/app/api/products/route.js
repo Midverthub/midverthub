@@ -31,6 +31,9 @@ export const GET = async (request) => {
         const products = await prisma.product.findMany({
             where: {
                 userId: userId
+            },
+            include: {
+                paidAdvert: true
             }
         })
 

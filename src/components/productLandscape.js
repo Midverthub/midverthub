@@ -9,10 +9,10 @@ import axios from 'axios';
 
 import Image from 'next/image'
 
-function ProductLandscape({ user, data, saved }) {
-    console.log(user);
+function ProductLandscape({ user, data, saved, deleteBtn }) {
+    // console.log(user);
     console.log(data);
-    console.log(saved);
+    // console.log(saved);
 
 
     // React.useEffect(() => {
@@ -24,7 +24,7 @@ function ProductLandscape({ user, data, saved }) {
     // })
 
     async function deleteFunc(params) {
-        console.log(user.id, data.id, saved.id);
+        // console.log(user.id, data.id, saved.id);
         try {
 
             const res = await fetch(`/api/saved/${user.id}`, {
@@ -43,10 +43,10 @@ function ProductLandscape({ user, data, saved }) {
             //     productId: data.id,
             //     savedId: saved.id
             // });
-            console.log(res);
+            // console.log(res);
             if (res.status === 200) {
-                console.log('Product deleted successfully');
-                console.log(res);
+                // console.log('Product deleted successfully');
+                // console.log(res);
 
             }
         } catch (error) {
@@ -64,7 +64,8 @@ function ProductLandscape({ user, data, saved }) {
                 <Image
                     width={114}
                     height={90}
-                    src="/assets/product image.jpeg"
+                    src={data.images[0]}
+                    // src="/assets/product image.jpeg"
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                     alt='Product Image'
                     style={{ objectFit: 'contain' }}
@@ -97,7 +98,7 @@ function ProductLandscape({ user, data, saved }) {
                     </div>
                 </div>
             </Link>
-            <FontAwesomeIcon onClick={() => deleteFunc()} icon={faTrash} className='loactionIcon' />
+            <FontAwesomeIcon onClick={(e) => deleteBtn(e, saved)} icon={faTrash} className='loactionIcon cursor' />
 
 
         </div>

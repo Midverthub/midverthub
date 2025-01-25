@@ -7,12 +7,18 @@ import { faGoogle, faApple } from '@fortawesome/free-brands-svg-icons';
 import { useRouter } from 'next/navigation';
 import Loading from '../../../loading';
 
-
+import { SessionContext } from '../../../../context/sessionContext';
 import { AuthContext } from '../../../../context/authContext';
+import { redirect } from 'next/navigation';
 import Image from 'next/image'
 import Link from 'next/link'
 
 export default function SignUp() {
+    const { session } = React.useContext(SessionContext)
+    if (session) {
+        redirect('/')
+    }
+
 
     const STATUS = {
         IDLE: "IDLE",
@@ -24,7 +30,7 @@ export default function SignUp() {
     const router = useRouter()
 
     const { isUser, isLoading } = React.useContext(AuthContext)
-    // console.log(isUser.id);
+
 
 
     const [formData, setFormData] = React.useState({

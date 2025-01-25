@@ -3,19 +3,37 @@ import Image from 'next/image'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faTrash } from '@fortawesome/free-solid-svg-icons'
+import { faMoneyBill1Wave } from '@fortawesome/free-solid-svg-icons'
 import Link from 'next/link'
 
 import { ProductContext } from '../../context/productContext'
 
 
-function AdvertItem({ data }) {
+function AdvertItem({ data, deleteBtn }) {
 
     const { isProduct, setProduct, isLoading } = React.useContext(ProductContext)
+
+
+    function dataFunc(e, data) {
+        // console.log(e);
+        // console.log(data);
+        setProduct(data)
+    }
+
 
     // console.log(data);
     return (
         <div className='itemToRateDiv d-flex padding'>
             <div className='itemToRateInnerDiv-0 d-flex'>
+                {
+                    data.paidAdvert &&
+                    <div className='reshuffledAdDiv d-flex'>
+                        <FontAwesomeIcon icon={faMoneyBill1Wave} className='iconSize1' />
+
+                        <h3 className='reshuffledAdHeader'>Reshuffled</h3>
+                    </div>
+                }
                 <div className='itemToRateImg d-flex'>
 
 
@@ -68,12 +86,17 @@ function AdvertItem({ data }) {
 
             <div className='straightLine'></div>
 
-            <button className='itemToRateBtn '>
-                <Link onClick={setProduct(data)} className='link' href='/reShuffle'>
+            <div className='d-flex itemToRateInnerDiv-2'>
+                <FontAwesomeIcon onClick={(e) => { deleteBtn(e, data) }} icon={faTrash} className='trashCan iconSize1 cursor' />
 
-                    Reshuffle ad
-                </Link>
-            </button>
+
+                <button className='itemToRateBtn '>
+                    <Link onClick={e => dataFunc(e, data)} className='link' href='/reShuffle'>
+
+                        Reshuffle ad
+                    </Link>
+                </button>
+            </div>
         </div >
 
     )

@@ -22,7 +22,7 @@ async function Header() {
             </Link>
             {
                 !session?.user ? (
-                    <Link href={"/signup"}>
+                    <Link href={"/login"}>
                         <button className='sign-up-btn'>Login</button>
                     </Link>
                 ) : (

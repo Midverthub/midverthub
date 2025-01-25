@@ -11,6 +11,7 @@ import ItemToRate from '@/components/itemToRate';
 import { AuthContext } from '../../../context/authContext';
 import Loading from '@/loading'
 import axios from 'axios'
+import Redirect from '../../../hooks/redirect';
 
 export const REQUEST_STATUS = {
   LOADING: "loading",
@@ -19,6 +20,9 @@ export const REQUEST_STATUS = {
 }
 
 export default function Rating() {
+  const { redirectFunc } = Redirect()
+
+  redirectFunc()
 
   const { isUser, isLoading } = React.useContext(AuthContext)
   // console.log(isUser);

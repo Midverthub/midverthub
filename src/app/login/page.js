@@ -5,7 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faGithub, faApple } from '@fortawesome/free-brands-svg-icons';
 import { useFormStatus } from 'react-dom'
 import { AuthContext } from '../../../context/authContext';
+import { SessionContext } from '../../../context/sessionContext';
 import Loading from '../../loading';
+import { redirect } from 'next/navigation';
 
 import Image from 'next/image'
 import Link from 'next/link'
@@ -14,6 +16,11 @@ import { getUserByEmail, getUsers, login, loginWithCredentials } from '../../../
 export default function SignUp() {
 
   const { isUser, isLoading } = React.useContext(AuthContext)
+  const { session } = React.useContext(SessionContext)
+
+  if (session) {
+    redirect('/')
+  }
 
 
   const STATUS = {
@@ -253,7 +260,7 @@ export default function SignUp() {
 
       <div className='otherFormDIv d-flex'>
 
-        <div className='separatorDiv d-flex'>
+        {/* <div className='separatorDiv d-flex'>
 
           <div className='separator'></div>
 
@@ -262,11 +269,11 @@ export default function SignUp() {
           </p>
 
           <div className='separator'></div>
-        </div>
+        </div> */}
 
 
         {/* come back to this */}
-        <div className="otherSignUpDiv d-flex">
+        {/* <div className="otherSignUpDiv d-flex">
           <button onClick={() => login('google')} className='otherSignUpBtn d-flex'>
             <FontAwesomeIcon icon={faGoogle} className='iconSize2' />
 
@@ -278,7 +285,7 @@ export default function SignUp() {
 
             <p>Sign in with Github</p>
           </button>
-        </div>
+        </div> */}
 
 
         <div className="otherSignUpDiv d-flex">

@@ -12,9 +12,13 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 
 import { AuthContext } from '../../../context/authContext';
 import Loading from '@/loading'
+import Redirect from '../../../hooks/redirect';
 
 
 export default function UserProfile() {
+  const { redirectFunc } = Redirect()
+
+  redirectFunc()
 
   const { isUser, isLoading } = React.useContext(AuthContext)
   console.log(isUser);

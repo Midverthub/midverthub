@@ -3,7 +3,7 @@ import React from 'react'
 
 import Image from 'next/image'
 
-function Contact({ contact, unfollow }) {
+function Contact({ contact, unfollow, loadingMini }) {
     // console.log(contact);
     return (
         <div className='contactDiv padding-l-r  d-flex'>
@@ -24,7 +24,20 @@ function Contact({ contact, unfollow }) {
                     {/* <p className='text1'> Key stone plug</p> */}
                 </div>
 
-                {contact.following && <button onClick={() => unfollow(contact.id)} className=' text1'>Remove</button>}
+                {contact.following && <button onClick={() => unfollow(contact.id)} className=' text1 cursor'>
+                    {
+                        loadingMini ?
+                            <Image
+                                width={18}
+                                height={18}
+                                src={"/assets/loadingTwo.svg"}
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                alt='Save'
+                                style={{ objectFit: 'contain' }}
+                            // onClick={() => saveProduct()}
+                            /> : "Unfollow"
+                    }
+                </button>}
             </div>
 
         </div>

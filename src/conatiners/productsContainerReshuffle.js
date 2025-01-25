@@ -4,7 +4,7 @@ import ProductContain from '@/components/productContain'
 
 import Link from 'next/link'
 
-function ProductsContainer({ data }) {
+function ProductsContainerReshuffle({ data }) {
     // console.log(data);
 
 
@@ -13,7 +13,7 @@ function ProductsContainer({ data }) {
             {
                 data.map((product, index) => {
                     return (
-                        <Link className='links' key={index} href={`/products/${product.id}`}>
+                        <Link className='links' key={index} href={`/products/${product.product.id}`}>
                             <ProductContain data={product} />
                         </Link>
                     )
@@ -29,4 +29,4 @@ function ProductsContainer({ data }) {
     )
 }
 
-export default ProductsContainer
+export default ProductsContainerReshuffle

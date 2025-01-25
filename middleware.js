@@ -1,9 +1,11 @@
-
 import { NextResponse } from "next/server";
+import React from "react";
+
 
 const protectedRoutes = ["/savedItems", "/upload", "/adverts", "/contacts", "/rating", "/userProfile", "/reShuffle"];
 
 export default async function middleware(request) {
+
     // get the session object from the auth function to check if the user is logged in or not
     const sessionToken = request.cookies.get('authjs.session-token' || '__Secure-authjs.session-token')?.value;
     console.log(sessionToken);

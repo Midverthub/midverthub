@@ -8,8 +8,19 @@ import { useRouter } from 'next/navigation';
 import Image from 'next/image'
 import Link from 'next/link'
 import { signup, signupWithCredentials } from '../../../actions/auth';
+import { AuthContext } from '../../../context/authContext';
+import { SessionContext } from '../../../context/sessionContext';
+import { redirect } from 'next/navigation';
 
 export default function SignUp() {
+
+  const { isUser, isLoading } = React.useContext(AuthContext)
+  const { session } = React.useContext(SessionContext)
+
+  if (session) {
+    redirect('/')
+  }
+
 
   const STATUS = {
     IDLE: "IDLE",
@@ -267,7 +278,7 @@ export default function SignUp() {
 
       <div className='otherFormDIv d-flex'>
 
-        <div className='separatorDiv d-flex'>
+        {/* <div className='separatorDiv d-flex'>
           <div className='separator'></div>
           <p className='separatorPgh'>
             or sign up with
@@ -289,7 +300,8 @@ export default function SignUp() {
 
             <p>Sign Up with Github</p>
           </button>
-        </div>
+        </div> */}
+        {/* <div className='separator'></div> */}
 
         <Link className="links" href="/login">
           <p className="signup-link">

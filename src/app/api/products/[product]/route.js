@@ -50,6 +50,9 @@ export const GET = async (request, context) => {
         const product = await prisma.product.findUnique({
             where: {
                 id: productId
+            },
+            include: {
+                paidAdvert: true
             }
         })
         if (!product) {

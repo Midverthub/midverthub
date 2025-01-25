@@ -5,7 +5,7 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 
 
 function ProductContain({ data }) {
-    console.log(data);
+    // console.log(data);
     return (
         <div className='productContainDiv'>
             <div className='productContainImg d-flex'>

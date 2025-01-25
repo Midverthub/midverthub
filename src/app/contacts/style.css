@@ -10,7 +10,9 @@
 }
 
 .contactFollowpgh {
-    padding-left: 2rem;
+    /* padding-left: 2rem; */
+    align-items: center;
+    justify-content: center;
     width: 50%;
 }
 
@@ -38,4 +40,8 @@
     height: 2.8125rem;
     border-radius: 0.5rem;
     background: #006F5F;
+}
+
+.active {
+    background-color: #006F5F;
 }

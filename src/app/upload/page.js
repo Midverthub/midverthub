@@ -6,13 +6,21 @@ import { faGoogle, faApple } from '@fortawesome/free-brands-svg-icons';
 import Loading from '@/loading';
 // import { useRouter } from 'next/router';
 import axios from 'axios';
+import Alert from '@/components/alert';
 
 import Image from 'next/image'
 import Link from 'next/link'
 import { faCross, faPlus } from '@fortawesome/free-solid-svg-icons';
 import { AuthContext } from '../../../context/authContext';
 
+import { useRouter } from 'next/navigation';
+
+import Redirect from '../../../hooks/redirect';
+import { set } from 'mongoose';
 export default function SignUp() {
+  const { redirectFunc } = Redirect()
+
+  redirectFunc()
 
   const STATUS = {
     IDLE: "IDLE",
@@ -21,10 +29,12 @@ export default function SignUp() {
     COMPLETED: "COMPLETED",
   };
 
-  // const router = useRouter()
+  const router = useRouter()
 
   const { isUser, isLoading } = React.useContext(AuthContext)
+
   // console.log(isUser);
+
 
 
   const [formData, setFormData] = React.useState({
@@ -55,6 +65,20 @@ export default function SignUp() {
   const [image64, setImage64] = React.useState([])
   // const [finish, setFinished] = React.useState(false);
   const [isError, setisError] = React.useState(null)
+
+  const [alertText, setAlertText] = React.useState('')
+  const [showAlert, setShowAlert] = React.useState(false)
+
+  React.useEffect(() => {
+    if (showAlert) {
+
+      const timer = setTimeout(() => {
+        setShowAlert(false);
+      }, 3000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [showAlert]);
 
   React.useEffect(() => {
 
@@ -190,63 +214,26 @@ export default function SignUp() {
               images: data
             }),
           });
-          if (res2.ok) {
+          // console.log(res2);
+
+          if (res2.status === 200 || res.status === 200) {
             // console.log("Product Uploaded");
             // console.log(await res2.json());
-            setisError("");
-            // router.push('/');
+            // setisError("");
+            setAlertText("Product uploaded successfully")
+            setShowAlert(true)
 
-          } else {
-            // console.log("Product Upload failed, try again");
-            // console.log(res2);
-            // console.log(await res2.json());
+            setTimeout(() => {
+              router.push(`/adverts`);
+            }, 5000);
           }
         })
 
-        // if (res.ok) {
-        //   const data = await res.json()
-        //   console.log(data);
-        // try {
-        //   const res = await fetch("/api/products", {
-        //     method: "POST",
-        //     headers: {
-        //       "Content-Type": "application/json",
-        //     },
-        //     body: JSON.stringify({
-        //       userId: isUser.id,
-        //       category: formData.category,
-        //       cityOrState: formData.cityOrState,
-        //       provinceAndRegion: formData.provinceAndRegion,
-        //       productName: formData.productName,
-        //       condition: formData.condition,
-        //       description: formData.description,
-        //       price: formData.price,
-        //       negotiation: formData.negotiation,
-        //       phone: formData.phone,
-        //       email: formData.email,
-        //       update: formData.update,
-        //       images: data
-        //     }),
-        //   });
-
-        // if (res.status === 400) {
-        //   setisError("Product Upload failed, try again");
-
-        // }
-        // if (res.status === 200) {
-        //   console.log("Product Uploaded");
-        //   console.log(await res.json());
-        //   setisError("");
-        //   // router.push('/');
-        // }
-
-        // } catch (error) {
-        //   console.log(error);
-        //   setisError("Something went wrong, try again");
-        // }
-        // }
 
       } catch (error) {
+        // setisError("Product Upload failed, try again");
+        setAlertText("Product Upload failed, try again")
+        setShowAlert(true)
         // console.log(error);
       }
 
@@ -330,12 +317,13 @@ export default function SignUp() {
   if (isError) throw isError
 
 
-  if (isStatus === "SUBMITTING" || isLoading === "loading") return (<Loading />)
+  if (isStatus === "SUBMITTING" || isLoading === "loading" || !data) return (<Loading />)
 
 
   return (
 
     <div>
+      {showAlert && <Alert text={alertText} />}
 
       <div className="formDiv d-flex">
 
@@ -694,7 +682,7 @@ export default function SignUp() {
           <button
             className="subBtn padding-l-r"
             type="submit"
-            disabled={!(formData.category || formData.cityOrState || formData.provinceAndRegion || formData.productName || formData.type || formData.condition || formData.description || formData.price || formData.returnPolicy || formData.payment || formData.negotiation || formData.phone || formData.email || formData.update)}
+            disabled={!(formData.category && formData.cityOrState && formData.provinceAndRegion && formData.productName && formData.condition && formData.description && formData.price && formData.negotiation && formData.phone && formData.email && formData.update)}
           >
             {/* <Link className='links' href="/signup/"> */}
             Upload
@@ -711,3 +699,47 @@ export default function SignUp() {
 
   )
 }
+
+
+// if (res.ok) {
+//   const data = await res.json()
+//   console.log(data);
+// try {
+//   const res = await fetch("/api/products", {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//     },
+//     body: JSON.stringify({
+//       userId: isUser.id,
+//       category: formData.category,
+//       cityOrState: formData.cityOrState,
+//       provinceAndRegion: formData.provinceAndRegion,
+//       productName: formData.productName,
+//       condition: formData.condition,
+//       description: formData.description,
+//       price: formData.price,
+//       negotiation: formData.negotiation,
+//       phone: formData.phone,
+//       email: formData.email,
+//       update: formData.update,
+//       images: data
+//     }),
+//   });
+
+// if (res.status === 400) {
+//   setisError("Product Upload failed, try again");
+
+// }
+// if (res.status === 200) {
+//   console.log("Product Uploaded");
+//   console.log(await res.json());
+//   setisError("");
+//   // router.push('/');
+// }
+
+// } catch (error) {
+//   console.log(error);
+//   setisError("Something went wrong, try again");
+// }
+// }

@@ -104,7 +104,7 @@ export default function SideMenu() {
 
 
       {isUser &&
-        <h3 onClick={() => logout()} className='padding subtitle2 logoutHeader d-flex'>
+        <h3 onClick={() => logout()} className='padding subtitle2 logoutHeader d-flex cursor'>
           Logout
         </h3>
       }

@@ -4,8 +4,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons';
 
-
+import { useRouter } from 'next/navigation';
 function SearchpageSearch() {
+
+    const router = useRouter()
+
+
     const STATUS = {
         IDLE: "IDLE",
         SUBMITTED: "SUBMITTED",
@@ -97,7 +101,7 @@ function SearchpageSearch() {
 
                 className='homepageSearch d-flex' action="" method="post" onSubmit={handleSubmit}>
 
-                <FontAwesomeIcon icon={faAngleLeft} className="searchIcon" />
+                <FontAwesomeIcon onClick={() => router.back()} icon={faAngleLeft} className="searchIcon cursor" />
 
                 <input
                     type="search"
@@ -111,7 +115,7 @@ function SearchpageSearch() {
                     onKeyDown={handleKey}
                 />
 
-                <FontAwesomeIcon icon={faMagnifyingGlass} className="searchIcon" />
+                <FontAwesomeIcon icon={faMagnifyingGlass} className="searchIcon cursor" />
 
 
                 {/* <button

@@ -8,8 +8,12 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { ProductContext } from '../../../../../context/productContext';
+import Redirect from '../../../../../hooks/redirect';
 
 export default function Reshuffle() {
+    const { redirectFunc } = Redirect()
+
+    redirectFunc()
 
     const { isProduct, setProduct, isLoading } = React.useContext(ProductContext)
     // console.log(isProduct);

@@ -15,7 +15,16 @@ export const ProductContext = React.createContext()
 
 function ProductContextProvider({ children }) {
 
-    const [isProduct, setProduct] = React.useState()
+
+    const localState = typeof window !== 'undefined' ? JSON.parse(localStorage.getItem("reshuffleProduct")) : null
+
+    const [isProduct, setProduct] = React.useState(localState || null)
+
+    React.useEffect(() => {
+
+        localStorage.setItem("reshuffleProduct", JSON.stringify(isProduct));
+    }, [isProduct]);
+
     const [isLoading, setIsLoading] = React.useState(REQUEST_STATUS.LOADING)
     const [error, setError] = React.useState(null)
 
@@ -38,6 +47,8 @@ function ProductContextProvider({ children }) {
     //     getUser()
 
     // }, [session])
+
+
 
 
     return (

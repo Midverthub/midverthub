@@ -4,7 +4,7 @@ import React from 'react'
 import { AuthContext } from '../../context/authContext'
 import Loading from '@/loading'
 import axios from 'axios'
-import ProductsContainer from '@/conatiners/productsContainer'
+import ProductsContainerReshuffle from '@/conatiners/productsContainerReshuffle'
 
 export const REQUEST_STATUS = {
     LOADING: "loading",
@@ -136,7 +136,7 @@ export default function AdReshuffle() {
                                 });
 
                                 if (res.status === 200) {
-                                    console.log("Ad deleted successfully successfully");
+                                    console.log("Ad updated successfully successfully");
                                     // console.log(await res.json());
                                     fetchData();
                                     // if (isRendered) {
@@ -201,7 +201,7 @@ export default function AdReshuffle() {
                                 });
 
                                 if (res.status === 200) {
-                                    console.log("Ad deleted successfully successfully");
+                                    console.log("Ad updated successfully successfully");
                                     // console.log(await res.json());
                                     fetchData();
                                     // if (isRendered) {
@@ -263,7 +263,7 @@ export default function AdReshuffle() {
                                 });
 
                                 if (res.status === 200) {
-                                    console.log("Ad deleted successfully successfully");
+                                    console.log("Ad updated successfully successfully");
                                     // console.log(await res.json());
                                     fetchData();
                                     // if (isRendered) {
@@ -290,6 +290,6 @@ export default function AdReshuffle() {
 
 
     return (
-        <ProductsContainer data={productData} />
+        <ProductsContainerReshuffle data={productData} />
     )
 }
