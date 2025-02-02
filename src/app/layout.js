@@ -4,9 +4,9 @@ import Header from "@/components/header";
 import Footer from "@/components/footer";
 import { SessionProvider } from "next-auth/react";
 import { auth } from "../../auth";
+import SessionContextProvider from "../../context/sessionContext";
 import AuthContextProvider from "../../context/authContext";
 import ProductContextProvider from "../../context/productContext";
-import SessionContextProvider from "../../context/sessionContext";
 
 
 const inter = Inter({

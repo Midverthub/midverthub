@@ -53,8 +53,8 @@ export const PATCH = async (request) => {
         await connect()
 
         //check if the userId or newUsername is not found
-        if (!userId || !name || !phone || !state || !lga || !postalcode) {
-            return new NextResponse(JSON.stringify({ message: "ID or new username not found" }),
+        if (!userId || !name || !phone || !state || !lga) {
+            return new NextResponse(JSON.stringify({ message: "ID or name or phone or state or lga not found" }),
                 { status: 400 })
         }
 
@@ -73,7 +73,7 @@ export const PATCH = async (request) => {
                 phone: phone,
                 state: state,
                 town: lga,
-                postalCode: postalcode
+                ...(postalcode && { postalCode: postalcode })
             }
         })
 

@@ -11,6 +11,7 @@ import { signup, signupWithCredentials } from '../../../actions/auth';
 import { AuthContext } from '../../../context/authContext';
 import { SessionContext } from '../../../context/sessionContext';
 import { redirect } from 'next/navigation';
+import Loading from '@/loading';
 
 export default function SignUp() {
 
@@ -88,7 +89,7 @@ export default function SignUp() {
     setStatus(STATUS.SUBMITTING);
 
     if (isValid) {
-      setStatus(STATUS.COMPLETED);
+      // setStatus(STATUS.COMPLETED);
       // console.log(formData.email);
       try {
         const res = await fetch("/api/register", {
@@ -114,6 +115,7 @@ export default function SignUp() {
       } catch (error) {
         setLoginError("Something went wrong, try again");
       }
+      setStatus(STATUS.COMPLETED);
     } else {
       setStatus(STATUS.SUBMITTED);
     }
@@ -169,7 +171,7 @@ export default function SignUp() {
   // if (loginError) throw loginError
 
 
-  if (isStatus === "SUBMITTING") return (<div className="container">...LOADING</div>)
+  if (isStatus === "SUBMITTING") return (<Loading />)
 
 
   return (
@@ -262,15 +264,15 @@ export default function SignUp() {
             <label htmlFor="isFriendly"> Stay signed in?</label>
           </div>
 
-          <Link className='links' href="/signup/continue">
-            <button
-              className="subBtn"
-              type="submit"
-              disabled={!(formData.email && formData.password && formData.passwordCheck)}
-            >
-              Continue
-            </button>
-          </Link>
+          {/* <Link className='links' href="/signup/continue"> */}
+          <button
+            className="subBtn"
+            type="submit"
+            disabled={!(formData.email && formData.password && formData.passwordCheck)}
+          >
+            Continue
+          </button>
+          {/* </Link> */}
 
         </form>
 

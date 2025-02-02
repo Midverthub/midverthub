@@ -4,48 +4,56 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faGoogle, faApple } from '@fortawesome/free-brands-svg-icons';
 
+import { AuthContext } from '../../../../context/authContext';
 import { useRouter } from 'next/navigation';
 import Loading from '../../../loading';
+import axios from 'axios';
 
 import { SessionContext } from '../../../../context/sessionContext';
-import { AuthContext } from '../../../../context/authContext';
 import { redirect } from 'next/navigation';
 import Image from 'next/image'
 import Link from 'next/link'
 
-export default function SignUp() {
-    const { session } = React.useContext(SessionContext)
-    if (session) {
-        redirect('/')
-    }
+const STATUS = {
+    IDLE: "IDLE",
+    SUBMITTED: "SUBMITTED",
+    SUBMITTING: "SUBMITTING",
+    COMPLETED: "COMPLETED",
+};
+
+const REQUEST_STATUS = {
+    LOADING: "loading",
+    SUCCESS: "success",
+    FAILURE: "failure"
+}
 
 
-    const STATUS = {
-        IDLE: "IDLE",
-        SUBMITTED: "SUBMITTED",
-        SUBMITTING: "SUBMITTING",
-        COMPLETED: "COMPLETED",
-    };
-
+export default function SignUpContinue() {
+    // const { session } = React.useContext(SessionContext)
+    // if (session) {
+    //     redirect('/')
+    // }
     const router = useRouter()
 
     const { isUser, isLoading } = React.useContext(AuthContext)
+    // console.log(isUser);
 
 
+    const [requestStatus, setRequestStatus] = React.useState()
+    const [isStatus, setStatus] = React.useState(STATUS.IDLE);
 
     const [formData, setFormData] = React.useState({
 
-        fullName: "".trim(),
-        email: "".trim(),
-        phone: "".trim(),
-        cityOrState: "".trim(),
-        provinceAndRegion: "".trim(),
-        postalCode: "".trim()
+        fullName: "",
+        email: "" || isUser ? (isUser.email) : "",
+        phone: "",
+        cityOrState: "",
+        provinceAndRegion: "",
+        postalCode: ""
 
     });
 
     const [data, setData] = React.useState(null);
-    const [isStatus, setStatus] = React.useState(STATUS.IDLE);
     const [touched, setTouched] = React.useState({});
     // const [finish, setFinished] = React.useState(false);
     const [loginError, setLoginError] = React.useState(null)
@@ -56,16 +64,27 @@ export default function SignUp() {
 
     React.useEffect(() => {
 
-        setStatus(STATUS.SUBMITTING)
-        fetch('/data.json')
-            .then(response => response.json())
-            .then(data => setData(data)).finally(() => {
-                setStatus(STATUS.COMPLETED);
+        if (isUser && isUser.id) {
+            setRequestStatus(REQUEST_STATUS.LOADING);
+            async function fetchMapData() {
+                try {
+                    const result = await axios.get('/data.json')
+                    setData(result.data)
+                    setRequestStatus(REQUEST_STATUS.SUCCESS)
+                    // .then(response => response.json())
+                    // .then(data => setData(data)).finally(() => {
+                    //     setRequestStatus(REQUEST_STATUS.SUCCESS);
 
-            })
-            .catch(error => console.error('Error fetching data:', error));
+                    // });
+                } catch (error) {
+                    setRequestStatus(REQUEST_STATUS.FAILURE);
+                    console.log('Error fetching data:', error);
+                }
+            }
+            fetchMapData();
 
-    }, [STATUS.COMPLETED, STATUS.SUBMITTING]);
+        }
+    }, [isUser]);
 
 
     function handleChg(e) {
@@ -92,44 +111,58 @@ export default function SignUp() {
     async function handleSubmit(e) {
         e.preventDefault();
 
-        setStatus(STATUS.SUBMITTING);
+
 
         if (isValid) {
             // console.log("submit");
             try {
+                setRequestStatus(REQUEST_STATUS.LOADING);
+                // console.log('i got here');
+                // console.log(isUser.id);
+                const body = {
+                    userId: isUser.id,
+                    name: formData.fullName,
+                    phone: formData.phone,
+                    state: formData.cityOrState,
+                    lga: formData.provinceAndRegion,
+                };
+
+                if (formData.postalCode) {
+                    body.postalcode = formData.postalCode;
+                }
+
                 const res = await fetch("/api/auth/users", {
                     method: "PATCH",
                     headers: {
                         "Content-Type": "application/json",
                     },
-                    body: JSON.stringify({
-                        userId: isUser.id,
-                        name: formData.fullName,
-                        phone: formData.phone,
-                        state: formData.cityOrState,
-                        lga: formData.provinceAndRegion,
-                        postalcode: formData.postalCode
-                    }),
+                    body: JSON.stringify(body),
                 });
 
                 if (res.status === 400) {
-                    setLoginError("User already exists");
-
+                    // setLoginError("User already exists");
+                    setRequestStatus(REQUEST_STATUS.FAILURE);
+                    setLoginError("Something went wrong, try again");
                 }
+
+
                 if (res.status === 200) {
+                    setRequestStatus(REQUEST_STATUS.SUCCESS);
                     setLoginError("");
                     router.push('/');
                 }
 
             } catch (error) {
                 // console.log(error);
+                setRequestStatus(REQUEST_STATUS.FAILURE);
                 setLoginError("Something went wrong, try again");
             }
-            setStatus(STATUS.COMPLETED);
+            setRequestStatus(REQUEST_STATUS.SUCCESS);
+            // setStatus(STATUS.COMPLETED);
 
             // console.log(formData);
         } else {
-            setStatus(STATUS.SUBMITTED);
+            setRequestStatus(REQUEST_STATUS.SUCCESS);
         }
     }
 
@@ -155,7 +188,8 @@ export default function SignUp() {
 
 
     function CheckPhone(inputtxt) {
-        var number = /^\+?\d{1,3}?\s?\d{10}$/;
+        // var number = /^\+?\d{1,3}?\s?\d{10}$/;
+        var number = /^\d{11}$/;
         if (inputtxt.match(number)) {
             return true;
         }
@@ -216,10 +250,10 @@ export default function SignUp() {
         return result;
     }
 
-    if (loginError) throw loginError
+    // if (loginError) throw loginError
 
 
-    if (isStatus === "SUBMITTING" || isLoading === "loading") return (<Loading />)
+    if (requestStatus === REQUEST_STATUS.LOADING || isLoading === "loading" || !data) return (<Loading />)
 
     // if
     //     (data) {

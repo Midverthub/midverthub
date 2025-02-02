@@ -75,6 +75,8 @@ export default function SavedItems() {
       }
       else {
         setProductData([]);
+        setRequestStatus(REQUEST_STATUS.SUCCESS)
+
       }
     } catch (error) {
       setRequestStatus(REQUEST_STATUS.FAILURE)
@@ -127,6 +129,7 @@ export default function SavedItems() {
           }
           else {
             setProductData([]);
+            setRequestStatus(REQUEST_STATUS.SUCCESS)
           }
         } catch (error) {
           setRequestStatus(REQUEST_STATUS.FAILURE)

@@ -16,7 +16,6 @@ import { AuthContext } from '../../../context/authContext';
 import { useRouter } from 'next/navigation';
 
 import Redirect from '../../../hooks/redirect';
-import { set } from 'mongoose';
 export default function SignUp() {
   const { redirectFunc } = Redirect()
 
