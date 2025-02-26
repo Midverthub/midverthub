@@ -11,7 +11,7 @@ function ProductsContainerReshuffle({ data }) {
     return (
         <div className='productsContainer'>
             {
-                data.map((product, index) => {
+                [...data].reverse().map((product, index) => {
                     return (
                         <Link className='links' key={index} href={`/products/${product.product.id}`}>
                             <ProductContain data={product} />

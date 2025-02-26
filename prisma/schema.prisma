@@ -112,9 +112,9 @@ model User {
 
   ratings Rating[]
 
-  name  String? @unique
+  name  String?
   email String? @unique
-  phone String? @unique
+  phone String?
 
   state          String?
   town           String?
