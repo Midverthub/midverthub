@@ -41,7 +41,7 @@ export const GET = async (request, context) => {
                 product: true
             },
             orderBy: {
-                updatedAt: "asc"
+                updatedAt: "desc"
             }
         })
 
