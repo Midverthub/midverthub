@@ -1,14 +1,10 @@
-// schedule: "* * * * *" // runs every 1 minute
-
-
 import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-// Optional: adjust to every second if using netlify schedule (see below)
-export async function handler(event, context) {
-    if (event.httpMethod !== "GET") {
-        return { statusCode: 405, body: "Method Not Allowed" };
+export default async function handler(request, context) {
+    if (request.method !== "GET") {
+        return new Response("Method Not Allowed", { status: 405 });
     }
 
     try {
@@ -45,10 +41,16 @@ export async function handler(event, context) {
         }
 
         await prisma.$disconnect();
-        return { statusCode: 200, body: "Reshuffle completed successfully" };
+        console.log("Reshuffle completed successfully");
+        return new Response("Reshuffle completed successfully", { status: 200 });
     } catch (error) {
 
         await prisma.$disconnect();
-        return { statusCode: 500, body: "Error during reshuffle" };
+        return new Response("Error during reshuffle", { status: 500 });
     }
 };
+
+
+export const config = {
+    schedule: "@hourly"
+}
