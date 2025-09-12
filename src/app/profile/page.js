@@ -9,8 +9,6 @@ import { faListCheck } from '@fortawesome/free-solid-svg-icons';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons';
 import { faCheck } from '@fortawesome/free-solid-svg-icons';
-
-import Image from 'next/image'
 import Link from 'next/link'
 
 import { AuthContext } from '../../../context/authContext';
@@ -20,20 +18,29 @@ import { logout } from '../../../actions/auth';
 export default function SideMenu() {
 
   const { isUser, isLoading } = React.useContext(AuthContext)
-  // console.log(isUser);
 
-  if (isLoading === "loading") return (<Loading />)
+
+  const [authState, setAuthState] = React.useState({ user: null, loading: true });
+
+
+  React.useEffect(() => {
+    setAuthState({ user: isUser, loading: isLoading === "loading" });
+  }, [isUser, isLoading]);
+
+  console.log("Auth state:", { isUser, isLoading, authState }); // Debug log
+
+  if (authState.loading) return (<Loading />)
 
 
   return (
 
     <div className="sideMenuDiv height d-flex">
       <div>
-        {isUser ? (
+        {authState.user ? (
 
           <header className='sideMenuHeader padding d-flex'>
-            <h3 className='subtitle1'>{`Welcome, ${isUser.name}`}</h3>
-            <p className='text1'>{isUser.email}</p>
+            <h3 className='subtitle1'>{`Welcome, ${authState.user.name || 'User'}`}</h3>
+            <p className='text1'>{authState.user.email || 'No email'}</p>
           </header>
         ) : (
           <header className='sideMenuHeader padding d-flex'>
@@ -103,7 +110,7 @@ export default function SideMenu() {
       </div>
 
 
-      {isUser &&
+      {authState.user &&
         <h3 onClick={() => logout()} className='padding subtitle2 logoutHeader d-flex cursor'>
           Logout
         </h3>

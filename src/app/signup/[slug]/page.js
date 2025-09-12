@@ -199,6 +199,14 @@ export default function SignUpContinue() {
         // return true
     }
 
+    function ValidatePhone(inputtxt) {
+        const cleanedInput = inputtxt.replace(/[\s\-\(\)]/g, '');
+
+        const internationalPhoneRegex = /^\+[1-9]\d{1,14}$/;
+
+        return internationalPhoneRegex.test(cleanedInput);
+    }
+
     function CheckZip(inputtxt) {
         var decimal = /^[A-Za-z0-9\s\-]{3,10}$/;
         if (inputtxt.match(decimal)) {
@@ -228,8 +236,8 @@ export default function SignUpContinue() {
 
         if (!formData.phone) {
             result.phone = "Phone number is required";
-        } else if (!CheckPhone(formData.phone)) {
-            result.phone = "Phone Number cannot contian letters or is not correct";
+        } else if (!ValidatePhone(formData.phone)) {
+            result.phone = "Enter a valid phone number with country code (e.g., +2348081183312)";
         }
 
         // if (!formData.postalCode) {
