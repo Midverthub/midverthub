@@ -24,6 +24,14 @@ function AuthContextProvider({ children, session }) {
 
     React.useEffect(() => {
         setIsLoading(REQUEST_STATUS.LOADING)
+        
+        // If there's no session, clear the user and set loading to success
+        if (!session) {
+            setUser(null)
+            setIsLoading(REQUEST_STATUS.SUCCESS)
+            return
+        }
+
         async function getUser() {
             try {
                 const response = await axios.get(`/api/auth/users/user?email=${session.user.email}`)

@@ -252,6 +252,15 @@ export default function SignUp() {
     }
   }
 
+
+  function ValidatePhone(inputtxt) {
+    const cleanedInput = inputtxt.replace(/[\s\-\(\)]/g, '');
+
+    const internationalPhoneRegex = /^\+[1-9]\d{1,14}$/;
+
+    return internationalPhoneRegex.test(cleanedInput);
+  }
+
   function getErrors(params) {
     const result = {}
 
@@ -297,6 +306,8 @@ export default function SignUp() {
 
     if (!formData.phone) {
       result.phone = "Please enter your phone number";
+    } else if (!ValidatePhone(formData.phone)) {
+      result.phone = "Enter a valid phone number with country code (e.g., +2348081183312)";
     }
 
     if (!formData.email) {
@@ -607,7 +618,7 @@ export default function SignUp() {
                 type="tel"
                 name="phone"
                 id="phone"
-                placeholder="+234 1234 5678"
+                placeholder="+234801134457"
                 onChange={handleChg}
                 onBlur={handleBlur}
                 value={formData.phone}

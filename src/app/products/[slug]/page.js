@@ -10,15 +10,14 @@ import { AuthContext } from '../../../../context/authContext';
 import Alert from '@/components/alert';
 import axios from 'axios'
 import Loading from '@/loading';
-
 import Back from '@/components/back';
+import { faFacebook, faTwitter, faWhatsapp } from '@fortawesome/free-brands-svg-icons';
 
 export const REQUEST_STATUS = {
     LOADING: "loading",
     SUCCESS: "success",
     FAILURE: "failure"
 }
-
 
 
 export default function Product({ params }) {
@@ -33,7 +32,8 @@ export default function Product({ params }) {
 
     const [loadingMini, setLoadingMini] = React.useState(false)
     const [loadingMini2, setLoadingMini2] = React.useState(false)
-
+    const [showAlt, setShowAlt] = React.useState(false)
+    const shareRef = React.useRef(null);
 
     React.useEffect(() => {
         if (showAlert) {
@@ -46,6 +46,21 @@ export default function Product({ params }) {
         }
     }, [showAlert]);
 
+    React.useEffect(() => {
+        function handleClickOutside(event) {
+            if (shareRef.current && !shareRef.current.contains(event.target)) {
+                setShowAlt(false);
+            }
+        }
+
+        if (showAlt) {
+            document.addEventListener('mousedown', handleClickOutside);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, [showAlt]);
 
     React.useEffect(() => {
         // if (isUser && isUser.id) {
@@ -69,7 +84,6 @@ export default function Product({ params }) {
 
 
     async function saveProduct() {
-
 
         //check if product is already saved
         //check if product belongs to user
@@ -110,6 +124,13 @@ export default function Product({ params }) {
             }
 
         } catch (error) {
+
+            if (!isUser || !isUser.id) {
+                setLoadingMini(false)
+                setAlertText('You need to be logged in to save a product')
+                setShowAlert(true)
+                return
+            }
             setLoadingMini(false)
             setAlertText('Error saving product try again')
             setShowAlert(true)
@@ -164,6 +185,37 @@ export default function Product({ params }) {
             setShowAlert(true)
         }
 
+    }
+
+    function ChatSellers(phone) {
+        console.log("Original phone:", phone);
+
+        // Remove all spaces, dashes, and parentheses for processing
+        let cleanedPhone = phone.replace(/[\s\-\(\)]/g, '');
+
+        // If phone doesn't start with +, assume it's a Nigerian number and add +234
+        if (!cleanedPhone.startsWith('+')) {
+            // Remove leading 0 if present (common in local format)
+            if (cleanedPhone.startsWith('0')) {
+                cleanedPhone = cleanedPhone.substring(1);
+            }
+            // Add Nigeria country code
+            cleanedPhone = '+234' + cleanedPhone;
+        }
+
+        // International phone number regex validation
+        const internationalPhoneRegex = /^\+[1-9]\d{1,14}$/;
+
+        if (internationalPhoneRegex.test(cleanedPhone)) {
+            console.log("Valid international phone:", cleanedPhone);
+            const whatsappUrl = `https://wa.me/${cleanedPhone.substring(1)}`;
+            window.open(whatsappUrl, '_blank');
+        } else {
+            console.log("Invalid phone format:", cleanedPhone);
+            // Show error to user
+            setAlertText('Invalid phone number format');
+            setShowAlert(true);
+        }
     }
 
 
@@ -232,18 +284,73 @@ export default function Product({ params }) {
                     </div>
 
                     <div className='mainProductInfoInnerDiv2 d-flex'>
-                        <button>
-                            <Image
-                                width={18}
-                                height={18}
-                                src="/assets/iconshare.svg"
-                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                alt='Share'
-                                style={{ objectFit: 'contain' }}
-                            />
-                        </button>
+                        <div className='cursor shareGroup d-flex' ref={shareRef}>
+                            {
+                                !showAlt ? (
+                                    <div style={{
+                                        transition: 'all 0.3s ease-in-out',
+                                        transform: showAlt ? 'scale(0.8) rotate(180deg)' : 'scale(1) rotate(0deg)',
+                                        opacity: showAlt ? 0 : 1
+                                    }}>
+                                        <Image
+                                            width={18}
+                                            height={18}
+                                            src="/assets/iconshare.svg"
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                            alt='Share'
+                                            style={{ objectFit: 'contain' }}
+                                            onClick={() => {
+                                                if (navigator.share) {
+                                                    navigator.share({
+                                                        title: productData.name,
+                                                        text: productData.description,
+                                                        url: window.location.href
+                                                    });
+                                                } else {
+                                                    setShowAlt(true);
+                                                    // Auto-hide after 5 seconds
+                                                    setTimeout(() => setShowAlt(false), 5000);
+                                                }
+                                            }}
+                                        />
+                                    </div>
+                                ) : (
+                                    <div className='shareGroupAlt d-flex'>
+                                        <FontAwesomeIcon
+                                            icon={faFacebook}
+                                            className='shareIcon'
+                                            onClick={() => {
+                                                window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
+                                                setShowAlt(false);
+                                            }}
+                                            title="Share on Facebook"
+                                        />
+                                        <FontAwesomeIcon
+                                            icon={faTwitter}
+                                            className='shareIcon'
+                                            onClick={() => {
+                                                const text = `Check out this product: ${productData.name}`;
+                                                window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(window.location.href)}`, '_blank', 'width=600,height=400');
+                                                setShowAlt(false);
+                                            }}
+                                            title="Share on Twitter"
+                                        />
+                                        <FontAwesomeIcon
+                                            icon={faWhatsapp}
+                                            className='shareIcon'
+                                            onClick={() => {
+                                                const text = `Check out this product: ${productData.name} - ${window.location.href}`;
+                                                window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, '_blank');
+                                                setShowAlt(false);
+                                            }}
+                                            title="Share on WhatsApp"
+                                        />
+                                    </div>
+                                )
+                            }
+                        </div>
 
-                        <button disabled={!isUser} onClick={() => saveProduct()}>
+                        <div disabled={!isUser} onClick={() => saveProduct()}>
                             <Image
                                 width={18}
                                 height={18}
@@ -253,7 +360,7 @@ export default function Product({ params }) {
                                 style={{ objectFit: 'contain' }}
                             // onClick={() => saveProduct()}
                             />
-                        </button>
+                        </div>
 
                     </div>
                 </div>
@@ -261,7 +368,9 @@ export default function Product({ params }) {
             </div>
 
             <div className='mainProductButtonDiv d-flex'>
-                <button className='btn'>
+                <button onClick={() => {
+                    ChatSellers(productData.phone)
+                }} className='btn'>
                     Chat Seller
                 </button>
                 {/* <div className='mainProductButton1 d-flex'>
